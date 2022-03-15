@@ -21,7 +21,7 @@ const Sidebar = (props) => {
         <AppButton title="LogOut" onPress={() => console.log("logout")} />
       </View>
     </>
-  );
+  );  
 };
 
 const styles = StyleSheet.create({

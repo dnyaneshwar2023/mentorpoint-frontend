@@ -10,6 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import MentorProfile from "../screens/MentorProfile";
 
 export default function Drawer() {
   return (
@@ -33,7 +34,7 @@ export default function Drawer() {
           }}
         >
           <AppDrawer.Screen
-            component={Heading}
+            component={MentorProfile}
             name="Profile"
             options={{
               drawerIcon: () => (
