@@ -4,8 +4,11 @@ import ProfileCard from "../components/ProfileCard";
 import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
+import BottonButton from "../components/BottomButton";
+import SessionsDrawer from "../drawers/SessionsDrawer";
 
 export default function MentorProfile() {
+  const drawerRef = React.createRef();
   return (
     <>
       <ScrollView>
@@ -78,9 +81,12 @@ export default function MentorProfile() {
             <Socialcard name={"instagram"} />
           </View>
         </View>
-
-        <View style={{ flex: 3 }}></View>
       </ScrollView>
+      <BottonButton
+        title="Start Session"
+        onPress={() => drawerRef.current.open()}
+      />
+      <SessionsDrawer ref={drawerRef} />
     </>
   );
 }

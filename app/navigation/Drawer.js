@@ -11,6 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
+import SessionsDrawer from "../drawers/SessionsDrawer";
 
 export default function Drawer() {
   return (
@@ -44,7 +45,7 @@ export default function Drawer() {
           />
 
           <AppDrawer.Screen
-            component={Heading}
+            component={SessionsDrawer}
             name="Sessions"
             options={{
               drawerIcon: () => (
