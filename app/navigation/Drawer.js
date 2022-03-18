@@ -12,6 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
 import SessionsDrawer from "../drawers/SessionsDrawer";
+import SessionsScreen from "../screens/SessionsScreen";
 
 export default function Drawer() {
   return (
@@ -35,17 +36,7 @@ export default function Drawer() {
           }}
         >
           <AppDrawer.Screen
-            component={MentorProfile}
-            name="Profile"
-            options={{
-              drawerIcon: () => (
-                <AntDesign name="user" size={24} color="#00aced" />
-              ),
-            }}
-          />
-
-          <AppDrawer.Screen
-            component={SessionsDrawer}
+            component={SessionsScreen}
             name="Sessions"
             options={{
               drawerIcon: () => (
@@ -54,6 +45,15 @@ export default function Drawer() {
                   size={24}
                   color="#00aced"
                 />
+              ),
+            }}
+          />
+          <AppDrawer.Screen
+            component={MentorProfile}
+            name="Profile"
+            options={{
+              drawerIcon: () => (
+                <AntDesign name="user" size={24} color="#00aced" />
               ),
             }}
           />

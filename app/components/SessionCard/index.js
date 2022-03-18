@@ -1,0 +1,144 @@
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import { colors } from "../../configs/variables";
+import { Badge } from "react-native-elements";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import AppButton from "../AppButton";
+
+export default function SessionCard() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.sessionheader}>
+        <View style={styles.sessionicon}>
+          <FontAwesome name="book" size={30} color="black" />
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
+          >
+            Doubts Solving Session
+          </Text>
+          <Text
+            style={{
+              opacity: 0.7,
+              fontWeight: "600",
+            }}
+          >
+            By Dnyaneshwar Ware
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.pricingsection}>
+        <View
+          style={{
+            marginLeft: 10,
+          }}
+        >
+          <Text style={styles.pricing}>FREE</Text>
+        </View>
+        <View>
+          <Badge
+            value="LIVE"
+            badgeStyle={{ backgroundColor: "red", borderRadius: 2 }}
+            textStyle={{
+              fontWeight: "bold",
+            }}
+          />
+        </View>
+      </View>
+
+      <View style={styles.timesection}>
+        <View
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <SimpleLineIcons name="calendar" size={18} color="black" />
+        </View>
+        <View>
+          <Text
+            style={{
+              fontWeight: "700",
+            }}
+          >
+            21/03/2022 9.30 PM IST
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.buttons}>
+        <View style={styles.button}>
+          <AppButton
+            title="Chat"
+            onPress={() => console.log("click")}
+            buttonStyles={{
+              paddingVertical: 5,
+              paddingHorizontal: 20,
+              borderRadius: 5,
+              marginVertical: 10,
+            }}
+          />
+        </View>
+        <View style={styles.button}>
+          <AppButton
+            title="Chat"
+            onPress={() => console.log("click")}
+            buttonStyles={{
+              paddingVertical: 5,
+              paddingHorizontal: 20,
+              borderRadius: 5,
+              marginVertical: 10,
+            }}
+          />
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+    margin: 10,
+    borderColor: colors.grey,
+    borderWidth: 2,
+    justifyContent: "space-between",
+  },
+  sessionheader: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginHorizontal: 10,
+  },
+  sessionicon: {
+    padding: 10,
+    backgroundColor: colors.lightskyblue,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  pricingsection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginVertical: 10,
+  },
+  pricing: {
+    color: "green",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  timesection: {
+    flexDirection: "row",
+    marginHorizontal: 10,
+  },
+  buttons: {
+    flexDirection: "row",
+    marginHorizontal: 10,
+    justifyContent: "space-between",
+  },
+  button: {},
+});
