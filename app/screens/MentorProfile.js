@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 import React from "react";
 import ProfileCard from "../components/ProfileCard";
 import SkillBadge from "../components/SkillBadge";
@@ -35,10 +35,7 @@ export default function MentorProfile() {
             Ullamco est aliqua amet proident tempor ullamco sint sit velit
             exercitation eiusmod. Sunt exercitation minim deserunt duis deserunt
             pariatur ex irure id fugiat do. Consectetur non sit ad quis non aute
-            amet est velit anim eu occaecat. Ullamco est aliqua amet proident
-            tempor ullamco sint sit velit exercitation eiusmod. Sunt
-            exercitation minim deserunt duis deserunt pariatur ex irure id
-            fugiat do.
+            amet est velit anim eu occaecat.
           </Text>
         </View>
 
