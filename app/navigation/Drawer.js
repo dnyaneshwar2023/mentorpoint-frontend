@@ -13,7 +13,8 @@ import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
 import SessionsDrawer from "../drawers/SessionsDrawer";
 import SessionsScreen from "../screens/SessionsScreen";
-
+import OppotunitiesScreen from "../screens/OppotunitiesScreen";
+import BookingScreen from "../screens/BookingScreen";
 export default function Drawer() {
   return (
     <>
@@ -35,6 +36,32 @@ export default function Drawer() {
             },
           }}
         >
+          <AppDrawer.Screen
+            component={BookingScreen}
+            name="Booking"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome5
+                  name="chalkboard-teacher"
+                  size={24}
+                  color="#00aced"
+                />
+              ),
+            }}
+          />
+          <AppDrawer.Screen
+            component={OppotunitiesScreen}
+            name="Oppotinities"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome5
+                  name="chalkboard-teacher"
+                  size={24}
+                  color="#00aced"
+                />
+              ),
+            }}
+          />
           <AppDrawer.Screen
             component={SessionsScreen}
             name="Sessions"

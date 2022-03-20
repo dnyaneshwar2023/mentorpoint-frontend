@@ -13,7 +13,7 @@ export default function SessionCard() {
         <View style={styles.sessionicon}>
           <FontAwesome name="book" size={30} color="black" />
         </View>
-        <View>
+        <View style={styles.sessiontitle}>
           <Text
             style={{
               fontSize: 18,
@@ -78,7 +78,7 @@ export default function SessionCard() {
             onPress={() => console.log("click")}
             buttonStyles={{
               paddingVertical: 5,
-              paddingHorizontal: 20,
+              paddingHorizontal: 50,
               borderRadius: 5,
               marginVertical: 10,
             }}
@@ -86,11 +86,11 @@ export default function SessionCard() {
         </View>
         <View style={styles.button}>
           <AppButton
-            title="Chat"
+            title="Meet"
             onPress={() => console.log("click")}
             buttonStyles={{
               paddingVertical: 5,
-              paddingHorizontal: 20,
+              paddingHorizontal: 50,
               borderRadius: 5,
               marginVertical: 10,
             }}
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     margin: 10,
-    borderColor: colors.grey,
-    borderWidth: 2,
-    justifyContent: "space-between",
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 2,
+    justifyContent: "space-around",
   },
   sessionheader: {
     flexDirection: "row",
@@ -119,6 +119,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightskyblue,
     borderRadius: 10,
     marginHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sessiontitle: {
+    marginLeft: 10,
   },
   pricingsection: {
     flexDirection: "row",
@@ -138,6 +143,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     marginHorizontal: 10,
+    marginTop: 10,
     justifyContent: "space-between",
   },
   button: {},
