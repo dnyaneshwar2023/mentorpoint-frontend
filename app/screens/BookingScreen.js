@@ -1,31 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { Calendar } from "react-native-calendars";
-import { colors } from "../configs/variables";
+
 import DatePicker from "../components/DatePicker";
+import ModalContext from "../hooks/useModal/context";
+import AppButton from "../components/AppButton";
 export default function BookingScreen() {
-  const [selected, setDate] = useState({});
+  const [modal, setModal] = useState(true);
   return (
     <View style={styles.container}>
-      {/* <Calendar
-        initialDate="2022-03-19"
-        markedDates={{
-          [selected]: {
-            selected: true,
-          },
-          "2022-03-16": {
-            marked: true,
-          },
-          ...selected,
-        }}
-        theme={{
-          selectedDayBackgroundColor: colors.primary,
-        }}
-        onDayPress={(day) => {
-          setDate(day.dateString);
-        }}
-      /> */}
-      <DatePicker />
+      {/* */}
+      <ModalContext.Provider value={{ modal, setModal }}>
+        <DatePicker />
+      </ModalContext.Provider>
+
+      <AppButton title="Open" onPress={() => setModal(true)} />
     </View>
   );
 }
