@@ -15,6 +15,8 @@ import SessionsDrawer from "../drawers/SessionsDrawer";
 import SessionsScreen from "../screens/SessionsScreen";
 import OppotunitiesScreen from "../screens/OppotunitiesScreen";
 import BookingScreen from "../screens/BookingScreen";
+import MentorsScreen from "../screens/MentorsScreen";
+
 export default function Drawer() {
   return (
     <>
@@ -36,6 +38,15 @@ export default function Drawer() {
             },
           }}
         >
+          <AppDrawer.Screen
+            component={MentorsScreen}
+            name="Mentors"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome5 name="people-arrows" size={24} color="#00aced" />
+              ),
+            }}
+          />
           <AppDrawer.Screen
             component={BookingScreen}
             name="Booking"

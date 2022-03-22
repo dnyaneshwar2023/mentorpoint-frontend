@@ -114,4 +114,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  badgecontainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    flexWrap: "wrap",
+    marginVertical: 5,
+  },
 });

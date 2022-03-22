@@ -7,5 +7,6 @@ const colors = {
   lightcyan: "#E0FFFF",
   lightskyblue: "#87CEFA",
   lightgrey: "#D3D3D3",
+  lightblue:'#e6ecff'
 };
 export { statusbar, colors };
