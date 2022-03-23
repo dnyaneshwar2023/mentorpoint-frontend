@@ -7,8 +7,9 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import AppButton from "../AppButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SkillBadge from "../SkillBadge";
-
+import { useNavigation } from "@react-navigation/native";
 export default function MentorCard() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.profileheader}>
@@ -41,12 +42,23 @@ export default function MentorCard() {
         <View
           style={{
             flex: 1,
-            justifyContent: "center",
-            alignItems: "flex-end",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
           }}
         >
-          <MaterialIcons name="star-rate" size={25} color="orange" />
-          <Text> 4.5/5</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              padding: 2,
+              borderRadius: 5,
+              borderColor: colors.grey,
+              borderWidth: 1,
+            }}
+          >
+            <MaterialIcons name="star-rate" size={20} color="orange" />
+            <Text style={{ fontWeight: "bold" }}> 4.5 </Text>
+          </View>
         </View>
       </View>
 
@@ -60,7 +72,7 @@ export default function MentorCard() {
         <View>
           <AppButton
             title="Profile"
-            onPress={() => console.log("click")}
+            onPress={() => navigation.navigate("Profile")}
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 20,
@@ -100,7 +112,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     margin: 10,
     borderBottomColor: colors.grey,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     justifyContent: "space-around",
   },
   profileheader: {

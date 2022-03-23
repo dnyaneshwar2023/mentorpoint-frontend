@@ -16,6 +16,7 @@ import SessionsScreen from "../screens/SessionsScreen";
 import OppotunitiesScreen from "../screens/OppotunitiesScreen";
 import BookingScreen from "../screens/BookingScreen";
 import MentorsScreen from "../screens/MentorsScreen";
+import EarningsSceen from "../screens/EarningsSceen";
 
 export default function Drawer() {
   return (
@@ -38,6 +39,15 @@ export default function Drawer() {
             },
           }}
         >
+          <AppDrawer.Screen
+            component={EarningsSceen}
+            name="Earnings"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+            }}
+          />
           <AppDrawer.Screen
             component={MentorsScreen}
             name="Mentors"
@@ -116,16 +126,6 @@ export default function Drawer() {
             options={{
               drawerIcon: () => (
                 <AntDesign name="calendar" size={24} color="#00aced" />
-              ),
-            }}
-          />
-
-          <AppDrawer.Screen
-            component={Heading}
-            name="Earnings"
-            options={{
-              drawerIcon: () => (
-                <FontAwesome name="money" size={24} color="#00aced" />
               ),
             }}
           />
