@@ -1,12 +1,87 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
+import { colors, statusbar } from "../configs/variables";
+import EarningCard from "../components/EarningCard";
+import AppButton from "../components/AppButton";
+import BottonButton from "../components/BottomButton";
 
 export default function EarningsSceen() {
   return (
-    <View style={styles.container}>
-      <Text>EarningsSceen</Text>
-    </View>
+    <>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.rewardcontainer}>
+            <EarningCard />
+          </View>
+          <View
+            style={{
+              flex: 2,
+              padding: 10,
+            }}
+          >
+            <ScrollView>
+              <Text>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing
+                and typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type
+                specimen book. Lorem Ipsum is simply dummy text of the printing
+                and typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type
+                specimen book. It has survived not only five centuries, but also
+                the leap into electronic typesetting, remaining essentially
+                unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more
+                recently with desktop publishing software like Aldus PageMaker
+                including versions of Lorem Ipsum. Lorem Ipsum is simply dummy
+                text of the printing and typesetting industry. Lorem Ipsum has
+                been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it
+                to make a type specimen book.
+              </Text>
+            </ScrollView>
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          marginHorizontal: 10,
+          marginTop: -20,
+        }}
+      >
+        <AppButton
+          title="withdraw"
+          buttonStyles={{ backgroundColor: "blue" }}
+        />
+      </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: statusbar,
+  },
+  rewardcontainer: {
+    flex: 1,
+    backgroundColor: "blue",
+    marginTop: -statusbar,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
