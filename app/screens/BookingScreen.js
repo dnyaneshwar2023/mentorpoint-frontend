@@ -12,9 +12,12 @@ import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
 import BottonButton from "../components/BottomButton";
 import BillCard from "../components/BillCard";
+import BottomDrawerContext from "../hooks/useBottomDrawer/context";
+import BillDrawer from "../drawers/BillDrawer";
 
 export default function BookingScreen() {
   const [modal, setModal] = useState(false);
+  const [drawer, setDrawer] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
   return (
@@ -97,8 +100,11 @@ export default function BookingScreen() {
           fixAndroidTouchableBug={true}
         />
       </View>
-      <BottonButton title="Proceed" onPress={() => console.log("Hello")} />
-      <BillCard />
+
+      <BottonButton title="Proceed" onPress={() => setDrawer(true)} />
+      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
+        <BillDrawer visible={drawer} />
+      </BottomDrawerContext.Provider>
     </>
   );
 }

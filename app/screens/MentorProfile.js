@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import ProfileCard from "../components/ProfileCard";
 import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
 import BottonButton from "../components/BottomButton";
 import SessionsDrawer from "../drawers/SessionsDrawer";
-
+import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 export default function MentorProfile() {
+  const [drawer, setDrawer] = useState(false);
   const drawerRef = React.createRef();
   return (
     <>
@@ -79,11 +80,10 @@ export default function MentorProfile() {
           </View>
         </View>
       </ScrollView>
-      <BottonButton
-        title="Start Session"
-        onPress={() => drawerRef.current.open()}
-      />
-      <SessionsDrawer ref={drawerRef} />
+      <BottonButton title="Start Session" onPress={() => setDrawer(true)} />
+      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
+        <SessionsDrawer visible={drawer} />
+      </BottomDrawerContext.Provider>
     </>
   );
 }

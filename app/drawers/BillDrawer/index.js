@@ -5,10 +5,12 @@ import SessionItem from "../../components/SessionItem";
 import { ScrollView } from "react-native-gesture-handler";
 import AppButton from "../../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function BillDrawer() {
+import useBottomDrawer from "../../hooks/useBottomDrawer";
+export default function BillDrawer({ visible }) {
+  const { drawer, setVisible } = useBottomDrawer();
   return (
     <BottomSheet
-      isVisible={true}
+      isVisible={visible}
       modalProps={{}}
       containerStyle={{
         flex: 1,
@@ -64,9 +66,10 @@ export default function BillDrawer() {
               paddingHorizontal: 40,
               paddingVertical: 10,
             }}
+            onPress={() => setVisible(false)}
           />
           <AppButton
-            title="back"
+            title="Next"
             buttonStyles={{
               paddingHorizontal: 40,
               paddingVertical: 10,

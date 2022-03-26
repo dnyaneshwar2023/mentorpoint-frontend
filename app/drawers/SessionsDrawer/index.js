@@ -1,68 +1,24 @@
-import React, { useRef } from "react";
-import {
-  View,
-  Button,
-  ScrollView,
-  FlatList,
-  Dimensions,
-  useWindowDimensions,
-  Text,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import RBSheet from "react-native-raw-bottom-sheet";
-import AppButton from "../../components/AppButton";
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { BottomSheet } from "react-native-elements";
 import SessionItem from "../../components/SessionItem";
-import { colors } from "../../configs/variables";
-
-const SessionsDrawer = React.forwardRef((props, ref) => {
-  const { height, width } = Dimensions.get("window");
-
-  const data = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d73",
-      title: "Third Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d74",
-      title: "Third Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d75",
-      title: "Third Item",
-    },
-  ];
-
+import { ScrollView } from "react-native-gesture-handler";
+import AppButton from "../../components/AppButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import useBottomDrawer from "../../hooks/useBottomDrawer";
+export default function BillDrawer({ visible }) {
+  const { drawer, setVisible } = useBottomDrawer();
   return (
-    <View
-      style={{
+    <BottomSheet
+      isVisible={visible}
+      modalProps={{}}
+      containerStyle={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <RBSheet
-        ref={ref}
-        height={height * 0.7}
-        openDuration={150}
-        customStyles={{
-          wrapper: {
-            backgroundColor: "transparent",
-          },
-          draggableIcon: {
-            backgroundColor: colors.primary,
-          },
+      <View
+        style={{
+          backgroundColor: "white",
         }}
       >
         <View style={{ alignItems: "center" }}>
@@ -72,20 +28,63 @@ const SessionsDrawer = React.forwardRef((props, ref) => {
             color="black"
           />
         </View>
-        <View style={{ margin: 10 }}>
-          <Text
-            style={{
-              fontWeight: "bold",
-            }}
-          >
-            {" "}
-            List of the Sessions
-          </Text>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+            maxHeight: 500,
+            height: "100%",
+          }}
+        >
+          <View>
+            <ScrollView>
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+              <SessionItem />
+            </ScrollView>
+          </View>
         </View>
-        <FlatList data={data} renderItem={(item) => <SessionItem />} />
-      </RBSheet>
-    </View>
-  );
-});
 
-export default SessionsDrawer;
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 10,
+            backgroundColor: "white",
+          }}
+        >
+          <AppButton
+            title="back"
+            buttonStyles={{
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+            }}
+            onPress={() => setVisible(false)}
+          />
+          <AppButton
+            title="Next"
+            buttonStyles={{
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+            }}
+          />
+        </View>
+      </View>
+    </BottomSheet>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {},
+  bottombuttons: {
+    flex: 1,
+    flexDirection: "row",
+  },
+});
