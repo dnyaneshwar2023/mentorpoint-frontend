@@ -11,6 +11,7 @@ import DateContext from "../hooks/useDate/context";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
 import BottonButton from "../components/BottomButton";
+import BillCard from "../components/BillCard";
 
 export default function BookingScreen() {
   const [modal, setModal] = useState(false);
@@ -97,6 +98,7 @@ export default function BookingScreen() {
         />
       </View>
       <BottonButton title="Proceed" onPress={() => console.log("Hello")} />
+      <BillCard />
     </>
   );
 }
