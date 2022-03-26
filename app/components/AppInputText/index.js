@@ -22,7 +22,7 @@ export default function AppTextInput({ icon, placeholder, ...otherProps }) {
           flex: 1,
         }}
       >
-        <TextInput placeholder={placeholder} {...otherProps} editable />
+        <TextInput placeholder={placeholder} {...otherProps} />
       </View>
     </View>
   );

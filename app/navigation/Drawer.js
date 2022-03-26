@@ -17,6 +17,7 @@ import OppotunitiesScreen from "../screens/OppotunitiesScreen";
 import BookingScreen from "../screens/BookingScreen";
 import MentorsScreen from "../screens/MentorsScreen";
 import EarningsSceen from "../screens/EarningsSceen";
+import EditProfile from "../screens/EditProfile";
 
 export default function Drawer() {
   return (
@@ -39,6 +40,15 @@ export default function Drawer() {
             },
           }}
         >
+          <AppDrawer.Screen
+            component={EditProfile}
+            name="EditProfile"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="edit" size={24} color="#00aced" />
+              ),
+            }}
+          />
           <AppDrawer.Screen
             component={EarningsSceen}
             name="Earnings"
