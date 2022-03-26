@@ -6,6 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AppButton from "../../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
+import BillCard from "../../components/BillCard";
 export default function BillDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
   return (
@@ -37,16 +38,7 @@ export default function BillDrawer({ visible }) {
           }}
         >
           <View>
-            <ScrollView>
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-            </ScrollView>
+            <BillCard />
           </View>
         </View>
 
