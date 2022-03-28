@@ -7,16 +7,34 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-export default function AppButton({ title, onPress, buttonStyles }) {
+export default function AppButton({
+  title,
+  onPress,
+  buttonStyles,
+  IconComponent,
+}) {
   return (
-    <TouchableOpacity style={[styles.button, buttonStyles]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={[styles.button, buttonStyles]}>
+        {IconComponent && (
+          <View
+            style={{
+              marginRight: 10,
+              justifyContent: "center",
+            }}
+          >
+            {IconComponent}
+          </View>
+        )}
+        <Text style={styles.text}>{title}</Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
+    flexDirection: "row",
     backgroundColor: "#0080ff",
     borderRadius: 10,
     justifyContent: "center",

@@ -4,7 +4,6 @@ import AppTextInput from "../components/AppInputText";
 import { Input } from "react-native-elements";
 import { colors, statusbar } from "../configs/variables";
 import RNEInput from "../components/RNEInput";
-import BottonButton from "../components/BottomButton";
 import AppButton from "../components/AppButton";
 export default function EditProfile() {
   function handleChange(text) {

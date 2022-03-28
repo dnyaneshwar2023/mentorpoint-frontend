@@ -18,6 +18,7 @@ import BookingScreen from "../screens/BookingScreen";
 import MentorsScreen from "../screens/MentorsScreen";
 import EarningsSceen from "../screens/EarningsSceen";
 import EditProfile from "../screens/EditProfile";
+import ScheduleScreen from "../screens/ScheduleScreen";
 
 export default function Drawer() {
   return (
@@ -41,9 +42,20 @@ export default function Drawer() {
           }}
         >
           <AppDrawer.Screen
+            component={ScheduleScreen}
+            name="MentorScedule"
+            options={{
+              drawerLabel: "Mentor Schedule",
+              drawerIcon: () => (
+                <FontAwesome name="calendar" size={24} color="#00aced" />
+              ),
+            }}
+          />
+          <AppDrawer.Screen
             component={EditProfile}
             name="EditProfile"
             options={{
+              drawerLabel: "Edit Profile",
               drawerIcon: () => (
                 <FontAwesome name="edit" size={24} color="#00aced" />
               ),
