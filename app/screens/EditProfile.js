@@ -12,7 +12,7 @@ export default function EditProfile() {
   return (
     <View style={styles.container}>
       <View style={styles.detailscontainer}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <RNEInput
             placeholder="Enter Name"
             label="Enter Name"
