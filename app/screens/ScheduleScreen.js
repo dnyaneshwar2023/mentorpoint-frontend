@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import TimePicker from "../components/TimePicker";
 import TimeSelector from "../components/TimeSelector";
+import SlotItem from "../components/SlotItem";
 
 export default function ScheduleScreen() {
   const [modal, setModal] = useState(false);
@@ -97,46 +98,22 @@ export default function ScheduleScreen() {
           flex: 1,
         }}
       >
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 17,
+            marginHorizontal: 10,
+            marginVertical: 10,
+          }}
+        >
+          Your Slots
+        </Text>
         <ScrollView>
-          <Text>
-            Eiusmod reprehenderit fugiat occaecat est deserunt dolor officia.
-            Laborum minim proident qui dolor. Do cillum non commodo id duis
-            cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum.Eiusmod reprehenderit fugiat occaecat est deserunt dolor
-            officia. Laborum minim proident qui dolor. Do cillum non commodo id
-            duis cillum. duis cillum. Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum.Eiusmod reprehenderit fugiat occaecat est
-            deserunt dolor officia. Laborum minim proident qui dolor. Do cillum
-            non commodo id duis cillum. duis cillum.
-          </Text>
+          <View>
+            <SlotItem starttime="8.30" endtime="10.30" />
+            <SlotItem starttime="12.30" endtime="1.30" />
+            <SlotItem starttime="6.30" endtime="9.30" />
+          </View>
         </ScrollView>
       </View>
     </View>
@@ -152,6 +129,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 18,
+    margin: 10,
   },
   titlecontainer: {
     marginVertical: 10,
