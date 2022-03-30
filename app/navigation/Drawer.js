@@ -19,6 +19,7 @@ import MentorsScreen from "../screens/MentorsScreen";
 import EarningsSceen from "../screens/EarningsSceen";
 import EditProfile from "../screens/EditProfile";
 import ScheduleScreen from "../screens/ScheduleScreen";
+import ChatScreen from "../screens/ChatScreen";
 
 export default function Drawer() {
   return (
@@ -41,6 +42,19 @@ export default function Drawer() {
             },
           }}
         >
+          <AppDrawer.Screen
+            component={ChatScreen}
+            name="Chats"
+            options={{
+              drawerIcon: () => (
+                <Ionicons
+                  name="chatbubble-ellipses-outline"
+                  size={24}
+                  color="#00aced"
+                />
+              ),
+            }}
+          />
           <AppDrawer.Screen
             component={ScheduleScreen}
             name="MentorScedule"
@@ -124,20 +138,6 @@ export default function Drawer() {
             options={{
               drawerIcon: () => (
                 <AntDesign name="user" size={24} color="#00aced" />
-              ),
-            }}
-          />
-
-          <AppDrawer.Screen
-            component={Heading}
-            name="Chats"
-            options={{
-              drawerIcon: () => (
-                <Ionicons
-                  name="chatbubble-ellipses-outline"
-                  size={24}
-                  color="#00aced"
-                />
               ),
             }}
           />
