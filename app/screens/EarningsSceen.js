@@ -4,7 +4,6 @@ import { colors, statusbar } from "../configs/variables";
 import EarningCard from "../components/EarningCard";
 import AppButton from "../components/AppButton";
 import BottonButton from "../components/BottomButton";
-
 export default function EarningsSceen() {
   return (
     <>
