@@ -4,23 +4,25 @@ import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import useDate from "../../hooks/useDate";
 import useModal from "../../hooks/useModal";
-export default function TimePicker() {
-  const { modal, setVisible } = useModal();
+export default function TimePicker({ modal }) {
+  const { setVisible } = useModal();
   const { date, changeDate } = useDate();
-  if (!modal) {
-    return null;
-  }
+  console.log(date);
+  if (!modal) return null;
   return (
     <DateTimePicker
       mode="time"
-      value={date}
+      value={date ? date : new Date()}
       onChange={async (event, date) => {
         changeDate(date);
-
         setVisible(false);
       }}
-      onTouchCancel={() => setVisible(false)}
+      onT
       minuteInterval={15}
+      onTouchEnd={() => {
+        console.log("End");
+        setVisible(false);
+      }}
     />
   );
 }

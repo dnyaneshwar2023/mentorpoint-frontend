@@ -20,7 +20,6 @@ export default function ScheduleScreen() {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [starttime, setStarttime] = useState(new Date());
   const [endtime, setEndtime] = useState(new Date());
-  const [time, setTime] = useState(new Date());
   return (
     <View style={styles.container}>
       <View style={styles.titlecontainer}>
@@ -52,12 +51,13 @@ export default function ScheduleScreen() {
         <DateContext.Provider
           value={{ date: starttime, setDate: setStarttime }}
         >
-          <TimePicker />
+          {modal1 ? <TimePicker modal={modal1} /> : <></>}
         </DateContext.Provider>
       </ModalContext.Provider>
+
       <ModalContext.Provider value={{ modal: modal2, setModal: setModal2 }}>
         <DateContext.Provider value={{ date: endtime, setDate: setEndtime }}>
-          <TimePicker />
+          {modal2 ? <TimePicker modal={modal2} /> : <></>}
         </DateContext.Provider>
       </ModalContext.Provider>
       <View>
@@ -77,7 +77,14 @@ export default function ScheduleScreen() {
           }}
         >
           <View style={{ flexDirection: "row" }}>
-            <TimeSelector time="00:00" onPress={() => setModal1(true)} />
+            <TimeSelector
+              time="00:00"
+              onPress={() => {
+                setModal1(true);
+                console.log(starttime);
+                console.log("done");
+              }}
+            />
             <TimeSelector time="00:00" onPress={() => setModal2(true)} />
           </View>
           <AppButton

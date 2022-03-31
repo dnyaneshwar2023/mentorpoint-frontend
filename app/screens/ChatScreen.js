@@ -116,9 +116,6 @@ export default function ChatScreen() {
       messages={messages}
       onSend={(messages) => {
         onSend(messages);
-        console.log("====================================");
-        console.log(messages);
-        console.log("====================================");
       }}
       user={{
         _id: 1,
