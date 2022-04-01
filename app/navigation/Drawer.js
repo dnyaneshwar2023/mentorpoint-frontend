@@ -20,6 +20,7 @@ import EarningsSceen from "../screens/EarningsSceen";
 import EditProfile from "../screens/EditProfile";
 import ScheduleScreen from "../screens/ScheduleScreen";
 import ChatScreen from "../screens/ChatScreen";
+import SessionsTypeScreen from "../screens/SessionsTypeScreen";
 
 export default function Drawer() {
   return (
@@ -43,6 +44,19 @@ export default function Drawer() {
           }}
         >
           <AppDrawer.Screen
+            component={SessionsTypeScreen}
+            name="SessionTypes"
+            options={{
+              drawerIcon: () => (
+                <Ionicons
+                  name="chatbubble-ellipses-outline"
+                  size={24}
+                  color="#00aced"
+                />
+              ),
+            }}
+          />
+          <AppDrawer.Screen
             component={ChatScreen}
             name="Chats"
             options={{
@@ -55,6 +69,7 @@ export default function Drawer() {
               ),
             }}
           />
+
           <AppDrawer.Screen
             component={ScheduleScreen}
             name="MentorScedule"
