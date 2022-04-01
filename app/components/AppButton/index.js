@@ -6,6 +6,7 @@ export default function AppButton({
   onPress,
   buttonStyles,
   IconComponent,
+  textStyle,
 }) {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -20,7 +21,7 @@ export default function AppButton({
             {IconComponent}
           </View>
         )}
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text, textStyle]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
