@@ -2,11 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { BottomSheet } from "react-native-elements";
 import SessionItem from "../../components/SessionItem";
-import { ScrollView } from "react-native-gesture-handler";
 import AppButton from "../../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
-import BillCard from "../../components/BillCard";
 import RNEInput from "../../components/RNEInput";
 export default function SessionEditDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
@@ -57,7 +55,7 @@ export default function SessionEditDrawer({ visible }) {
             buttonStyles={{
               paddingHorizontal: 40,
               paddingVertical: 10,
-              backgroundColor: "white",
+              backgroundColor: "red",
               borderColor: "red",
               borderWidth: 1,
             }}

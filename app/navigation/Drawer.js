@@ -21,6 +21,7 @@ import EditProfile from "../screens/EditProfile";
 import ScheduleScreen from "../screens/ScheduleScreen";
 import ChatScreen from "../screens/ChatScreen";
 import SessionsTypeScreen from "../screens/SessionsTypeScreen";
+import BottomTabBar from "./BottomTabBar";
 
 export default function Drawer() {
   return (
@@ -44,21 +45,26 @@ export default function Drawer() {
           }}
         >
           <AppDrawer.Screen
-            component={SessionsTypeScreen}
-            name="SessionTypes"
+            component={BottomTabBar}
+            name="Home"
             options={{
               drawerIcon: () => (
-                <Ionicons
-                  name="chatbubble-ellipses-outline"
-                  size={24}
-                  color="#00aced"
-                />
+                <AntDesign name="home" size={24} color="#00aced" />
               ),
             }}
           />
           <AppDrawer.Screen
-            component={ChatScreen}
-            name="Chats"
+            component={MentorProfile}
+            name="Profile"
+            options={{
+              drawerIcon: () => (
+                <AntDesign name="user" size={24} color="#00aced" />
+              ),
+            }}
+          />
+          <AppDrawer.Screen
+            component={SessionsTypeScreen}
+            name="SessionTypes"
             options={{
               drawerIcon: () => (
                 <Ionicons
@@ -96,73 +102,6 @@ export default function Drawer() {
             options={{
               drawerIcon: () => (
                 <FontAwesome name="money" size={24} color="#00aced" />
-              ),
-            }}
-          />
-          <AppDrawer.Screen
-            component={MentorsScreen}
-            name="Mentors"
-            options={{
-              drawerIcon: () => (
-                <FontAwesome5 name="people-arrows" size={24} color="#00aced" />
-              ),
-            }}
-          />
-          <AppDrawer.Screen
-            component={BookingScreen}
-            name="Booking"
-            options={{
-              drawerIcon: () => (
-                <FontAwesome5
-                  name="chalkboard-teacher"
-                  size={24}
-                  color="#00aced"
-                />
-              ),
-            }}
-          />
-          <AppDrawer.Screen
-            component={OppotunitiesScreen}
-            name="Oppotinities"
-            options={{
-              drawerIcon: () => (
-                <FontAwesome5
-                  name="chalkboard-teacher"
-                  size={24}
-                  color="#00aced"
-                />
-              ),
-            }}
-          />
-          <AppDrawer.Screen
-            component={SessionsScreen}
-            name="Sessions"
-            options={{
-              drawerIcon: () => (
-                <FontAwesome5
-                  name="chalkboard-teacher"
-                  size={24}
-                  color="#00aced"
-                />
-              ),
-            }}
-          />
-          <AppDrawer.Screen
-            component={MentorProfile}
-            name="Profile"
-            options={{
-              drawerIcon: () => (
-                <AntDesign name="user" size={24} color="#00aced" />
-              ),
-            }}
-          />
-
-          <AppDrawer.Screen
-            component={Heading}
-            name="Schedule"
-            options={{
-              drawerIcon: () => (
-                <AntDesign name="calendar" size={24} color="#00aced" />
               ),
             }}
           />
