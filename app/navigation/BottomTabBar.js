@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import OppotunitiesScreen from "../screens/OppotunitiesScreen";
+import HeaderItem from "../components/HeaderItem";
 const BottomTabs = createBottomTabNavigator();
 export default function BottomTabBar() {
   return (
@@ -19,6 +20,7 @@ export default function BottomTabBar() {
           tabBarShowLabel: false,
           tabBarActiveTintColor: "blue",
           tabBarInactiveTintColor: "black",
+          header: (props) => <HeaderItem {...props} />,
         }}
       >
         <BottomTabs.Screen
@@ -28,6 +30,8 @@ export default function BottomTabBar() {
             tabBarIcon: ({ color }) => (
               <AntDesign name="home" size={25} color={color} />
             ),
+            title: "Home",
+            headerTitle: "Home",
           }}
         />
         <BottomTabs.Screen
