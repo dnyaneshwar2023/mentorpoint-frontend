@@ -6,7 +6,7 @@ import { Badge } from "react-native-elements";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import AppButton from "../AppButton";
 
-export default function SessionCard() {
+export default function SessionCard(props) {
   return (
     <View style={styles.container}>
       <View style={styles.sessionheader}>
@@ -20,7 +20,7 @@ export default function SessionCard() {
               fontWeight: "bold",
             }}
           >
-            Doubts Solving Session
+            {props.title}
           </Text>
           <Text
             style={{
@@ -28,7 +28,7 @@ export default function SessionCard() {
               fontWeight: "600",
             }}
           >
-            By Dnyaneshwar Ware
+            {props.mentor_name}
           </Text>
         </View>
       </View>
@@ -39,7 +39,9 @@ export default function SessionCard() {
             marginLeft: 10,
           }}
         >
-          <Text style={styles.pricing}>FREE</Text>
+          <Text style={styles.pricing}>
+            {props.fee == "0" ? "FREE" : props.fee}
+          </Text>
         </View>
         <View>
           <Badge
@@ -66,7 +68,7 @@ export default function SessionCard() {
               fontWeight: "700",
             }}
           >
-            21/03/2022 9.30 PM IST
+            {props.date}
           </Text>
         </View>
       </View>
