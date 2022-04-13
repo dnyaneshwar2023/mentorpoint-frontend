@@ -6,7 +6,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 
 import { colors } from "../../configs/variables";
 import AppButton from "../AppButton";
-export default function OpportunityCard() {
+export default function OpportunityCard(props) {
   return (
     <View style={[styles.container, styles.elevation]}>
       <View style={styles.header}>
@@ -15,11 +15,11 @@ export default function OpportunityCard() {
         </View>
 
         <View style={styles.worktitle}>
-          <Text style={styles.title}>Software Engineer Internship</Text>
+          <Text style={styles.title}>{props.job_title}</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <SimpleLineIcons name="organization" size={15} color="black" />
             <View style={{ justifyContent: "center", marginHorizontal: 8 }}>
-              <Text style={styles.subtitle}>Google India</Text>
+              <Text style={styles.subtitle}>{props.company}</Text>
             </View>
           </View>
         </View>
