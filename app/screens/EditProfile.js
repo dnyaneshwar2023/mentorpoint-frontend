@@ -14,6 +14,7 @@ import SkillSelect from "../components/SkillSelect";
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
   bio: yup.string().required(),
+  headline: yup.string().required(),
   linkedin_url: yup.string().url(),
   instagram_url: yup.string().url(),
   github_url: yup.string().url(),
@@ -97,6 +98,16 @@ export default function EditProfile() {
                   name="company"
                   error={errors.company}
                 />
+                <RNEInput
+                  placeholder="Enter Headline"
+                  label="Headline"
+                  onInputChange={handleChange}
+                  bg="white"
+                  multiline={true}
+                  name="headline"
+                  error={errors.headline}
+                />
+
                 <RNEInput
                   placeholder="Bio"
                   label="Bio"
