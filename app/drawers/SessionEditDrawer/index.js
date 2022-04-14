@@ -35,8 +35,9 @@ export default function SessionEditDrawer({ visible }) {
             duration: "",
           }}
           validationSchema={validationSchema}
+          onSubmit={(values) => console.log(values)}
         >
-          {({ errors, handleSubmit }) => (
+          {({ errors, handleSubmit, touched }) => (
             <>
               <View style={{ alignItems: "center" }}>
                 <MaterialCommunityIcons
@@ -52,6 +53,7 @@ export default function SessionEditDrawer({ visible }) {
                   label="Session Name"
                   name="session_title"
                   onInputChange={(text) => console.log(text)}
+                  error={touched?.session_title && errors.session_title}
                 />
                 <RNEInput
                   placeholder="Enter Session Description"
@@ -59,6 +61,10 @@ export default function SessionEditDrawer({ visible }) {
                   label="Session Description"
                   name="session_description"
                   onInputChange={(text) => console.log(text)}
+                  multiline={true}
+                  error={
+                    touched.session_description && errors.session_description
+                  }
                 />
                 <RNEInput
                   placeholder="Enter Session Charges"
@@ -66,6 +72,7 @@ export default function SessionEditDrawer({ visible }) {
                   label="Session Charges"
                   name="fee"
                   onInputChange={(text) => console.log(text)}
+                  error={touched.fee && errors.fee}
                 />
                 <RNEInput
                   placeholder="Enter duration in Minutes"
@@ -73,6 +80,7 @@ export default function SessionEditDrawer({ visible }) {
                   label="Duration"
                   name="duration"
                   onInputChange={(text) => console.log(text)}
+                  error={touched.duration && errors.duration}
                 />
               </View>
               <View style={styles.bottombuttons}>
@@ -85,6 +93,7 @@ export default function SessionEditDrawer({ visible }) {
                     borderColor: "red",
                     borderWidth: 1,
                   }}
+                  onPress={() => setVisible(false)}
                 />
                 <AppButton
                   title="Submit"
