@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { colors } from "../../configs/variables";
 
 export default function AppImagePicker({ imageUri, onChangeImage }) {
   useEffect(() => {
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   picker: {
     width: 100,
     height: 100,
-    backgroundColor: "grey",
+    backgroundColor: colors.lightgrey,
     borderRadius: 10,
     marginVertical: 10,
     marginRight: 10,
