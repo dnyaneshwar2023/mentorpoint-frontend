@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import sessionsApi from "../apis/sessions";
@@ -12,7 +13,7 @@ import SessionCard from "../components/SessionCard";
 
 export default function SessionsScreen() {
   const [sessions, setSessions] = useState([]);
-
+  const [refresh, setRefresh] = useState(false);
   const getSessions = async () => {
     const res = await sessionsApi.getSessions();
     console.log(res.data.data);
@@ -24,6 +25,14 @@ export default function SessionsScreen() {
     });
   }, []);
 
+  const onRefresh = React.useCallback(() => {
+    setRefresh(true);
+    getSessions().then((data) => {
+      setSessions(data);
+    });
+    setRefresh(false);
+  }, []);
+
   return (
     <View style={styles.container}>
       {sessions.length > 0 ? (
@@ -31,6 +40,9 @@ export default function SessionsScreen() {
           data={sessions}
           renderItem={({ item }) => <SessionCard {...item} />}
           keyExtractor={(item) => item._id}
+          refreshControl={
+            <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+          }
         />
       ) : (
         <View
