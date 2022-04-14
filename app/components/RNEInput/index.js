@@ -11,6 +11,7 @@ export default function RNEInput({
   bg,
   onInputChange,
   name,
+  error,
 }) {
   const { setFieldValue } = useFormikContext();
   return (
@@ -34,6 +35,7 @@ export default function RNEInput({
         color: "black",
         marginBottom: 5,
       }}
+      errorMessage={error}
     />
   );
 }

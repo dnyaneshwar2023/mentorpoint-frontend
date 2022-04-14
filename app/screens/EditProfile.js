@@ -6,8 +6,8 @@ import { colors, statusbar } from "../configs/variables";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
 import AppImagePicker from "../components/ImagePicker";
-import { Formik } from "formik";
 import * as yup from "yup";
+import { Formik } from "formik";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
@@ -16,6 +16,7 @@ const validationSchema = yup.object().shape({
   instagram_url: yup.string().url(),
   github_url: yup.string().url(),
   company: yup.string().required(),
+  mobile_number: yup.string().required(),
 });
 
 export default function EditProfile() {
@@ -23,6 +24,11 @@ export default function EditProfile() {
   function handleChange(text) {
     console.log(text);
   }
+
+  const handleSubmit = (values) => {
+    console.log("Submission");
+    console.log(values);
+  };
   return (
     <View style={styles.container}>
       <Formik
@@ -36,8 +42,16 @@ export default function EditProfile() {
           instagram_url: "",
         }}
         validationSchema={validationSchema}
+        onSubmit={(values) => console.log(values)}
       >
-        {() => (
+        {({
+          errors,
+          touched,
+          values,
+          setFieldValue,
+          resetForm,
+          handleSubmit,
+        }) => (
           <>
             <View style={styles.detailscontainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
@@ -45,6 +59,7 @@ export default function EditProfile() {
                   <Text style={{ fontWeight: "bold", fontSize: 16 }}>
                     Profile Picture
                   </Text>
+
                   <AppImagePicker
                     imageUri={imageUri}
                     onChangeImage={(val) => {
@@ -60,6 +75,7 @@ export default function EditProfile() {
                   name="name"
                   bg="white"
                   onInputChange={handleChange}
+                  error={errors.name}
                 />
 
                 <RNEInput
@@ -68,6 +84,7 @@ export default function EditProfile() {
                   name="mobile_number"
                   bg="white"
                   onInputChange={handleChange}
+                  error={errors.mobile_number}
                 />
                 <RNEInput
                   placeholder="Company/Organization"
@@ -75,6 +92,7 @@ export default function EditProfile() {
                   onInputChange={handleChange}
                   bg="white"
                   name="company"
+                  error={errors.company}
                 />
                 <RNEInput
                   placeholder="Bio"
@@ -83,6 +101,7 @@ export default function EditProfile() {
                   bg="white"
                   multiline={true}
                   name="bio"
+                  error={errors.bio}
                 />
                 <RNEInput
                   placeholder="LinkedIn Profile URL"
@@ -90,6 +109,7 @@ export default function EditProfile() {
                   onInputChange={handleChange}
                   bg="white"
                   name="linkedin_url"
+                  error={errors.linkedin_url}
                 />
                 <RNEInput
                   placeholder="GitHub Profile URL"
@@ -97,6 +117,7 @@ export default function EditProfile() {
                   onInputChange={handleChange}
                   bg="white"
                   name="github_url"
+                  error={errors.github_url}
                 />
                 <RNEInput
                   placeholder="Instagram Profile URL"
@@ -104,6 +125,7 @@ export default function EditProfile() {
                   onInputChange={handleChange}
                   bg="white"
                   name="instagram_url"
+                  error={errors.instagram_url}
                 />
                 <RNEInput
                   placeholder="Skills"
@@ -115,7 +137,7 @@ export default function EditProfile() {
             </View>
 
             <View style={{ marginHorizontal: 10 }}>
-              <AppButton title="Save Details" />
+              <AppButton title="Save Details" onPress={handleSubmit} />
             </View>
           </>
         )}
