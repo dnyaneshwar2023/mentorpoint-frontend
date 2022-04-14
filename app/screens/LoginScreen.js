@@ -3,7 +3,8 @@ import React from "react";
 import { statusbar } from "../configs/variables";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
-
+import { Formik } from "formik";
+import * as yup from "yup";
 const data = [
   {
     id: 1,
@@ -18,6 +19,11 @@ const data = [
     image: require("../images/meeting.png"),
   },
 ];
+
+const validationSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+});
 
 export default function LoginScreen() {
   const CardItem = ({ image }) => {
@@ -66,24 +72,42 @@ export default function LoginScreen() {
         </Text>
       </View>
       <View style={styles.userdetailscontainer}>
-        <View>
-          <RNEInput placeholder="E-mail" onInputChange={() => {}} bg="white" />
-          <RNEInput
-            placeholder="Password"
-            onInputChange={() => {}}
-            bg="white"
-          />
-        </View>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={validationSchema}
+        >
+          {() => (
+            <>
+              <View>
+                <RNEInput
+                  placeholder="E-mail"
+                  onInputChange={() => {}}
+                  bg="white"
+                  name="email"
+                />
+                <RNEInput
+                  placeholder="Password"
+                  onInputChange={() => {}}
+                  bg="white"
+                  name="password"
+                />
+              </View>
 
-        <View style={{ paddingHorizontal: 10 }}>
-          <AppButton
-            title="Sign In"
-            onPress={() => {}}
-            buttonStyles={{
-              paddingHorizontal: 10,
-            }}
-          />
-        </View>
+              <View style={{ paddingHorizontal: 10 }}>
+                <AppButton
+                  title="Sign In"
+                  onPress={() => {}}
+                  buttonStyles={{
+                    paddingHorizontal: 10,
+                  }}
+                />
+              </View>
+            </>
+          )}
+        </Formik>
       </View>
     </View>
   );
