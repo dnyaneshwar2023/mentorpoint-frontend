@@ -2,12 +2,14 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import AppTextInput from "../components/AppInputText";
 import { Input } from "react-native-elements";
+import * as yup from "yup";
+import { Formik } from "formik";
+
 import { colors, statusbar } from "../configs/variables";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
 import AppImagePicker from "../components/ImagePicker";
-import * as yup from "yup";
-import { Formik } from "formik";
+import SkillSelect from "../components/SkillSelect";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
@@ -21,6 +23,7 @@ const validationSchema = yup.object().shape({
 
 export default function EditProfile() {
   const [imageUri, setImageUri] = useState(null);
+
   function handleChange(text) {
     console.log(text);
   }
@@ -127,12 +130,8 @@ export default function EditProfile() {
                   name="instagram_url"
                   error={errors.instagram_url}
                 />
-                <RNEInput
-                  placeholder="Skills"
-                  label="Skills"
-                  onInputChange={handleChange}
-                  bg="white"
-                />
+
+                <SkillSelect />
               </ScrollView>
             </View>
 
