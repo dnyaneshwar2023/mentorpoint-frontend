@@ -7,6 +7,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { colors } from "../../configs/variables";
 import AppButton from "../AppButton";
 export default function OpportunityCard(props) {
+  const addedDate = props.date ? new Date(props.date).toLocaleDateString() : "";
   return (
     <View style={[styles.container, styles.elevation]}>
       <View style={styles.header}>
@@ -45,7 +46,7 @@ export default function OpportunityCard(props) {
                 fontWeight: "700",
               }}
             >
-              {props.date}
+              {addedDate}
             </Text>
           </View>
         </View>

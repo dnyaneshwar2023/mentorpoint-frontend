@@ -1,4 +1,12 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import opportunitiesApi from "../apis/opportunities";
 
@@ -6,7 +14,7 @@ import OpportunityCard from "../components/OpportunityCard";
 
 export default function OppotunitiesScreen() {
   const [opportunities, setOpportunities] = useState([]);
-
+  const [refresh, setRefresh] = useState(false);
   const getOpportunities = async () => {
     const res = await opportunitiesApi.getOpportunities();
     return res.data.data;
@@ -16,13 +24,35 @@ export default function OppotunitiesScreen() {
       setOpportunities(data);
     });
   }, []);
+  const onRefresh = React.useCallback(() => {
+    setRefresh(true);
+    getOpportunities().then((data) => {
+      setOpportunities(data);
+    });
+    setRefresh(false);
+  }, []);
   return (
     <View style={styles.container}>
-      <FlatList
-        data={opportunities}
-        renderItem={({ item }) => <OpportunityCard {...item} />}
-        keyExtractor={(item) => item._id}
-      />
+      {opportunities.length > 0 ? (
+        <FlatList
+          data={opportunities}
+          renderItem={({ item }) => <OpportunityCard {...item} />}
+          keyExtractor={(item) => item._id}
+          refreshControl={
+            <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+          }
+        />
+      ) : (
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
     </View>
   );
 }
