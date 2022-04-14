@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Linking } from "react-native";
 import React from "react";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -45,7 +45,7 @@ export default function OpportunityCard(props) {
                 fontWeight: "700",
               }}
             >
-              21/03/2022
+              {props.date}
             </Text>
           </View>
         </View>
@@ -53,7 +53,7 @@ export default function OpportunityCard(props) {
         <View>
           <AppButton
             title="Apply Now"
-            onPress={() => console.log("App Button")}
+            onPress={() => Linking.openURL(props.application_link)}
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 10,
