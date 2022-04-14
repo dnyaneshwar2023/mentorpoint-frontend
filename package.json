@@ -19,8 +19,10 @@
     "@react-navigation/native-stack": "^6.5.0",
     "apisauce": "^2.1.5",
     "expo": "^44.0.6",
+    "expo-image-picker": "~12.0.1",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
+    "formik": "^2.2.9",
     "install": "^0.13.0",
     "npm": "^8.5.5",
     "react": "17.0.1",
@@ -38,7 +40,8 @@
     "react-native-skeleton-content": "^1.0.24",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg-transformer": "^1.0.0",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

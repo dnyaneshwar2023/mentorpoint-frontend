@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Input } from "react-native-elements";
 import { colors } from "../../configs/variables";
+import { useFormikContext } from "formik";
 
 export default function RNEInput({
   placeholder,
@@ -9,10 +10,12 @@ export default function RNEInput({
   multiline,
   bg,
   onInputChange,
+  name,
 }) {
+  const { setFieldValue } = useFormikContext();
   return (
     <Input
-      onChangeText={(text) => onInputChange(text)}
+      onChangeText={(text) => setFieldValue(name, text)}
       placeholder={placeholder}
       label={label}
       multiline={multiline}
