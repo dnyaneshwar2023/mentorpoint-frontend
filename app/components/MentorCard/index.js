@@ -8,7 +8,7 @@ import AppButton from "../AppButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SkillBadge from "../SkillBadge";
 import { useNavigation } from "@react-navigation/native";
-export default function MentorCard() {
+export default function MentorCard(props) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ export default function MentorCard() {
                 fontWeight: "bold",
               }}
             >
-              Dnyaneshwar Ware
+              {props.name}
             </Text>
             <Text
               style={{
@@ -35,7 +35,7 @@ export default function MentorCard() {
                 fontWeight: "600",
               }}
             >
-              Mentor
+              {props.headline}
             </Text>
           </View>
         </View>
@@ -63,9 +63,9 @@ export default function MentorCard() {
       </View>
 
       <View style={styles.badgecontainer}>
-        <SkillBadge skill="backend" style={badgeStyle} />
-        <SkillBadge skill="frontend" style={badgeStyle} />
-        <SkillBadge skill="devops" style={badgeStyle} />
+        {props.skills.map((item) => {
+          return <SkillBadge skill={item} style={badgeStyle} key={item} />;
+        })}
       </View>
 
       <View style={styles.buttons}>

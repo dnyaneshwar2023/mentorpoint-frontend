@@ -35,6 +35,7 @@ export default function OppotunitiesScreen() {
     <View style={styles.container}>
       {opportunities.length > 0 ? (
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={opportunities}
           renderItem={({ item }) => <OpportunityCard {...item} />}
           keyExtractor={(item) => item._id}

@@ -1,7 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import AppTextInput from "../components/AppInputText";
-import { Input } from "react-native-elements";
 import * as yup from "yup";
 import { Formik } from "formik";
 

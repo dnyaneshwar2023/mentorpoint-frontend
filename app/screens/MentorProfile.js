@@ -7,9 +7,8 @@ import Socialcard from "../components/SocialCard";
 import BottonButton from "../components/BottomButton";
 import SessionsDrawer from "../drawers/SessionsDrawer";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
-export default function MentorProfile() {
+export default function MentorProfile(props) {
   const [drawer, setDrawer] = useState(false);
-  const drawerRef = React.createRef();
   return (
     <>
       <ScrollView>
@@ -33,10 +32,7 @@ export default function MentorProfile() {
               marginVertical: 5,
             }}
           >
-            Ullamco est aliqua amet proident tempor ullamco sint sit velit
-            exercitation eiusmod. Sunt exercitation minim deserunt duis deserunt
-            pariatur ex irure id fugiat do. Consectetur non sit ad quis non aute
-            amet est velit anim eu occaecat.
+            {props.bio}
           </Text>
         </View>
 

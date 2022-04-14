@@ -37,6 +37,7 @@ export default function SessionsScreen() {
     <View style={styles.container}>
       {sessions.length > 0 ? (
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={sessions}
           renderItem={({ item }) => <SessionCard {...item} />}
           keyExtractor={(item) => item._id}
