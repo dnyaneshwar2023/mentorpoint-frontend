@@ -16,11 +16,12 @@ export default function SessionEditDrawer({ visible }) {
 
   const mentor_id = "6258524c47d03e25192b6330";
 
-  const handleSubmit = (values) => {
+  const addService = (values) => {
     servicesApi.addService(mentor_id, values).then((res) => {
       console.log(data);
     });
   };
+
   return (
     <BottomSheet
       isVisible={visible}
@@ -43,7 +44,7 @@ export default function SessionEditDrawer({ visible }) {
             duration: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={addService}
         >
           {({ errors, handleSubmit, touched }) => (
             <>
