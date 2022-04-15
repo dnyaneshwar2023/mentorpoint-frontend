@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { statusbar } from "../configs/variables";
 import ModalContext from "../hooks/useModal/context";
 import DatePicker from "../components/DatePicker";
@@ -9,9 +9,12 @@ import AppButton from "../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
+
+import slotsApi from "../apis/slots";
 import TimePicker from "../components/TimePicker";
 import TimeSelector from "../components/TimeSelector";
 import SlotItem from "../components/SlotItem";
+import mentor_id from "../utils/mentorid";
 
 export default function ScheduleScreen() {
   const [modal, setModal] = useState(false);
@@ -20,6 +23,15 @@ export default function ScheduleScreen() {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [starttime, setStarttime] = useState(new Date());
   const [endtime, setEndtime] = useState(new Date());
+  const [slots, setSlots] = useState([]);
+
+  useEffect(() => {
+    slotsApi.getSlots(mentor_id, date).then((res) => {
+      console.log(res);
+      setSlots(res.data.data);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.titlecontainer}>
@@ -117,9 +129,11 @@ export default function ScheduleScreen() {
         </Text>
         <ScrollView>
           <View>
-            <SlotItem starttime="8.30" endtime="10.30" />
-            <SlotItem starttime="12.30" endtime="1.30" />
-            <SlotItem starttime="6.30" endtime="9.30" />
+            {slots.map((item) => {
+              return (
+                <SlotItem starttime={item.starttime} endtime={item.endtime} />
+              );
+            })}
           </View>
         </ScrollView>
       </View>
