@@ -33,7 +33,7 @@ export default function MentorProfile({ route, navigation }) {
               marginVertical: 5,
             }}
           >
-            {params.bio}
+            {params?.bio}
           </Text>
         </View>
 

@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../configs/variables";
-export default function SessionItem() {
+export default function SessionItem(props) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPress}>
       <View style={styles.container}>
         <View style={styles.sessioncontainer}>
           <View
@@ -14,11 +14,14 @@ export default function SessionItem() {
               overflow: "scroll",
             }}
           >
-            <Text style={styles.sessionheader}>Doubt Solving Session</Text>
+            <Text style={styles.sessionheader}>{props.title}</Text>
           </View>
-          {/* {"\u20A8"}. 99 */}
-          <View>
-            <Text style={styles.pricing}>FREE</Text>
+
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontWeight: "bold", marginRight: 5, fontSize: 15 }}>
+              {"\u20A8"}
+            </Text>
+            <Text style={styles.pricing}>{props.fee}</Text>
           </View>
         </View>
         <View style={styles.moveicon}>

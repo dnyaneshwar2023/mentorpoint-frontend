@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AppButton from "../../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
-export default function BillDrawer({ visible }) {
+export default function SessionsDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
   return (
     <BottomSheet
@@ -38,14 +38,11 @@ export default function BillDrawer({ visible }) {
         >
           <View>
             <ScrollView>
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
-              <SessionItem />
+              <SessionItem
+                title="Doubt Solving"
+                fee={100}
+                onPress={() => console.log("Session")}
+              />
             </ScrollView>
           </View>
         </View>
