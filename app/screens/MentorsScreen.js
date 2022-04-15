@@ -26,6 +26,7 @@ export default function MentorsScreen() {
 
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
+    setMentors([]);
     getMentors().then((data) => {
       setMentors(data);
     });
@@ -61,6 +62,6 @@ export default function MentorsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 20,
+    marginVertical: 10,
   },
 });
