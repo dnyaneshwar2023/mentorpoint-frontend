@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { colors } from "../../configs/variables";
-export default function ProfileCard() {
+export default function ProfileCard(props) {
   return (
     <View style={styles.container}>
       <View style={styles.profilecontainer}>
@@ -16,8 +16,12 @@ export default function ProfileCard() {
                 source={require("../../images/user-icon.png")}
                 style={styles.image}
               />
-              <Text style={styles.heading}>Dnyaneshwar Ware</Text>
-              <Text style={styles.subheading}>SDE at Somewhere</Text>
+              <Text style={styles.heading}>
+                {props.name ? props.name : "Name"}
+              </Text>
+              <Text style={styles.subheading}>
+                {props.headline ? props.headline : "Headline"}
+              </Text>
             </View>
           </View>
           <View style={styles.infocontainer}>
@@ -53,7 +57,7 @@ export default function ProfileCard() {
         </View>
       </View>
 
-      <View style={styles.quotecontainer}>
+      {/* <View style={styles.quotecontainer}>
         <Text
           style={{
             fontSize: 15,
@@ -62,7 +66,7 @@ export default function ProfileCard() {
         >
           Fake it untill you make it
         </Text>
-      </View>
+      </View> */}
     </View>
   );
 }

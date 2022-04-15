@@ -7,7 +7,8 @@ import Socialcard from "../components/SocialCard";
 import BottonButton from "../components/BottomButton";
 import SessionsDrawer from "../drawers/SessionsDrawer";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
-export default function MentorProfile(props) {
+export default function MentorProfile({ route, navigation }) {
+  const params = route.params;
   const [drawer, setDrawer] = useState(false);
   return (
     <>
@@ -32,7 +33,7 @@ export default function MentorProfile(props) {
               marginVertical: 5,
             }}
           >
-            {props.bio}
+            {params.bio}
           </Text>
         </View>
 
