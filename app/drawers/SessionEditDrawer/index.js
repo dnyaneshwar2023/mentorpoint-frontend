@@ -7,12 +7,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
 import RNEInput from "../../components/RNEInput";
 import { Formik } from "formik";
-import * as yup from "yup";
+import servicesApi from "../../apis/services";
 
 import validationSchema from "./validations";
 
 export default function SessionEditDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
+
+  const mentor_id = "6258524c47d03e25192b6330";
+
+  const handleSubmit = (values) => {
+    servicesApi.addService(mentor_id, values).then((res) => {
+      console.log(data);
+    });
+  };
   return (
     <BottomSheet
       isVisible={visible}
@@ -60,7 +68,6 @@ export default function SessionEditDrawer({ visible }) {
                   bg="white"
                   label="Session Description"
                   name="session_description"
-                  onInputChange={(text) => console.log(text)}
                   multiline={true}
                   error={
                     touched.session_description && errors.session_description
