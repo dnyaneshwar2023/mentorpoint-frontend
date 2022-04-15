@@ -1,16 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TouchableHighlight,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import SectionedMultiSelect from "react-native-sectioned-multi-select";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 
 import SkillInput from "../SkillInput";
 import { colors } from "../../configs/variables";
