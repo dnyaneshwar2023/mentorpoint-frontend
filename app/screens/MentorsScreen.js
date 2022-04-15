@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import MentorCard from "../components/MentorCard";
-import mentorsApi from "../apis/users.js";
+import mentorsApi from "../apis/mentors";
 
 export default function MentorsScreen() {
   const [refresh, setRefresh] = useState(false);
