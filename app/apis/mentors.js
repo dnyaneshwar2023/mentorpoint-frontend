@@ -1,7 +1,7 @@
 import apiClient from "./client";
 
-const getMentors = () => {
-  return apiClient.post("/users/get");
+const getMentors = (mentor_id) => {
+  return apiClient.get("/users/get", { mentor_id });
 };
 
 export default { getMentors };

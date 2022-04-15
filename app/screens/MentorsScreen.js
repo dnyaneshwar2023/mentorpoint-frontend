@@ -15,7 +15,8 @@ export default function MentorsScreen() {
   const [refresh, setRefresh] = useState(false);
   const [mentors, setMentors] = useState([]);
   const getMentors = async () => {
-    const res = await mentorsApi.getMentors();
+    const res = await mentorsApi.getMentors("6258524c47d03e25192b6330");
+    console.log(res);
     return res.data.data;
   };
   useEffect(() => {
