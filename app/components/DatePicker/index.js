@@ -6,6 +6,7 @@ import AppButton from "../AppButton";
 import { Calendar } from "react-native-calendars";
 import { colors } from "../../configs/variables";
 import useDate from "../../hooks/useDate";
+import moment from "moment";
 export default function DatePicker() {
   const { modal, setVisible } = useModal();
   const { date, changeDate } = useDate();
@@ -21,7 +22,7 @@ export default function DatePicker() {
         >
           <View>
             <Calendar
-              initialDate="2022-03-19"
+              initialDate={moment().format("YYYY-MM-DD")}
               style={{
                 padding: 10,
                 borderRadius: 10,
@@ -29,9 +30,6 @@ export default function DatePicker() {
               markedDates={{
                 [date]: {
                   selected: true,
-                },
-                "2022-03-16": {
-                  marked: true,
                 },
               }}
               theme={{

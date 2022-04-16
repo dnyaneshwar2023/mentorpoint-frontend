@@ -72,7 +72,9 @@ export default function MentorCard(props) {
         <View>
           <AppButton
             title="Profile"
-            onPress={() => navigation.navigate("Profile", { user: props })}
+            onPress={() =>
+              navigation.navigate("MentorProfile", { user: props })
+            }
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 20,

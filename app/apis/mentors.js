@@ -1,7 +1,10 @@
 import apiClient from "./client";
-
 const getMentors = (mentor_id) => {
-  return apiClient.get("/users", { body: { mentor_id } });
+  return apiClient.get("/users", { _id: mentor_id });
 };
 
-export default { getMentors };
+const updateMentor = (data) => {
+  return apiClient.put("/users", data);
+};
+
+export default { getMentors, updateMentor };

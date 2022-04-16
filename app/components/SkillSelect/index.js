@@ -5,16 +5,21 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SkillInput from "../SkillInput";
 import { colors } from "../../configs/variables";
 import AppButton from "../AppButton";
+import { useFormikContext } from "formik";
 
-export default function SkillSelect() {
-  const [selectedOptions, setSelectedOptions] = useState([]);
+export default function SkillSelect({ skills }) {
+  var selectedOptions = skills ? skills : [];
   const [skill, setSkill] = useState("");
-  const handleAddSkill = () => {
-    console.log(skill);
-    if (skill.length > 0) setSelectedOptions(selectedOptions.concat(skill));
+  const { setFieldValue } = useFormikContext();
+
+  const handleAddSkill = async () => {
+    if (skill.length > 0) selectedOptions = selectedOptions.concat(skill);
+    console.log(selectedOptions);
+    setFieldValue("skills", selectedOptions);
   };
   const handleDeleteSkill = (skillToDelete) => {
-    setSelectedOptions(selectedOptions.filter((item) => item != skillToDelete));
+    selectedOptions = selectedOptions.filter((item) => item != skillToDelete);
+    setFieldValue("skills", selectedOptions);
   };
   return (
     <>
@@ -32,7 +37,6 @@ export default function SkillSelect() {
               bg="white"
               onInputChange={(value) => {
                 setSkill(value);
-                console.log(skill);
               }}
             />
           </View>

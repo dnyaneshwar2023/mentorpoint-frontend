@@ -1,20 +1,50 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
+import { Feather } from "@expo/vector-icons";
+
 import ProfileCard from "../components/ProfileCard";
 import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
+
 import BottonButton from "../components/BottomButton";
 import SessionsDrawer from "../drawers/SessionsDrawer";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
-export default function MentorProfile({ route, navigation }) {
-  const params = route.params.user;
+import user from "../utils/user";
+
+export default function UserProfile({ route, navigation }) {
   const [drawer, setDrawer] = useState(false);
+  console.log(user);
   return (
     <>
       <ScrollView>
+        <View>
+          <View
+            style={{
+              justifyContent: "flex-end",
+              flexDirection: "row",
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("EditProfile");
+              }}
+            >
+              <Feather name="edit" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.container}>
-          <ProfileCard {...params} />
+          <ProfileCard {...user} />
         </View>
 
         <View style={styles.biocontainer}>
@@ -33,7 +63,7 @@ export default function MentorProfile({ route, navigation }) {
               marginVertical: 5,
             }}
           >
-            {params?.bio}
+            {user.bio}
           </Text>
         </View>
 
@@ -47,7 +77,7 @@ export default function MentorProfile({ route, navigation }) {
             Skills
           </Text>
           <View style={styles.badgecontainer}>
-            {params.skills.map((item) => {
+            {user.skills.map((item) => {
               return <SkillBadge skill={item} key={item} />;
             })}
           </View>
@@ -73,10 +103,6 @@ export default function MentorProfile({ route, navigation }) {
           </View>
         </View>
       </ScrollView>
-      <BottonButton title="Start Session" onPress={() => setDrawer(true)} />
-      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
-        <SessionsDrawer visible={drawer} />
-      </BottomDrawerContext.Provider>
     </>
   );
 }
@@ -87,7 +113,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginHorizontal: 10,
     borderRadius: 5,
-    marginVertical: 10,
   },
   biocontainer: {
     marginLeft: 20,

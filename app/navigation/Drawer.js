@@ -22,7 +22,7 @@ import ScheduleScreen from "../screens/ScheduleScreen";
 import ChatScreen from "../screens/ChatScreen";
 import SessionsTypeScreen from "../screens/SessionsTypeScreen";
 import BottomTabBar from "./BottomTabBar";
-
+import UserProfile from "../screens/UserProfile";
 export default function Drawer() {
   return (
     <>
@@ -54,25 +54,40 @@ export default function Drawer() {
             }}
           />
           <AppDrawer.Screen
-            component={MentorProfile}
-            name="Profile"
+            component={UserProfile}
+            name="UserProfile"
             options={{
               drawerIcon: () => (
                 <AntDesign name="user" size={24} color="#00aced" />
               ),
+              headerShown: true,
+              headerTitle: "Your Profile",
+              drawerItemStyle: { display: "none" },
             }}
           />
+
+          <AppDrawer.Screen
+            component={MentorProfile}
+            name="MentorProfile"
+            options={{
+              drawerIcon: () => (
+                <AntDesign name="user" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+
           <AppDrawer.Screen
             component={SessionsTypeScreen}
             name="SessionTypes"
             options={{
+              drawerLabel: "Your Services",
               drawerIcon: () => (
-                <Ionicons
-                  name="chatbubble-ellipses-outline"
-                  size={24}
-                  color="#00aced"
-                />
+                <AntDesign name="customerservice" size={24} color="#00aced" />
               ),
+              headerShown: true,
+              headerTitle: "Your Services",
             }}
           />
 
@@ -84,6 +99,8 @@ export default function Drawer() {
               drawerIcon: () => (
                 <FontAwesome name="calendar" size={24} color="#00aced" />
               ),
+              headerTitle: "Your Schedule",
+              headerShown: true,
             }}
           />
           <AppDrawer.Screen
@@ -94,6 +111,8 @@ export default function Drawer() {
               drawerIcon: () => (
                 <FontAwesome name="edit" size={24} color="#00aced" />
               ),
+              headerShown: true,
+              headerTitle: "Edit Profile",
             }}
           />
           <AppDrawer.Screen
@@ -103,6 +122,8 @@ export default function Drawer() {
               drawerIcon: () => (
                 <FontAwesome name="money" size={24} color="#00aced" />
               ),
+              headerShown: true,
+              headerTitle: "Earnings",
             }}
           />
         </AppDrawer.Navigator>

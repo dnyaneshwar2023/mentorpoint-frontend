@@ -12,7 +12,7 @@ export default function TimeSelector({ time, onPress }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
-        <Text style={{ fontSize: 17, fontWeight: "bold" }}>00:00</Text>
+        <Text style={{ fontSize: 17, fontWeight: "bold" }}>{time}</Text>
       </TouchableOpacity>
     </View>
   );

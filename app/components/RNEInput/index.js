@@ -10,12 +10,14 @@ export default function RNEInput({
   multiline,
   bg,
   onInputChange,
+  defaultValue,
   name,
   error,
 }) {
   const { setFieldValue } = useFormikContext();
   return (
     <Input
+      defaultValue={defaultValue}
       onChangeText={(text) => setFieldValue(name, text)}
       placeholder={placeholder}
       label={label}

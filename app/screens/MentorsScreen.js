@@ -10,27 +10,35 @@ import {
 import React, { useEffect, useState } from "react";
 import MentorCard from "../components/MentorCard";
 import mentorsApi from "../apis/mentors";
+import mentorid from "../utils/mentorid";
 
 export default function MentorsScreen() {
   const [refresh, setRefresh] = useState(false);
   const [mentors, setMentors] = useState([]);
   const getMentors = async () => {
-    const res = await mentorsApi.getMentors("6258524c47d03e25192b6330");
-    console.log(res);
+    const res = await mentorsApi.getMentors();
     return res.data.data;
   };
   useEffect(() => {
-    getMentors().then((data) => {
-      setMentors(data);
-    });
+    getMentors()
+      .then((data) => {
+        setMentors(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
     setMentors([]);
-    getMentors().then((data) => {
-      setMentors(data);
-    });
+    getMentors()
+      .then((data) => {
+        setMentors(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setRefresh(false);
   }, []);
 

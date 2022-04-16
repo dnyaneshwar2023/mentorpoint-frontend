@@ -24,6 +24,7 @@ export default function HeaderItem({ route, navigation }) {
         </View>
         <View>
           <Avatar
+            onPress={() => navigation.navigate("UserProfile")}
             activeOpacity={0.2}
             avatarStyle={{}}
             containerStyle={{ backgroundColor: "#BDBDBD" }}
