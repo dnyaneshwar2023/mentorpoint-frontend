@@ -1,7 +1,7 @@
 import apiClient from "./client";
 
 const getOpportunities = () => {
-  return apiClient.post("/opportunities/get");
+  return apiClient.get("/opportunities");
 };
 
 export default { getOpportunities };
