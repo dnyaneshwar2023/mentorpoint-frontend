@@ -35,7 +35,7 @@ export default function MentorCard(props) {
                 fontWeight: "600",
               }}
             >
-              {props.headline}
+              {props?.headline}
             </Text>
           </View>
         </View>
@@ -72,7 +72,7 @@ export default function MentorCard(props) {
         <View>
           <AppButton
             title="Profile"
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => navigation.navigate("Profile", { user: props })}
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 20,

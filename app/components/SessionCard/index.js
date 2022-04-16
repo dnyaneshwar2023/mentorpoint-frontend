@@ -5,8 +5,10 @@ import { colors } from "../../configs/variables";
 import { Badge } from "react-native-elements";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import AppButton from "../AppButton";
+import moment from "moment";
 
 export default function SessionCard(props) {
+  const starttime = moment(props.start_time).format("LLL");
   return (
     <View style={styles.container}>
       <View style={styles.sessionheader}>
@@ -20,7 +22,7 @@ export default function SessionCard(props) {
               fontWeight: "bold",
             }}
           >
-            {props.title}
+            {props.service_id.title}
           </Text>
           <Text
             style={{
@@ -28,7 +30,7 @@ export default function SessionCard(props) {
               fontWeight: "600",
             }}
           >
-            {props.mentor_name}
+            {props.service_id.mentor_name}
           </Text>
         </View>
       </View>
@@ -40,7 +42,7 @@ export default function SessionCard(props) {
           }}
         >
           <Text style={styles.pricing}>
-            {props.fee == "0" ? "FREE" : props.fee}
+            {props.service_id.fee == "0" ? "FREE" : props.service_id.fee}
           </Text>
         </View>
         <View>
@@ -68,7 +70,7 @@ export default function SessionCard(props) {
               fontWeight: "700",
             }}
           >
-            {props.date}
+            {starttime}
           </Text>
         </View>
       </View>

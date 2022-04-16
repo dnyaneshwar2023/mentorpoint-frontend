@@ -8,13 +8,13 @@ import BottonButton from "../components/BottomButton";
 import SessionsDrawer from "../drawers/SessionsDrawer";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 export default function MentorProfile({ route, navigation }) {
-  const params = route.params;
+  const params = route.params.user;
   const [drawer, setDrawer] = useState(false);
   return (
     <>
       <ScrollView>
         <View style={styles.container}>
-          <ProfileCard />
+          <ProfileCard {...params} />
         </View>
 
         <View style={styles.biocontainer}>
@@ -47,13 +47,9 @@ export default function MentorProfile({ route, navigation }) {
             Skills
           </Text>
           <View style={styles.badgecontainer}>
-            <SkillBadge skill="C++" />
-            <SkillBadge skill="javascript" />
-            <SkillBadge skill="node-js" />
-            <SkillBadge skill="React.js" />
-            <SkillBadge skill="Redux" />
-            <SkillBadge skill="MongoDB" />
-            <SkillBadge skill="React Native" />
+            {params.skills.map((item) => {
+              return <SkillBadge skill={item} />;
+            })}
           </View>
         </View>
 
