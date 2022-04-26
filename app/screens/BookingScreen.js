@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import DatePicker from "../components/DatePicker";
 import ModalContext from "../hooks/useModal/context";
@@ -14,12 +14,25 @@ import BottonButton from "../components/BottomButton";
 import BillCard from "../components/BillCard";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 import BillDrawer from "../drawers/BillDrawer";
+import servicesApi from "../apis/services";
 
-export default function BookingScreen() {
+export default function BookingScreen({ route }) {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-
+  const [service, setService] = useState({});
+  const serviceid = route?.params?.serviceid;
+  console.log(serviceid);
+  useEffect(() => {
+    servicesApi
+      .getServiceById(serviceid)
+      .then((res) => {
+        setService(res?.data?.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <View style={styles.container}>
@@ -30,7 +43,7 @@ export default function BookingScreen() {
               fontWeight: "bold",
             }}
           >
-            Resume Review
+            {service?.title}
           </Text>
           <Text
             style={{
@@ -39,10 +52,7 @@ export default function BookingScreen() {
               marginVertical: 5,
             }}
           >
-            Ullamco est aliqua amet proident tempor ullamco sint sit velit
-            exercitation eiusmod. Sunt exercitation minim deserunt duis deserunt
-            pariatur ex irure id fugiat do. Consectetur non sit ad quis non aute
-            amet est velit anim eu occaecat.
+            {service?.description}
           </Text>
         </View>
 

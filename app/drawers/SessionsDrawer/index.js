@@ -1,13 +1,39 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  RefreshControl,
+  FlatList,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { BottomSheet } from "react-native-elements";
 import SessionItem from "../../components/SessionItem";
-import { ScrollView } from "react-native-gesture-handler";
 import AppButton from "../../components/AppButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
+import servicesApi from "../../apis/services";
+import mentorid from "../../utils/mentorid";
+import { useIsFocused } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+
 export default function SessionsDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
+  const [services, setServices] = useState([]);
+  const isFocus = useIsFocused();
+  const navigation = useNavigation();
+  useEffect(() => {
+    servicesApi
+      .getServices(mentorid)
+      .then((res) => {
+        setServices(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [isFocus]);
+
   return (
     <BottomSheet
       isVisible={visible}
@@ -37,13 +63,33 @@ export default function SessionsDrawer({ visible }) {
           }}
         >
           <View>
-            <ScrollView>
-              <SessionItem
-                title="Doubt Solving"
-                fee={100}
-                onPress={() => console.log("Session")}
-              />
-            </ScrollView>
+            {services.length > 0 ? (
+              <ScrollView>
+                {services.map((item) => {
+                  return (
+                    <SessionItem
+                      key={item._id}
+                      {...item}
+                      onPress={() => {
+                        navigation.navigate("Booking", {
+                          serviceid: item._id,
+                        });
+                      }}
+                    />
+                  );
+                })}
+              </ScrollView>
+            ) : (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flex: 1,
+                }}
+              >
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+            )}
           </View>
         </View>
 

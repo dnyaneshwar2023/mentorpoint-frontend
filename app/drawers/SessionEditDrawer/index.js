@@ -8,17 +8,16 @@ import useBottomDrawer from "../../hooks/useBottomDrawer";
 import RNEInput from "../../components/RNEInput";
 import { Formik } from "formik";
 import servicesApi from "../../apis/services";
+import mentorid from "../../utils/mentorid";
 
 import validationSchema from "./validations";
 
 export default function SessionEditDrawer({ visible }) {
   const { drawer, setVisible } = useBottomDrawer();
 
-  const mentor_id = "6258524c47d03e25192b6330";
-
   const addService = (values) => {
-    servicesApi.addService(mentor_id, values).then((res) => {
-      console.log(data);
+    servicesApi.addService(mentorid, values).then((res) => {
+      console.log(res.data);
     });
   };
 

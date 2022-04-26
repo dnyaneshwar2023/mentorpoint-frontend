@@ -8,4 +8,8 @@ const getServices = (mentor_id) => {
   return apiClient.get("/services", { mentor_id });
 };
 
-export default { addService, getServices };
+const getServiceById = (service_id) => {
+  return apiClient.get("/services", { _id: service_id });
+};
+
+export default { addService, getServices, getServiceById };

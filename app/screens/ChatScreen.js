@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat, Send } from "react-native-gifted-chat";
 import { View, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import chatsApi from "../apis/chats";
 const msg = [
   {
     _id: "8abbc4757",
@@ -96,13 +96,20 @@ const msg = [
   },
 ];
 
-export default function ChatScreen() {
+export default function ChatScreen({ route }) {
   // fetch messages using database
-
+  const sessionid = route?.params?.sessionid;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    setMessages(msg);
+    chatsApi
+      .getChats(sessionid)
+      .then((res) => {
+        setMessages(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const onSend = useCallback((messages = []) => {

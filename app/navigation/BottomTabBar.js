@@ -1,16 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MentorsScreen from "../screens/MentorsScreen";
-import ChatScreen from "../screens/ChatScreen";
 import SessionsScreen from "../screens/SessionsScreen";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import OppotunitiesScreen from "../screens/OppotunitiesScreen";
 import HeaderItem from "../components/HeaderItem";
+import BookingScreen from "../screens/BookingScreen";
+import BookingStack from "./BookingStack";
 const BottomTabs = createBottomTabNavigator();
 export default function BottomTabBar() {
   return (
@@ -43,7 +42,7 @@ export default function BottomTabBar() {
             ),
           }}
         />
-        <BottomTabs.Screen
+        {/* <BottomTabs.Screen
           name="ChatScreen"
           component={ChatScreen}
           options={{
@@ -55,7 +54,7 @@ export default function BottomTabBar() {
               />
             ),
           }}
-        />
+        /> */}
         <BottomTabs.Screen
           name="Opportunities"
           component={OppotunitiesScreen}
@@ -63,6 +62,16 @@ export default function BottomTabBar() {
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="work-outline" size={24} color={color} />
             ),
+          }}
+        />
+        <BottomTabs.Screen
+          name="Booking"
+          component={BookingScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="work-outline" size={24} color={color} />
+            ),
+            tabBarItemStyle: { display: "none" },
           }}
         />
       </BottomTabs.Navigator>
