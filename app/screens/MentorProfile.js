@@ -73,10 +73,12 @@ export default function MentorProfile({ route, navigation }) {
           </View>
         </View>
       </ScrollView>
-      <BottonButton title="Start Session" onPress={() => setDrawer(true)} />
-      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
-        <SessionsDrawer visible={drawer} />
-      </BottomDrawerContext.Provider>
+      <BottonButton
+        title="Start Session"
+        onPress={() =>
+          navigation.navigate("Services", { mentor_id: params._id })
+        }
+      />
     </>
   );
 }

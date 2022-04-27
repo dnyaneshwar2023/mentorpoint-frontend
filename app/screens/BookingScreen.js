@@ -8,10 +8,10 @@ import { colors, statusbar } from "../configs/variables";
 import AppTextInput from "../components/AppInputText";
 import AppPicker from "../components/AppPicker";
 import DateContext from "../hooks/useDate/context";
-import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
 import BottonButton from "../components/BottomButton";
 import BillCard from "../components/BillCard";
+import { useIsFocused } from "@react-navigation/native";
 import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 import BillDrawer from "../drawers/BillDrawer";
 import servicesApi from "../apis/services";
@@ -21,9 +21,11 @@ export default function BookingScreen({ route }) {
   const [drawer, setDrawer] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [service, setService] = useState({});
+  const [refresh, setRefresh] = useState(0);
   const serviceid = route?.params?.serviceid;
-  console.log(serviceid);
+  const isFocus = useIsFocused();
   useEffect(() => {
+    setService({});
     servicesApi
       .getServiceById(serviceid)
       .then((res) => {
@@ -32,7 +34,7 @@ export default function BookingScreen({ route }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [isFocus]);
   return (
     <>
       <View style={styles.container}>
@@ -72,43 +74,6 @@ export default function BookingScreen({ route }) {
             <DatePicker />
           </DateContext.Provider>
         </ModalContext.Provider>
-
-        <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
-          placeholder={{ label: "Select Time Slot", value: null }}
-          value={{}}
-          style={{
-            iconContainer: {
-              position: "absolute",
-              top: "auto",
-              left: 10,
-              flex: 1,
-              justifyContent: "center",
-            },
-            placeholder: {
-              color: "black",
-              marginLeft: 10,
-            },
-            inputAndroid: {
-              width: "100%",
-            },
-            viewContainer: {
-              padding: 5,
-              flexDirection: "row",
-              backgroundColor: colors.lightgrey,
-              borderRadius: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginVertical: 10,
-            },
-          }}
-          items={[
-            { key: 1, label: "Football", value: "football" },
-            { key: 2, label: "Baseball", value: "baseball" },
-            { key: 3, label: "Hockey", value: "hockey" },
-          ]}
-          fixAndroidTouchableBug={true}
-        />
       </View>
 
       <BottonButton title="Proceed" onPress={() => setDrawer(true)} />

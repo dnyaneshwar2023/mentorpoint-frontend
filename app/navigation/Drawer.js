@@ -24,6 +24,7 @@ import SessionsTypeScreen from "../screens/SessionsTypeScreen";
 import BottomTabBar from "./BottomTabBar";
 import UserProfile from "../screens/UserProfile";
 import BookingStack from "./BookingStack";
+import ServicesScreen from "../screens/ServicesScreen";
 export default function Drawer() {
   return (
     <>
@@ -137,6 +138,17 @@ export default function Drawer() {
               ),
               headerShown: true,
               headerTitle: "Earnings",
+            }}
+          />
+          <AppDrawer.Screen
+            component={ServicesScreen}
+            name="Services"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              drawerItemStyle: { display: "none" },
             }}
           />
         </AppDrawer.Navigator>
