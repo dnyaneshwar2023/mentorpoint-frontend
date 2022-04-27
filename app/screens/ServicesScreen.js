@@ -15,17 +15,20 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ServicesScreen({ route }) {
   const [services, setServices] = useState([]);
+  const [loaded, setLoaded] = useState(true);
   const navigation = useNavigation();
   const mentor_id = route?.params?.mentor_id;
   const isFocus = useIsFocused();
   useEffect(() => {
     setServices([]);
-    console.log(isFocus);
+    setLoaded(true);
+
     if (!isFocus) return null;
     servicesApi
       .getServices(mentor_id)
       .then((res) => {
         setServices(res?.data?.data);
+        setLoaded(false);
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +61,12 @@ export default function ServicesScreen({ route }) {
             flex: 1,
           }}
         >
-          <ActivityIndicator size="large" color="#0000ff" />
+          {loaded && <ActivityIndicator size="large" color="#0000ff" />}
+          {!loaded && (
+            <View>
+              <Text>No Services by Mentor</Text>
+            </View>
+          )}
         </View>
       )}
     </View>
