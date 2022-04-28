@@ -19,6 +19,7 @@ import MentorServices from "../screens/MentorServices";
 import BottomTabBar from "./BottomTabBar";
 import UserProfile from "../screens/UserProfile";
 import ServicesScreen from "../screens/ServicesScreen";
+import ChatScreen from "../screens/ChatScreen";
 export default function Drawer() {
   return (
     <>
@@ -143,6 +144,17 @@ export default function Drawer() {
               ),
               headerShown: true,
               drawerItemStyle: { display: "none" },
+            }}
+          />
+          <AppDrawer.Screen
+            component={ChatScreen}
+            name="Chats"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              headerTitle: "Communications",
             }}
           />
         </AppDrawer.Navigator>

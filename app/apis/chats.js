@@ -1,11 +1,11 @@
 import apiClient from "./client";
 
-const addChat = (sessionId) => {
-  return apiClient.post("/chats", { _id: sessionId });
+const addChat = (sessionId, chats) => {
+  return apiClient.post("sessions/chats", { _id: sessionId, chats: chats });
 };
 
 const getChats = (sessionId) => {
-  return apiClient.get("/chats", { _id: sessionId });
+  return apiClient.get("sessions/chats", { _id: sessionId });
 };
 
 export default { addChat, getChats };
