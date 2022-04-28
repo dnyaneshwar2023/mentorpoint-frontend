@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { statusbar } from "../configs/variables";
 import ModalContext from "../hooks/useModal/context";
@@ -10,7 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-
+import { useIsFocused } from "@react-navigation/native";
 import slotsApi from "../apis/slots";
 import TimePicker from "../components/TimePicker";
 import TimeSelector from "../components/TimeSelector";
@@ -24,35 +30,70 @@ export default function ScheduleScreen() {
   const [starttime, setStarttime] = useState(new Date());
   const [endtime, setEndtime] = useState(new Date());
   const [slots, setSlots] = useState([]);
-  const mentor_id = "6259933559338316b65a7e9f";
+  const [loading, setLoading] = useState(true);
+  const focus = useIsFocused();
+  const mentor_id = "625a060ae039b15e14cd3af0";
 
   const getSlots = () => {
+    setLoading(true);
+    setSlots([]);
     slotsApi
       .getSlots(date, mentor_id)
       .then((res) => {
-        console.log(res.data);
-        const slots = res?.data?.data[0]?.slots;
-        console.log(slots);
+        const slots = res?.data?.data[0]?.mentor_slots;
         setSlots(slots ? slots : []);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  useEffect(() => {
+  const handleAddSlot = () => {
+    const data = {
+      date: date,
+      mentor_id: mentor_id,
+      mentor_slots: [
+        {
+          start_time: starttime,
+          end_time: endtime,
+        },
+      ],
+    };
     slotsApi
-      .getSlots(date, mentor_id)
+      .addSlot(data)
       .then((res) => {
-        console.log(res.data);
-        const slots = res?.data?.data[0]?.slots;
-        console.log(slots);
-        setSlots(slots ? slots : []);
+        getSlots();
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [date]);
+  };
+
+  const handleSlotDelete = (id) => {
+    slotsApi
+      .deleteMentorSlot({ slot_id: id, mentor_id: mentor_id })
+      .then((res) => {
+        setSlots(slots.filter((item) => item._id != id));
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    if (!focus) return null;
+    setSlots([]);
+    setLoading(true);
+    slotsApi
+      .getSlots(date, mentor_id)
+      .then((res) => {
+        const slots = res?.data?.data[0]?.mentor_slots;
+        setSlots(slots ? slots : []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [date, focus]);
 
   return (
     <View style={styles.container}>
@@ -120,7 +161,7 @@ export default function ScheduleScreen() {
             <AppButton
               title="Add"
               onPress={() => {
-                console.log(date, starttime, endtime);
+                handleAddSlot();
               }}
               buttonStyles={{
                 paddingVertical: 10,
@@ -158,13 +199,15 @@ export default function ScheduleScreen() {
                   <SlotItem
                     starttime={startTime}
                     endtime={endTime}
-                    key={startTime}
+                    key={item._id}
+                    onPress={() => handleSlotDelete(item._id)}
                   />
                 );
               })}
             </View>
           )}
-          {slots.length <= 0 && (
+
+          {slots.length <= 0 && !loading && (
             <View
               style={{
                 justifyContent: "center",
@@ -174,6 +217,9 @@ export default function ScheduleScreen() {
             >
               <Text> No Slots Provided on {moment(date).format("LL")}</Text>
             </View>
+          )}
+          {slots.length <= 0 && loading && (
+            <ActivityIndicator size="large" color="#0000ff" />
           )}
         </ScrollView>
       </View>

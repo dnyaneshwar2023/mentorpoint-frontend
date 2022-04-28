@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from "react";
 import SessionItem from "../components/SessionItem";
 import servicesApi from "../apis/services";
-import mentorid from "../utils/mentorid";
 import { useIsFocused } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";

@@ -14,9 +14,6 @@ import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
 
-import BottonButton from "../components/BottomButton";
-import SessionsDrawer from "../drawers/SessionsDrawer";
-import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 import user from "../utils/user";
 
 export default function UserProfile({ route, navigation }) {

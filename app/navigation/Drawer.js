@@ -11,19 +11,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
-import SessionsDrawer from "../drawers/SessionsDrawer";
-import SessionsScreen from "../screens/SessionsScreen";
-import OppotunitiesScreen from "../screens/OppotunitiesScreen";
 import BookingScreen from "../screens/BookingScreen";
-import MentorsScreen from "../screens/MentorsScreen";
 import EarningsSceen from "../screens/EarningsSceen";
 import EditProfile from "../screens/EditProfile";
 import ScheduleScreen from "../screens/ScheduleScreen";
-import ChatScreen from "../screens/ChatScreen";
 import SessionsTypeScreen from "../screens/SessionsTypeScreen";
 import BottomTabBar from "./BottomTabBar";
 import UserProfile from "../screens/UserProfile";
-import BookingStack from "./BookingStack";
 import ServicesScreen from "../screens/ServicesScreen";
 export default function Drawer() {
   return (

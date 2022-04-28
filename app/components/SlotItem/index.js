@@ -9,7 +9,7 @@ import React from "react";
 import { colors } from "../../configs/variables";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function SlotItem({ starttime, endtime }) {
+export default function SlotItem({ starttime, endtime, onPress }) {
   return (
     <View style={styles.container}>
       <View
@@ -30,7 +30,7 @@ export default function SlotItem({ starttime, endtime }) {
           borderRadius: 5,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
           <MaterialCommunityIcons name="delete" size={20} color="white" />
         </TouchableOpacity>
       </View>

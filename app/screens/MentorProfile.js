@@ -5,8 +5,6 @@ import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
 import BottonButton from "../components/BottomButton";
-import SessionsDrawer from "../drawers/SessionsDrawer";
-import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 export default function MentorProfile({ route, navigation }) {
   const params = route.params.user;
   const [drawer, setDrawer] = useState(false);
