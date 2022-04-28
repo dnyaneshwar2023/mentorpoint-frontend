@@ -9,7 +9,6 @@ const getSlots = (date, mentor_id) => {
 };
 
 const deleteMentorSlot = (payload) => {
-  console.log(payload);
   return apiClient.delete("/slots/mentorslots", { ...payload });
 };
 

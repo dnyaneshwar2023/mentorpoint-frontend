@@ -12,4 +12,9 @@ const getServiceById = (service_id) => {
   return apiClient.get("/services", { _id: service_id });
 };
 
-export default { addService, getServices, getServiceById };
+const deleteService = (payload) => {
+  console.log(payload);
+  return apiClient.delete("/services", { ...payload });
+};
+
+export default { addService, getServices, getServiceById, deleteService };

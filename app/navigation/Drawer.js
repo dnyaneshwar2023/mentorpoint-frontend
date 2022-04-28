@@ -15,7 +15,7 @@ import BookingScreen from "../screens/BookingScreen";
 import EarningsSceen from "../screens/EarningsSceen";
 import EditProfile from "../screens/EditProfile";
 import ScheduleScreen from "../screens/ScheduleScreen";
-import SessionsTypeScreen from "../screens/SessionsTypeScreen";
+import MentorServices from "../screens/MentorServices";
 import BottomTabBar from "./BottomTabBar";
 import UserProfile from "../screens/UserProfile";
 import ServicesScreen from "../screens/ServicesScreen";
@@ -87,7 +87,7 @@ export default function Drawer() {
           />
 
           <AppDrawer.Screen
-            component={SessionsTypeScreen}
+            component={MentorServices}
             name="SessionTypes"
             options={{
               drawerLabel: "Your Services",

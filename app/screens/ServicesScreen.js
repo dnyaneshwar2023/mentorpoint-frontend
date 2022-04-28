@@ -19,13 +19,13 @@ export default function ServicesScreen({ route }) {
   const mentor_id = route?.params?.mentor_id;
   const isFocus = useIsFocused();
   useEffect(() => {
+    if (!isFocus) return null;
     setServices([]);
     setLoaded(true);
-
-    if (!isFocus) return null;
     servicesApi
       .getServices(mentor_id)
       .then((res) => {
+        console.log(res.data);
         setServices(res?.data?.data);
         setLoaded(false);
       })
