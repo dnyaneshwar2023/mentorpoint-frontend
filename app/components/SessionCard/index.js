@@ -79,7 +79,7 @@ export default function SessionCard(props) {
         <View style={styles.button}>
           <AppButton
             title="Chat"
-            onPress={() => console.log("click")}
+            onPress={props?.handleChat}
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 50,

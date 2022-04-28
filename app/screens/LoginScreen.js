@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React from "react";
 import { statusbar } from "../configs/variables";
-import RNEInput from "../components/RNEInput";
-import AppButton from "../components/AppButton";
 import { Formik } from "formik";
 import * as yup from "yup";
+import RNEInput from "../components/RNEInput";
+import AppButton from "../components/AppButton";
+import * as GoogleSignIn from "expo-google-sign-in";
+
 const data = [
   {
     id: 1,
@@ -26,6 +28,17 @@ const validationSchema = yup.object().shape({
 });
 
 export default function LoginScreen() {
+  signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === "success") {
+        this._syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert("login: Error:" + message);
+    }
+  };
   const CardItem = ({ image }) => {
     return (
       <View
@@ -71,6 +84,7 @@ export default function LoginScreen() {
           Let's Get Started
         </Text>
       </View>
+      <AppButton title="Sign In" onPress={() => signInAsync()} />
       <View style={styles.userdetailscontainer}>
         <Formik
           initialValues={{

@@ -154,7 +154,7 @@ export default function Drawer() {
                 <FontAwesome name="money" size={24} color="#00aced" />
               ),
               headerShown: true,
-              headerTitle: "Communications",
+              drawerItemStyle: { display: "none" },
             }}
           />
         </AppDrawer.Navigator>

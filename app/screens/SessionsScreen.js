@@ -11,7 +11,7 @@ import React, { useState, useEffect } from "react";
 import sessionsApi from "../apis/sessions";
 import SessionCard from "../components/SessionCard";
 
-export default function SessionsScreen() {
+export default function SessionsScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const getSessions = async () => {
@@ -39,7 +39,14 @@ export default function SessionsScreen() {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={sessions}
-          renderItem={({ item }) => <SessionCard {...item} />}
+          renderItem={({ item }) => (
+            <SessionCard
+              {...item}
+              handleChat={() => {
+                navigation.navigate("Chats", { sessionid: item._id });
+              }}
+            />
+          )}
           keyExtractor={(item) => item._id}
           refreshControl={
             <RefreshControl refreshing={refresh} onRefresh={onRefresh} />

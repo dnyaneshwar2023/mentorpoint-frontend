@@ -2,11 +2,22 @@ import { StyleSheet, Text, View, Platform, StatusBar } from "react-native";
 import "react-native-gesture-handler";
 import Drawer from "./app/navigation/Drawer";
 import LoginScreen from "./app/screens/LoginScreen";
+import { auth } from "./app/firebase/client";
 
+import { useEffect } from "react";
 export default function App() {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+    });
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   console.log(user);
+    // });
+  }, []);
+
   return (
     <>
-      <Drawer />
+      <LoginScreen />
     </>
   );
 }
