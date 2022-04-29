@@ -5,8 +5,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
-import * as GoogleSignIn from "expo-google-sign-in";
-
+import GoogleButton from "react-google-button";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 const data = [
   {
     id: 1,
@@ -28,17 +29,11 @@ const validationSchema = yup.object().shape({
 });
 
 export default function LoginScreen() {
-  signInAsync = async () => {
-    try {
-      await GoogleSignIn.askForPlayServicesAsync();
-      const { type, user } = await GoogleSignIn.signInAsync();
-      if (type === "success") {
-        this._syncUserWithStateAsync();
-      }
-    } catch ({ message }) {
-      alert("login: Error:" + message);
-    }
-  };
+  async function onGoogleButtonPress() {
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+    console.log(idToken);
+  }
   const CardItem = ({ image }) => {
     return (
       <View
@@ -84,7 +79,7 @@ export default function LoginScreen() {
           Let's Get Started
         </Text>
       </View>
-      <AppButton title="Sign In" onPress={() => signInAsync()} />
+
       <View style={styles.userdetailscontainer}>
         <Formik
           initialValues={{
@@ -117,6 +112,35 @@ export default function LoginScreen() {
                   buttonStyles={{
                     paddingHorizontal: 10,
                   }}
+                />
+              </View>
+              <View style={{ paddingHorizontal: 10 }}>
+                <AppButton
+                  title="Sign Up"
+                  onPress={() => {}}
+                  buttonStyles={{
+                    paddingHorizontal: 10,
+                  }}
+                />
+              </View>
+
+              <View style={{ paddingHorizontal: 10 }}>
+                <AppButton
+                  title="Continue With Google"
+                  onPress={() => {}}
+                  buttonStyles={{
+                    paddingHorizontal: 10,
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    borderColor: "black",
+                    borderWidth: 2,
+                  }}
+                  textStyle={{
+                    color: "black",
+                  }}
+                  IconComponent={
+                    <AntDesign name="google" size={25} color="red" />
+                  }
                 />
               </View>
             </>

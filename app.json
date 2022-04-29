@@ -15,7 +15,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mentorpointapp.mentorpoint"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "packagerOpts": {
+      "sourceExts": ["js", "json", "ts", "tsx", "jsx", "vue"]
     }
   }
 }

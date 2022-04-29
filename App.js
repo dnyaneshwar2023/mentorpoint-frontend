@@ -5,19 +5,11 @@ import LoginScreen from "./app/screens/LoginScreen";
 import { auth } from "./app/firebase/client";
 
 import { useEffect } from "react";
+import ExpoScreen from "./app/screens/ExpoScreen";
 export default function App() {
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      console.log(user);
-    });
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   console.log(user);
-    // });
-  }, []);
-
   return (
     <>
-      <LoginScreen />
+      <ExpoScreen />
     </>
   );
 }
