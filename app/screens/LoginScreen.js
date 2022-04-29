@@ -37,12 +37,13 @@ export default function LoginScreen({ navigation }) {
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: android.androidClientID,
-    expoClientId: android.webClientId,
-    webClientId: android.webClientId,
+    expoClientId: android.androidClientID,
+    webClientId: android.androidClientID,
   });
   React.useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
+      console.log(authentication);
       setAccessToken(authentication.accessToken);
     }
   }, [response]);
@@ -154,7 +155,7 @@ export default function LoginScreen({ navigation }) {
                   <AppButton
                     title="Sign Up"
                     onPress={() => {
-                      navigation.navigate("Signup")
+                      navigation.navigate("Signup");
                     }}
                     buttonStyles={{
                       paddingHorizontal: 30,

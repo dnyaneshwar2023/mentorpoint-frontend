@@ -12,4 +12,8 @@ const deleteMentorSlot = (payload) => {
   return apiClient.delete("/slots/mentorslots", { ...payload });
 };
 
-export default { getSlots, addSlot, deleteMentorSlot };
+const getSlotsByService = (payload) => {
+  return apiClient.get("/slots/userslots", { ...payload });
+};
+
+export default { getSlots, addSlot, deleteMentorSlot, getSlotsByService };

@@ -30,9 +30,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "packagerOpts": {
-      "sourceExts": ["js", "json", "ts", "tsx", "jsx", "vue"]
     }
   }
 }

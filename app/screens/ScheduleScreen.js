@@ -21,6 +21,7 @@ import slotsApi from "../apis/slots";
 import TimePicker from "../components/TimePicker";
 import TimeSelector from "../components/TimeSelector";
 import SlotItem from "../components/SlotItem";
+import mentorid from "../utils/mentorid";
 
 export default function ScheduleScreen() {
   const [modal, setModal] = useState(false);
@@ -32,7 +33,7 @@ export default function ScheduleScreen() {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const focus = useIsFocused();
-  const mentor_id = "625a060ae039b15e14cd3af0";
+  const mentor_id = mentorid;
 
   const getSlots = () => {
     setLoading(true);
