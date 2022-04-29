@@ -5,9 +5,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
-import GoogleButton from "react-google-button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import * as Google from "expo-auth-session/providers/google";
+import android from "../firebase/android";
+
 const data = [
   {
     id: 1,
@@ -28,12 +30,44 @@ const validationSchema = yup.object().shape({
   password: yup.string().required(),
 });
 
-export default function LoginScreen() {
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-    console.log(idToken);
+export default function LoginScreen({ navigation }) {
+  const [accessToken, setAccessToken] = React.useState();
+  const [userInfo, setUserInfo] = React.useState();
+  const [message, setMessage] = React.useState();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: android.androidClientID,
+    expoClientId: android.webClientId,
+    webClientId: android.webClientId,
+  });
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      const { authentication } = response;
+      setAccessToken(authentication.accessToken);
+    }
+  }, [response]);
+  async function getUserData() {
+    let userInfoResponse = await fetch(
+      "https://www.googleapis.com/userinfo/v2/me",
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    userInfoResponse.json().then((data) => {
+      console.log(data);
+      auth
+        .signInAnonymously(data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setUserInfo(data);
+    });
   }
+
   const CardItem = ({ image }) => {
     return (
       <View
@@ -104,30 +138,39 @@ export default function LoginScreen() {
                   name="password"
                 />
               </View>
-
-              <View style={{ paddingHorizontal: 10 }}>
-                <AppButton
-                  title="Sign In"
-                  onPress={() => {}}
-                  buttonStyles={{
-                    paddingHorizontal: 10,
-                  }}
-                />
-              </View>
-              <View style={{ paddingHorizontal: 10 }}>
-                <AppButton
-                  title="Sign Up"
-                  onPress={() => {}}
-                  buttonStyles={{
-                    paddingHorizontal: 10,
-                  }}
-                />
+              <View style={styles.loginbuttons}>
+                <View style={{ paddingHorizontal: 10 }}>
+                  <AppButton
+                    title="Sign In"
+                    onPress={() => {}}
+                    buttonStyles={{
+                      paddingHorizontal: 30,
+                      borderRadius: 5,
+                      paddingVertical: 10,
+                    }}
+                  />
+                </View>
+                <View style={{ paddingHorizontal: 10 }}>
+                  <AppButton
+                    title="Sign Up"
+                    onPress={() => {
+                      navigation.navigate("Signup")
+                    }}
+                    buttonStyles={{
+                      paddingHorizontal: 30,
+                      borderRadius: 5,
+                      paddingVertical: 10,
+                    }}
+                  />
+                </View>
               </View>
 
               <View style={{ paddingHorizontal: 10 }}>
                 <AppButton
                   title="Continue With Google"
-                  onPress={() => {}}
+                  onPress={() => {
+                    promptAsync();
+                  }}
                   buttonStyles={{
                     paddingHorizontal: 10,
                     backgroundColor: "white",
@@ -161,7 +204,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   userdetailscontainer: {
-    marginVertical: 10,
+    marginTop: 10,
     paddingHorizontal: 20,
+  },
+  loginbuttons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: -30,
   },
 });

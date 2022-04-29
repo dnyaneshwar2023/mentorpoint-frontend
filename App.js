@@ -6,10 +6,12 @@ import { auth } from "./app/firebase/client";
 
 import { useEffect } from "react";
 import ExpoScreen from "./app/screens/ExpoScreen";
+import SignUpScreen from "./app/screens/SignUpScreen";
+import AuthNavigator from "./app/navigation/AuthNavigator";
 export default function App() {
   return (
     <>
-      <ExpoScreen />
+      <AuthNavigator />
     </>
   );
 }
