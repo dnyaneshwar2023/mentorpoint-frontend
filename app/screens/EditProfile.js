@@ -32,21 +32,39 @@ const validationSchema = yup.object().shape({
 export default function EditProfile({ navigation }) {
   const [imageUri, setImageUri] = useState(null);
   const [mentordata, setMentorData] = useState(null);
-  const [reload, setReload] = useState(0);
   const isFocus = useIsFocused();
   function handleChange(text) {
     console.log(text);
   }
 
+  const successResponse = () => {
+    navigation.navigate("Success", {
+      buttonTitle: "Take me to Profile",
+      screenName: "UserProfile",
+    });
+  };
+
+  const failResponse = () => {
+    navigation.navigate("Failure", {
+      buttonTitle: "Take me to Profile",
+      screenName: "UserProfile",
+    });
+  };
   const updateData = (values) => {
     mentorsApi
       .updateMentor(values)
       .then((res) => {
-        console.log(res.data);
-        setReload(reload + 1);
+        if (res.ok) {
+          console.log(res.data);
+          if (res.data.ok) successResponse();
+          else failResponse();
+        } else {
+          failResponse();
+        }
       })
       .catch((err) => {
         console.log(err);
+        failResponse();
       });
   };
 
@@ -55,8 +73,13 @@ export default function EditProfile({ navigation }) {
     mentorsApi
       .getMentors(mentorid)
       .then((res) => {
-        setMentorData(res.data.data[0]);
-        console.log(res.data.data[0]);
+        if (res.ok == true) setMentorData(res.data.data[0]);
+        else {
+          navigation.navigate("Failure", {
+            buttonTitle: "Take me to Profile",
+            screenName: "UserProfile",
+          });
+        }
       })
       .catch((err) => {
         console.log(err);

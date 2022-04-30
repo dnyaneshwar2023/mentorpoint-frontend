@@ -20,6 +20,8 @@ import BottomTabBar from "./BottomTabBar";
 import UserProfile from "../screens/UserProfile";
 import ServicesScreen from "../screens/ServicesScreen";
 import ChatScreen from "../screens/ChatScreen";
+import SuccessAnimation from "../animations/SuccessAnimation";
+import FailureAnimation from "../animations/FailureAnimation";
 export default function Drawer() {
   return (
     <>
@@ -154,6 +156,28 @@ export default function Drawer() {
                 <FontAwesome name="money" size={24} color="#00aced" />
               ),
               headerShown: true,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+          <AppDrawer.Screen
+            component={SuccessAnimation}
+            name="Success"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: false,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+          <AppDrawer.Screen
+            component={FailureAnimation}
+            name="Failure"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: false,
               drawerItemStyle: { display: "none" },
             }}
           />

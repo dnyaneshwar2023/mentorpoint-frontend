@@ -10,25 +10,44 @@ import {
 import React, { useState, useEffect } from "react";
 import sessionsApi from "../apis/sessions";
 import SessionCard from "../components/SessionCard";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SessionsScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const focus = useIsFocused();
+  const failResponse = () => {
+    navigation.navigate("Failure", {
+      buttonTitle: "Retry",
+      screenName: "Home",
+    });
+  };
   const getSessions = async () => {
     const res = await sessionsApi.getSessions();
     console.log(res.data.data);
     return res.data.data;
   };
   useEffect(() => {
-    getSessions().then((data) => {
-      setSessions(data);
+    if (!focus) return null;
+    setSessions([]);
+    sessionsApi.getSessions().then((res) => {
+      if (res.ok == true) {
+        setSessions(res.data.data);
+      } else {
+        failResponse();
+      }
     });
-  }, []);
+  }, [focus]);
 
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
-    getSessions().then((data) => {
-      setSessions(data);
+    setSessions([]);
+    sessionsApi.getSessions().then((res) => {
+      if (res.ok == true) {
+        setSessions(res.data.data);
+      } else {
+        failResponse();
+      }
     });
     setRefresh(false);
   }, []);
