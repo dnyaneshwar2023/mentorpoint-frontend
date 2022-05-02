@@ -229,7 +229,7 @@ export default function EditProfile({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: statusbar,
+    paddingTop: 10,
   },
   detailscontainer: {
     flex: 1,

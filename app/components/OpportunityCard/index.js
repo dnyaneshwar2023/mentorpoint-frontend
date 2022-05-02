@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Linking } from "react-native";
 import React from "react";
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
-
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import { colors } from "../../configs/variables";
 import AppButton from "../AppButton";
 export default function OpportunityCard(props) {
@@ -18,7 +19,7 @@ export default function OpportunityCard(props) {
         <View style={styles.worktitle}>
           <Text style={styles.title}>{props.job_title}</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <SimpleLineIcons name="organization" size={15} color="black" />
+            <FontAwesome5 name="building" size={15} color="black" />
             <View style={{ justifyContent: "center", marginHorizontal: 8 }}>
               <Text style={styles.subtitle}>{props.company}</Text>
             </View>
@@ -71,12 +72,12 @@ export default function OpportunityCard(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    borderRadius: 8,
+    borderRadius: 5,
     paddingVertical: 15,
     paddingHorizontal: 15,
     margin: 10,
     shadowColor: "#171717",
-    elevation: 10,
+    elevation: 2,
   },
 
   header: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   workicon: {
     padding: 10,
     backgroundColor: colors.lightskyblue,
-    borderRadius: 10,
+    borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -95,7 +96,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: "bold",
+
     lineHeight: 30,
   },
   subtitle: {

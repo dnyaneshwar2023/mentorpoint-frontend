@@ -8,6 +8,7 @@ const AppDrawer = createDrawerNavigator();
 import Sidebar from "../components/Sidebar";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
@@ -23,6 +24,7 @@ import ChatScreen from "../screens/ChatScreen";
 import SuccessAnimation from "../animations/SuccessAnimation";
 import FailureAnimation from "../animations/FailureAnimation";
 import AddServiceScreen from "../screens/AddServiceScreen";
+import AddOpportunityScreen from "../screens/AddOpportunity";
 export default function Drawer() {
   return (
     <>
@@ -163,6 +165,19 @@ export default function Drawer() {
               drawerItemStyle: { display: "none" },
             }}
           />
+          <AppDrawer.Screen
+            component={AddOpportunityScreen}
+            name="AddOpportunity"
+            options={{
+              drawerIcon: () => (
+                <MaterialIcons name="work" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              headerTitle: "Add Opportunity",
+              drawerLabel: "Add Opportunity",
+            }}
+          />
+
           <AppDrawer.Screen
             component={ChatScreen}
             name="Chats"

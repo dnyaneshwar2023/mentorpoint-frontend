@@ -47,8 +47,7 @@ export default function SessionsScreen({ navigation }) {
       .then((res) => {
         console.log(res);
         if (res.ok == true) {
-          // console.log(res.data.data);
-          // setSessions(res.data.data);
+          setSessions(res.data.data);
         } else {
           failResponse();
         }
