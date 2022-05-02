@@ -45,12 +45,24 @@ export default function MentorsScreen({ navigation }) {
         failResponse();
         console.log(err);
       });
-  }, [focus, refresh]);
+  }, [focus]);
 
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
     setMentors([]);
-
+    if (!focus) return null;
+    mentorsApi
+      .getMentors()
+      .then((res) => {
+        if (res.ok == true) setMentors(res.data.data);
+        else {
+          failResponse();
+        }
+      })
+      .catch((err) => {
+        failResponse();
+        console.log(err);
+      });
     setRefresh(false);
   }, []);
 

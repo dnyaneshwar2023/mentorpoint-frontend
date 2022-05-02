@@ -1,13 +1,19 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import { statusbar } from "../configs/variables";
 import { Formik } from "formik";
 import * as yup from "yup";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
-import GoogleButton from "react-google-button";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import authApi from "../apis/auth";
+import useAuth from "../auth/useAuth";
 const data = [
   {
     id: 1,
@@ -30,6 +36,39 @@ const validationSchema = yup.object().shape({
 });
 
 export default function SignUpScreen({ navigation }) {
+  const [wrong, setWrong] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { logIn, user } = useAuth();
+  const handleSignup = (values) => {
+    setLoading(true);
+    authApi
+      .signUp(values)
+      .then((res) => {
+        setLoading(false);
+        if (res.ok) {
+          if (res.data.ok == 1) {
+            const token = res.data.data;
+            console.log(token);
+            logIn(token);
+            console.log(user);
+          } else {
+            console.log(res.data);
+            setWrong(true);
+            setError(res.data.err);
+          }
+        } else {
+          console.log(res.data);
+          setWrong(true);
+          setError(res.data.err);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
+
   const CardItem = ({ image }) => {
     return (
       <View
@@ -76,16 +115,35 @@ export default function SignUpScreen({ navigation }) {
             Sign Up
           </Text>
         </View>
-
+        {wrong && (
+          <View
+            style={{
+              marginHorizontal: 20,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                color: "red",
+                fontWeight: "bold",
+                fontSize: 18,
+              }}
+            >
+              {error}
+            </Text>
+          </View>
+        )}
         <View style={styles.userdetailscontainer}>
           <Formik
             initialValues={{
               email: "",
               password: "",
+              name: "",
             }}
+            onSubmit={handleSignup}
             validationSchema={validationSchema}
           >
-            {() => (
+            {({ handleSubmit, values, errors, touched }) => (
               <>
                 <View>
                   <RNEInput
@@ -93,46 +151,41 @@ export default function SignUpScreen({ navigation }) {
                     onInputChange={() => {}}
                     bg="white"
                     name="name"
+                    error={touched.name && errors.name}
                   />
                   <RNEInput
                     placeholder="E-mail"
                     onInputChange={() => {}}
                     bg="white"
                     name="email"
+                    error={touched.email && errors.email}
                   />
                   <RNEInput
                     placeholder="Password"
                     onInputChange={() => {}}
                     bg="white"
                     name="password"
+                    error={touched.password && errors.password}
                   />
                 </View>
+                {loading && (
+                  <View
+                    style={{
+                      alignSelf: "flex-start",
+                      marginHorizontal: 10,
+                    }}
+                  >
+                    <ActivityIndicator size="large" color="#0000ff" />
+                  </View>
+                )}
 
-                <View style={{ paddingHorizontal: 10, marginTop: -30 }}>
+                <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
                   <AppButton
                     title="Sign Up"
-                    onPress={() => {}}
+                    onPress={handleSubmit}
                     buttonStyles={{
                       paddingHorizontal: 10,
                       borderRadius: 5,
-                    }}
-                  />
-                </View>
-                <View style={{ paddingHorizontal: 10 }}>
-                  <AppButton
-                    title="Sign In Instead"
-                    onPress={() => {
-                      navigation.navigate("Login");
-                    }}
-                    buttonStyles={{
-                      paddingHorizontal: 10,
-                      backgroundColor: "white",
-                      borderColor: "black",
-                      borderRadius: 5,
-                      borderWidth: 2,
-                    }}
-                    textStyle={{
-                      color: "black",
                     }}
                   />
                 </View>

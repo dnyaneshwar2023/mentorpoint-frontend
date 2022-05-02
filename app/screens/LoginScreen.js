@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import { statusbar } from "../configs/variables";
 import { Formik } from "formik";
 import * as yup from "yup";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import * as Google from "expo-auth-session/providers/google";
-import android from "../firebase/android";
+import authApi from "../apis/auth";
+import jwtDecode from "jwt-decode";
+import useAuth from "../auth/useAuth";
 
 const data = [
   {
@@ -31,43 +37,39 @@ const validationSchema = yup.object().shape({
 });
 
 export default function LoginScreen({ navigation }) {
-  const [accessToken, setAccessToken] = React.useState();
-  const [userInfo, setUserInfo] = React.useState();
-  const [message, setMessage] = React.useState();
+  const { logIn } = useAuth();
+  const [wrong, setWrong] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSignin = (values) => {
+    setLoading(true);
+    authApi
+      .signIn(values)
+      .then((res) => {
+        setLoading(false);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: android.androidClientID,
-    expoClientId: android.androidClientID,
-    webClientId: android.androidClientID,
-  });
-  React.useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response;
-      console.log(authentication);
-      setAccessToken(authentication.accessToken);
-    }
-  }, [response]);
-  async function getUserData() {
-    let userInfoResponse = await fetch(
-      "https://www.googleapis.com/userinfo/v2/me",
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
+        if (res.ok) {
+          if (res.data.ok == 1) {
+            const token = res.data.data;
+            logIn(token);
+          } else {
+            console.log(res.data);
+            setWrong(true);
+            setError(res.data.err);
+          }
+        } else {
+          console.log(res.data);
+          setWrong(true);
+          setError(res.data.err);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
 
-    userInfoResponse.json().then((data) => {
-      console.log(data);
-      auth
-        .signInAnonymously(data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setUserInfo(data);
-    });
-  }
+  React.useEffect(() => {}, []);
 
   const CardItem = ({ image }) => {
     return (
@@ -115,6 +117,25 @@ export default function LoginScreen({ navigation }) {
         </Text>
       </View>
 
+      {wrong && (
+        <View
+          style={{
+            marginHorizontal: 20,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "red",
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+          >
+            {error}
+          </Text>
+        </View>
+      )}
+
       <View style={styles.userdetailscontainer}>
         <Formik
           initialValues={{
@@ -122,8 +143,9 @@ export default function LoginScreen({ navigation }) {
             password: "",
           }}
           validationSchema={validationSchema}
+          onSubmit={handleSignin}
         >
-          {() => (
+          {({ handleSubmit, values, errors, touched }) => (
             <>
               <View>
                 <RNEInput
@@ -131,19 +153,32 @@ export default function LoginScreen({ navigation }) {
                   onInputChange={() => {}}
                   bg="white"
                   name="email"
+                  error={touched.email && errors.email}
                 />
                 <RNEInput
                   placeholder="Password"
                   onInputChange={() => {}}
                   bg="white"
                   name="password"
+                  error={touched.password && errors.password}
                 />
               </View>
+              {loading && (
+                <View
+                  style={{
+                    alignSelf: "flex-start",
+                    marginHorizontal: 10,
+                  }}
+                >
+                  <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+              )}
+
               <View style={styles.loginbuttons}>
                 <View style={{ paddingHorizontal: 10 }}>
                   <AppButton
                     title="Sign In"
-                    onPress={() => {}}
+                    onPress={handleSubmit}
                     buttonStyles={{
                       paddingHorizontal: 30,
                       borderRadius: 5,
@@ -166,7 +201,7 @@ export default function LoginScreen({ navigation }) {
                 </View>
               </View>
 
-              <View style={{ paddingHorizontal: 10 }}>
+              {/* <View style={{ paddingHorizontal: 10 }}>
                 <AppButton
                   title="Continue With Google"
                   onPress={() => {
@@ -186,7 +221,7 @@ export default function LoginScreen({ navigation }) {
                     <AntDesign name="google" size={25} color="red" />
                   }
                 />
-              </View>
+              </View> */}
             </>
           )}
         </Formik>
@@ -211,6 +246,6 @@ const styles = StyleSheet.create({
   loginbuttons: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: -30,
+    marginTop: 10,
   },
 });

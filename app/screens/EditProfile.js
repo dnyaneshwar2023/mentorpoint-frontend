@@ -15,9 +15,8 @@ import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
 import AppImagePicker from "../components/ImagePicker";
 import SkillSelect from "../components/SkillSelect";
-import mentorid from "../utils/mentorid";
 import mentorsApi from "../apis/mentors";
-
+import useAuth from "../auth/useAuth";
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
   bio: yup.string().required(),
@@ -33,6 +32,9 @@ export default function EditProfile({ navigation }) {
   const [imageUri, setImageUri] = useState(null);
   const [mentordata, setMentorData] = useState(null);
   const isFocus = useIsFocused();
+
+  const mentorid = useAuth()?.user?._id;
+
   function handleChange(text) {
     console.log(text);
   }
@@ -55,7 +57,6 @@ export default function EditProfile({ navigation }) {
       .updateMentor(values)
       .then((res) => {
         if (res.ok) {
-          console.log(res.data);
           if (res.data.ok) successResponse();
           else failResponse();
         } else {

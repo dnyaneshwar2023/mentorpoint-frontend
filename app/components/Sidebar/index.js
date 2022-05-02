@@ -6,8 +6,9 @@ import {
 } from "@react-navigation/drawer";
 import AccountItem from "../AccountItem";
 import AppButton from "../AppButton";
-
+import useAuth from "../../auth/useAuth";
 const Sidebar = (props) => {
+  const { logOut } = useAuth();
   return (
     <>
       <View style={styles.container}>
@@ -18,7 +19,12 @@ const Sidebar = (props) => {
       </View>
 
       <View style={styles.logout}>
-        <AppButton title="LogOut" onPress={() => console.log("logout")} />
+        <AppButton
+          title="LogOut"
+          onPress={() => {
+            logOut();
+          }}
+        />
       </View>
     </>
   );
