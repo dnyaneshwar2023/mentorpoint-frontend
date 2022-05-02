@@ -51,7 +51,6 @@ export default function SignUpScreen({ navigation }) {
             const token = res.data.data;
             console.log(token);
             logIn(token);
-            console.log(user);
           } else {
             console.log(res.data);
             setWrong(true);

@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function Socialcard({ name }) {
+import { TouchableOpacity } from "react-native";
+export default function Socialcard({ name, onPress }) {
   return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons name={name} size={35} />
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <MaterialCommunityIcons name={name} size={35} />
+      </View>
+    </TouchableOpacity>
   );
 }
 
