@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     backgroundColor: "#0080ff",
-    borderRadius: 10,
+    borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     padding: 15,

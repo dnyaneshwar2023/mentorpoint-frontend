@@ -6,22 +6,19 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { statusbar } from "../configs/variables";
 import ModalContext from "../hooks/useModal/context";
 import DatePicker from "../components/DatePicker";
 import DateContext from "../hooks/useDate/context";
 import AppPicker from "../components/AppPicker";
 import AppButton from "../components/AppButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { useIsFocused } from "@react-navigation/native";
 import slotsApi from "../apis/slots";
 import TimePicker from "../components/TimePicker";
 import TimeSelector from "../components/TimeSelector";
 import SlotItem from "../components/SlotItem";
-import mentorid from "../utils/mentorid";
+import useAuth from "../auth/useAuth";
 
 export default function ScheduleScreen() {
   const [modal, setModal] = useState(false);
@@ -33,7 +30,8 @@ export default function ScheduleScreen() {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const focus = useIsFocused();
-  const mentor_id = mentorid;
+  const { user } = useAuth();
+  const mentor_id = user?._id;
 
   const getSlots = () => {
     setLoading(true);

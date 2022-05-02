@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import React from "react";
+import "react-native-gesture-handler";
+
 import { colors } from "../../configs/variables";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -14,12 +16,14 @@ export default function SessionTypeItem({
       <View
         style={{
           flexDirection: "row",
-          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
         }}
       >
         <Text style={styles.time}>{item?.title}</Text>
         <Text style={styles.time}> - </Text>
-        <Text style={styles.time}>{item?.fee}</Text>
+        <Text style={styles.time}>Rs. {item?.fee} </Text>
+        <Text style={styles.time}>({item?.duration} mins)</Text>
       </View>
 
       <View

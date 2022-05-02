@@ -42,13 +42,20 @@ export default function SessionsScreen({ navigation }) {
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
     setSessions([]);
-    sessionsApi.getSessions().then((res) => {
-      if (res.ok == true) {
-        setSessions(res.data.data);
-      } else {
-        failResponse();
-      }
-    });
+    sessionsApi
+      .getSessions()
+      .then((res) => {
+        console.log(res);
+        if (res.ok == true) {
+          // console.log(res.data.data);
+          // setSessions(res.data.data);
+        } else {
+          failResponse();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setRefresh(false);
   }, []);
 

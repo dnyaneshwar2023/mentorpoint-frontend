@@ -22,7 +22,7 @@ export default function SessionCard(props) {
               fontWeight: "bold",
             }}
           >
-            {props.service_id.title}
+            {props?.service_id?.title}
           </Text>
           <Text
             style={{
@@ -30,7 +30,7 @@ export default function SessionCard(props) {
               fontWeight: "600",
             }}
           >
-            {props.service_id.mentor_name}
+            {props?.service_id?.mentor_name}
           </Text>
         </View>
       </View>
@@ -42,7 +42,7 @@ export default function SessionCard(props) {
           }}
         >
           <Text style={styles.pricing}>
-            {props.service_id.fee == "0" ? "FREE" : props.service_id.fee}
+            {props?.service_id?.fee == "0" ? "FREE" : props?.service_id?.fee}
           </Text>
         </View>
         <View>

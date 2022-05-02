@@ -1,20 +1,18 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { statusbar } from "../configs/variables";
 import SessionTypeItem from "../components/SessionTypeItem";
 import AppButton from "../components/AppButton";
-import BottomDrawerContext from "../hooks/useBottomDrawer/context";
-import SessionEditDrawer from "../drawers/SessionEditDrawer";
 import servicesApi from "../apis/services";
 import { useIsFocused } from "@react-navigation/native";
-export default function SessionsTypeScreen() {
+import useAuth from "../auth/useAuth";
+export default function SessionsTypeScreen({ navigation }) {
   const [drawer, setDrawer] = useState(false);
   const [services, setServices] = useState([]);
   const focus = useIsFocused();
-  const mentor_id = "6259933559338316b65a7e9f";
+  const { user } = useAuth();
+  const mentor_id = user?._id;
 
   const handleDeleteService = (id) => {
-    console.log(id);
     servicesApi
       .deleteService({ _id: id })
       .then((res) => {
@@ -22,9 +20,13 @@ export default function SessionsTypeScreen() {
       })
       .then((err) => {});
   };
-  const handleEditService = (id) => {};
+  const handleEditService = (id) => {
+    console.log("Edit");
+  };
 
   useEffect(() => {
+    if (!focus) return null;
+    console.log(mentor_id);
     if (!focus) return null;
     servicesApi.getServices(mentor_id).then((res) => {
       setServices(res.data.data);
@@ -37,6 +39,7 @@ export default function SessionsTypeScreen() {
           <Text style={styles.title}>Add Your Session Types</Text>
         </View>
         <FlatList
+          keyboardShouldPersistTaps={"handled"}
           data={services}
           keyExtractor={(item) => item._id}
           renderItem={(item) => (
@@ -49,12 +52,14 @@ export default function SessionsTypeScreen() {
         />
       </View>
       <View style={{ marginHorizontal: 10 }}>
-        <AppButton title="Add New" onPress={() => setDrawer(true)} />
+        <AppButton
+          title="Add New"
+          onPress={() => navigation.navigate("AddService")}
+          buttonStyles={{
+            borderRadius: 5,
+          }}
+        />
       </View>
-
-      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
-        <SessionEditDrawer visible={drawer} />
-      </BottomDrawerContext.Provider>
     </>
   );
 }

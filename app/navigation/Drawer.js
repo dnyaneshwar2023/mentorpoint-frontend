@@ -22,6 +22,7 @@ import ServicesScreen from "../screens/ServicesScreen";
 import ChatScreen from "../screens/ChatScreen";
 import SuccessAnimation from "../animations/SuccessAnimation";
 import FailureAnimation from "../animations/FailureAnimation";
+import AddServiceScreen from "../screens/AddServiceScreen";
 export default function Drawer() {
   return (
     <>
@@ -91,7 +92,7 @@ export default function Drawer() {
 
           <AppDrawer.Screen
             component={MentorServices}
-            name="SessionTypes"
+            name="MentorServices"
             options={{
               drawerLabel: "Your Services",
               drawerIcon: () => (
@@ -99,6 +100,20 @@ export default function Drawer() {
               ),
               headerShown: true,
               headerTitle: "Your Services",
+            }}
+          />
+
+          <AppDrawer.Screen
+            component={AddServiceScreen}
+            name="AddService"
+            options={{
+              drawerLabel: "Your Services",
+              drawerIcon: () => (
+                <AntDesign name="customerservice" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              headerTitle: "Add Service",
+              drawerItemStyle: { display: "none" },
             }}
           />
 

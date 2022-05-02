@@ -1,24 +1,52 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { BottomSheet } from "react-native-elements";
+import { Formik } from "formik";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 import SessionItem from "../../components/SessionItem";
 import AppButton from "../../components/AppButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useBottomDrawer from "../../hooks/useBottomDrawer";
 import RNEInput from "../../components/RNEInput";
-import { Formik } from "formik";
 import servicesApi from "../../apis/services";
-import mentorid from "../../utils/mentorid";
-
 import validationSchema from "./validations";
+import useAuth from "../../auth/useAuth";
 
 export default function SessionEditDrawer({ visible }) {
+  const navigation = useNavigation();
   const { drawer, setVisible } = useBottomDrawer();
+  const { user } = useAuth();
+  const mentorid = user?._id;
+
+  const successResponse = () => {
+    navigation.navigate("Success", {
+      buttonTitle: "Home",
+      screenName: "Home",
+    });
+  };
+
+  const failResponse = () => {
+    navigation.navigate("Failure", {
+      buttonTitle: "Take me to Home",
+      screenName: "Home",
+    });
+  };
 
   const addService = (values) => {
-    servicesApi.addService(mentorid, values).then((res) => {
-      console.log(res.data);
-    });
+    console.log(values);
+    servicesApi
+      .addService({ mentor_id: mentorid, mentor_name: user?.name, ...values })
+      .then((res) => {
+        if (res.ok) {
+          successResponse();
+        } else {
+          failResponse();
+        }
+      })
+      .catch((err) => {
+        failResponse();
+      });
   };
 
   return (
@@ -37,8 +65,8 @@ export default function SessionEditDrawer({ visible }) {
       >
         <Formik
           initialValues={{
-            session_title: "",
-            session_description: "",
+            title: "",
+            description: "",
             fee: "",
             duration: "",
           }}
@@ -59,19 +87,17 @@ export default function SessionEditDrawer({ visible }) {
                   placeholder="Enter Session Name"
                   bg="white"
                   label="Session Name"
-                  name="session_title"
+                  name="title"
                   onInputChange={(text) => console.log(text)}
-                  error={touched?.session_title && errors.session_title}
+                  error={touched?.title && errors.title}
                 />
                 <RNEInput
                   placeholder="Enter Session Description"
                   bg="white"
                   label="Session Description"
-                  name="session_description"
+                  name="description"
                   multiline={true}
-                  error={
-                    touched.session_description && errors.session_description
-                  }
+                  error={touched.description && errors.description}
                 />
                 <RNEInput
                   placeholder="Enter Session Charges"

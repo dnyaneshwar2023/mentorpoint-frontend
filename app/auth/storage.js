@@ -24,7 +24,7 @@ const getToken = async () => {
 const getUser = async () => {
   const token = await getToken();
   if (token) {
-    return jwtDecode(token);
+    return jwtDecode(token)?.user;
   }
   return null;
 };

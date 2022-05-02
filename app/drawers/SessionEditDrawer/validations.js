@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-  session_title: yup.string().required(),
-  session_description: yup.string().required(),
+  title: yup.string().required(),
+  description: yup.string().required(),
   fee: yup
     .number("Charge must be a number")
     .required()
