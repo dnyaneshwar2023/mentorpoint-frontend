@@ -23,6 +23,7 @@ import { useIsFocused } from "@react-navigation/native";
 import servicesApi from "../apis/services";
 import slotsApi from "../apis/slots";
 import useAuth from "../auth/useAuth";
+import sessionsApi from "../apis/sessions";
 
 const validationSchema = yup.object().shape({
   resume_link: yup.string().required().url(),
@@ -47,6 +48,13 @@ export default function BookingScreen({ route, navigation }) {
       screenName: "Sessions",
     });
   };
+
+  const failResponse = () => {
+    navigation.navigate("Failure", {
+      buttonTitle: "Back to Home",
+      screenName: "Home",
+    });
+  };
   const handleSubmit = (values) => {
     console.log(values);
     const user_slot = selected;
@@ -58,8 +66,22 @@ export default function BookingScreen({ route, navigation }) {
       slot: selected,
       service_id: serviceid,
       user_id: user?._id,
+      start_time: user_slot.start_time,
+      mentor_id: mentorid,
     };
-    console.log(payload);
+
+    sessionsApi
+      .bookSession(payload)
+      .then((res) => {
+        if (res.ok) {
+          successResponse();
+        } else {
+          failResponse();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -184,7 +206,10 @@ export default function BookingScreen({ route, navigation }) {
                         {...item}
                         key={item.start_time}
                         selected={item == selected}
-                        onPress={() => setSelected(item)}
+                        onPress={() => {
+                          if (item.is_booked) return null;
+                          setSelected(item);
+                        }}
                       />
                     );
                   })}

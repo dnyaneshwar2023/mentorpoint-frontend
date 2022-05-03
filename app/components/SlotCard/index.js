@@ -2,12 +2,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
+import { colors } from "../../configs/variables";
 export default function SlotCard(props) {
   const starttime = moment(props.start_time).format("LT");
   const endtime = moment(props.end_time).format("LT");
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: props.is_booked ? colors.lightgrey : "white",
+          },
+        ]}
+      >
         <View>
           <Text>
             {starttime} - {endtime}

@@ -4,4 +4,8 @@ const getSessions = () => {
   return apiClient.get("/sessions");
 };
 
-export default { getSessions };
+const bookSession = (payload) => {
+  return apiClient.post("/sessions/booking", payload);
+};
+
+export default { getSessions, bookSession };
