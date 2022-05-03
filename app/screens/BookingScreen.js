@@ -6,23 +6,27 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 import DatePicker from "../components/DatePicker";
 import ModalContext from "../hooks/useModal/context";
 import AppButton from "../components/AppButton";
 import { colors, statusbar } from "../configs/variables";
-import AppTextInput from "../components/AppInputText";
 import AppPicker from "../components/AppPicker";
 import DateContext from "../hooks/useDate/context";
-import { Ionicons } from "@expo/vector-icons";
-import BottonButton from "../components/BottomButton";
-import BillCard from "../components/BillCard";
+import SlotCard from "../components/SlotCard";
+import RNEInput from "../components/RNEInput";
+
 import { useIsFocused } from "@react-navigation/native";
-import BottomDrawerContext from "../hooks/useBottomDrawer/context";
-import BillDrawer from "../drawers/BillDrawer";
+
 import servicesApi from "../apis/services";
 import slotsApi from "../apis/slots";
-import SlotCard from "../components/SlotCard";
+import useAuth from "../auth/useAuth";
+
+const validationSchema = yup.object().shape({
+  resume_link: yup.string().required().url(),
+});
 
 export default function BookingScreen({ route, navigation }) {
   const [modal, setModal] = useState(false);
@@ -30,15 +34,33 @@ export default function BookingScreen({ route, navigation }) {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [service, setService] = useState({});
   const [slots, setSlots] = useState([]);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState(null);
   const [refresh, setRefresh] = useState(true);
   const serviceid = route?.params?.serviceid;
   const mentorid = route?.params?.mentor_id;
   const isFocus = useIsFocused();
+  const { user } = useAuth();
 
-  React.useCallback(() => {
-    console.log("hi");
-  }, []);
+  const successResponse = () => {
+    navigation.navigate("BookingSuccess", {
+      buttonTitle: "My Sessions",
+      screenName: "Sessions",
+    });
+  };
+  const handleSubmit = (values) => {
+    console.log(values);
+    const user_slot = selected;
+    if (user_slot == null) return null;
+    delete user_slot["is_booked"];
+    const payload = {
+      resume_link: values?.resume_link,
+      date: date,
+      slot: selected,
+      service_id: serviceid,
+      user_id: user?._id,
+    };
+    console.log(payload);
+  };
 
   useEffect(() => {
     if (!isFocus) return null;
@@ -73,89 +95,134 @@ export default function BookingScreen({ route, navigation }) {
   }, [isFocus, date]);
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.biocontainer}>
-          <Text
-            style={{
-              color: colors.grey,
-              fontWeight: "bold",
-            }}
-          >
-            {service?.title}
-          </Text>
-          <Text
-            style={{
-              textAlign: "justify",
-              lineHeight: 20,
-              marginVertical: 5,
-            }}
-          >
-            {service?.description}
-          </Text>
-        </View>
+      <Formik
+        initialValues={{
+          resume_link: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, errors, handleSubmit, handleChange, touched }) => (
+          <>
+            <ScrollView keyboardShouldPersistTaps={"always"}>
+              <View style={styles.container}>
+                <View style={styles.biocontainer}>
+                  <Text
+                    style={{
+                      color: colors.primary,
+                      fontWeight: "bold",
+                      fontSize: 16,
+                    }}
+                  >
+                    {service?.title}
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: "justify",
+                      lineHeight: 20,
+                      marginVertical: 5,
+                    }}
+                  >
+                    {service?.description}
+                  </Text>
+                  <View
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Duration
+                    </Text>
+                    <Text
+                      style={{
+                        textAlign: "justify",
+                        lineHeight: 20,
+                        marginVertical: 5,
+                      }}
+                    >
+                      {service?.duration} Minutes
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    marginHorizontal: -10,
+                    marginTop: 10,
+                    marginBottom: -10,
+                  }}
+                >
+                  <RNEInput
+                    placeholder="Enter Resume Link"
+                    bg="white"
+                    label="Resume Link"
+                    name="resume_link"
+                    onInputChange={handleChange}
+                    error={touched.resume_link && errors?.resume_link}
+                  />
+                </View>
+                <ModalContext.Provider value={{ modal, setModal }}>
+                  <DateContext.Provider value={{ date, setDate }}>
+                    <AppPicker placeholder={date} icon="calendar" />
+                    <DatePicker />
+                  </DateContext.Provider>
+                </ModalContext.Provider>
 
-        <AppTextInput
-          placeholder="Resume Link"
-          icon="link"
-          style={{
-            fontSize: 16,
-            overflow: "scroll",
-            width: "100%",
-          }}
-        />
-
-        <ModalContext.Provider value={{ modal, setModal }}>
-          <DateContext.Provider value={{ date, setDate }}>
-            <AppPicker placeholder={date} icon="calendar" />
-            <DatePicker />
-          </DateContext.Provider>
-        </ModalContext.Provider>
-        <ScrollView>
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-          >
-            {slots.map((item) => {
-              return (
-                <SlotCard
-                  {...item}
-                  key={item.start_time}
-                  selected={item == selected}
-                  onPress={() => setSelected(item)}
-                />
-              );
-            })}
-          </View>
-          {slots.length == 0 && refresh && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {slots.map((item) => {
+                    return (
+                      <SlotCard
+                        {...item}
+                        key={item.start_time}
+                        selected={item == selected}
+                        onPress={() => setSelected(item)}
+                      />
+                    );
+                  })}
+                </View>
+                {slots.length == 0 && refresh && (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <ActivityIndicator size="large" color="#0000ff" />
+                  </View>
+                )}
+                {slots.length == 0 && !refresh && (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <Text>No Slots Available on {date} </Text>
+                  </View>
+                )}
+              </View>
+            </ScrollView>
             <View
               style={{
-                justifyContent: "center",
-                alignItems: "center",
-                flex: 1,
+                marginHorizontal: 20,
               }}
             >
-              <ActivityIndicator size="large" color="#0000ff" />
+              <AppButton title="Proceed" onPress={handleSubmit} />
             </View>
-          )}
-        </ScrollView>
-      </View>
-      <View
-        style={{
-          marginHorizontal: 20,
-        }}
-      >
-        <AppButton
-          title="Proceed"
-          onPress={() =>
-            navigation.navigate("BookingSuccess", {
-              buttonTitle: "My Sessions",
-              screenName: "Sessions",
-            })
-          }
-        />
-      </View>
+          </>
+        )}
+      </Formik>
     </>
   );
 }
@@ -163,7 +230,7 @@ export default function BookingScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 10,
-    paddingTop: statusbar,
+    marginHorizontal: 20,
+    paddingTop: 20,
   },
 });
