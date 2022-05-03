@@ -59,9 +59,11 @@ export default function ScheduleScreen() {
         },
       ],
     };
+
     slotsApi
       .addSlot(data)
       .then((res) => {
+        console.log(res);
         getSlots();
       })
       .catch((err) => {

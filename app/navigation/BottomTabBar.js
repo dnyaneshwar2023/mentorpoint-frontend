@@ -64,16 +64,6 @@ export default function BottomTabBar() {
             ),
           }}
         />
-        <BottomTabs.Screen
-          name="Booking"
-          component={BookingScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="work-outline" size={24} color={color} />
-            ),
-            tabBarItemStyle: { display: "none" },
-          }}
-        />
       </BottomTabs.Navigator>
     </>
   );

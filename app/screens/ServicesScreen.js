@@ -46,6 +46,7 @@ export default function ServicesScreen({ route }) {
                 onPress={() => {
                   navigation.navigate("Booking", {
                     serviceid: item._id,
+                    mentor_id: mentor_id,
                   });
                 }}
               />

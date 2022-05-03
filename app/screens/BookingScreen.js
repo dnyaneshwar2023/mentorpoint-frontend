@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import DatePicker from "../components/DatePicker";
@@ -16,18 +22,18 @@ import BottomDrawerContext from "../hooks/useBottomDrawer/context";
 import BillDrawer from "../drawers/BillDrawer";
 import servicesApi from "../apis/services";
 import slotsApi from "../apis/slots";
-import mentorid from "../utils/mentorid";
 import SlotCard from "../components/SlotCard";
 
-export default function BookingScreen({ route }) {
+export default function BookingScreen({ route, navigation }) {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [service, setService] = useState({});
   const [slots, setSlots] = useState([]);
   const [selected, setSelected] = useState({});
-  const [refresh, setRefresh] = useState(0);
+  const [refresh, setRefresh] = useState(true);
   const serviceid = route?.params?.serviceid;
+  const mentorid = route?.params?.mentor_id;
   const isFocus = useIsFocused();
 
   React.useCallback(() => {
@@ -47,6 +53,7 @@ export default function BookingScreen({ route }) {
         });
     }
     setSlots([]);
+    setRefresh(true);
     slotsApi
       .getSlotsByService({
         mentor_id: mentorid,
@@ -54,8 +61,11 @@ export default function BookingScreen({ route }) {
         date: date,
       })
       .then((res) => {
-        console.log(res.data);
-        setSlots(res?.data?.data);
+        setRefresh(false);
+        if (res.ok) {
+          console.log(res.data);
+          setSlots(res?.data?.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -103,8 +113,8 @@ export default function BookingScreen({ route }) {
         <ScrollView>
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              flexDirection: "row",
+              flexWrap: "wrap",
             }}
           >
             {slots.map((item) => {
@@ -118,13 +128,34 @@ export default function BookingScreen({ route }) {
               );
             })}
           </View>
+          {slots.length == 0 && refresh && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
         </ScrollView>
       </View>
-
-      <BottonButton title="Proceed" onPress={() => setDrawer(true)} />
-      <BottomDrawerContext.Provider value={{ drawer, setDrawer }}>
-        <BillDrawer visible={drawer} />
-      </BottomDrawerContext.Provider>
+      <View
+        style={{
+          marginHorizontal: 20,
+        }}
+      >
+        <AppButton
+          title="Proceed"
+          onPress={() =>
+            navigation.navigate("BookingSuccess", {
+              buttonTitle: "My Sessions",
+              screenName: "Sessions",
+            })
+          }
+        />
+      </View>
     </>
   );
 }

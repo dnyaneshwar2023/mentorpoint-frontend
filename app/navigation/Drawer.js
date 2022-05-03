@@ -25,6 +25,7 @@ import SuccessAnimation from "../animations/SuccessAnimation";
 import FailureAnimation from "../animations/FailureAnimation";
 import AddServiceScreen from "../screens/AddServiceScreen";
 import AddOpportunityScreen from "../screens/AddOpportunity";
+import BookingSuccess from "../animations/BookingSuccess";
 export default function Drawer() {
   return (
     <>
@@ -203,6 +204,28 @@ export default function Drawer() {
           <AppDrawer.Screen
             component={FailureAnimation}
             name="Failure"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: false,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+          <AppDrawer.Screen
+            name="Booking"
+            component={BookingScreen}
+            options={{
+              drawerIcon: ({ color }) => (
+                <MaterialIcons name="work-outline" size={24} color={color} />
+              ),
+              headerShown: true,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+          <AppDrawer.Screen
+            component={BookingSuccess}
+            name="BookingSuccess"
             options={{
               drawerIcon: () => (
                 <FontAwesome name="money" size={24} color="#00aced" />

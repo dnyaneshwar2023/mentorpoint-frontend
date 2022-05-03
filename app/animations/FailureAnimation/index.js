@@ -20,7 +20,7 @@ export default function FailureAnimation({ navigation, route }) {
         }}
       >
         <LottieView
-          source={require("../error.json")}
+          source={require("./error.json")}
           style={{
             width: 500,
             height: 500,
