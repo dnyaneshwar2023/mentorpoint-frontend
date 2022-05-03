@@ -67,6 +67,7 @@ export default function BookingScreen({ route, navigation }) {
       service_id: serviceid,
       user_id: user?._id,
       start_time: user_slot.start_time,
+      end_time: user_slot.end_time,
       mentor_id: mentorid,
     };
 
