@@ -85,7 +85,10 @@ export default function BookingScreen({ route, navigation }) {
   };
 
   useEffect(() => {
-    if (!isFocus) return null;
+    if (!isFocus) {
+      setService({});
+      return null;
+    }
     if (!service?.title) {
       servicesApi
         .getServiceById(serviceid)

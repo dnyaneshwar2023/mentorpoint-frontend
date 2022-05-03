@@ -3,15 +3,13 @@ import { GiftedChat, Send } from "react-native-gifted-chat";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
-
+import useAuth from "../auth/useAuth";
 import chatsApi from "../apis/chats";
-import mentorid from "../utils/mentorid";
 
 export default function ChatScreen({ route }) {
   // fetch messages using database
-  const sessionid = route?.params?.sessionid
-    ? route?.params?.sessionid
-    : "6259ab25491cfda2663e396e";
+  const sessionid = route?.params?.sessionid;
+  const { user } = useAuth();
   const focus = useIsFocused();
 
   const [messages, setMessages] = useState([]);
@@ -62,7 +60,7 @@ export default function ChatScreen({ route }) {
             onSend(messages);
           }}
           user={{
-            _id: mentorid,
+            _id: user._id,
           }}
           alwaysShowSend={true}
           showUserAvatar={false}
