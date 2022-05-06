@@ -26,6 +26,7 @@ import FailureAnimation from "../animations/FailureAnimation";
 import AddServiceScreen from "../screens/AddServiceScreen";
 import AddOpportunityScreen from "../screens/AddOpportunity";
 import BookingSuccess from "../animations/BookingSuccess";
+import Payment from "../screens/Payment";
 export default function Drawer() {
   return (
     <>

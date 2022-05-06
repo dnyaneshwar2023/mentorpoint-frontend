@@ -1,7 +1,7 @@
 import { create } from "apisauce";
 
 const apiClient = create({
-  baseURL: "http://192.168.84.204:5000/api",
+  baseURL: "https://mentorpoint.herokuapp.com/api",
 });
 
 export default apiClient;

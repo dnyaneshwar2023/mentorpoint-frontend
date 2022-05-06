@@ -46,8 +46,8 @@ export default function HeaderItem({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: statusbar,
     backgroundColor: "white",
+    paddingTop: statusbar,
   },
   row: {
     flexDirection: "row",

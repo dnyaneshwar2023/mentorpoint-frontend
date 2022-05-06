@@ -24,7 +24,7 @@ import servicesApi from "../apis/services";
 import slotsApi from "../apis/slots";
 import useAuth from "../auth/useAuth";
 import sessionsApi from "../apis/sessions";
-
+import RazorpayCheckout from "react-native-razorpay";
 const validationSchema = yup.object().shape({
   resume_link: yup.string().required().url(),
 });
@@ -71,18 +71,56 @@ export default function BookingScreen({ route, navigation }) {
       mentor_id: mentorid,
     };
 
-    sessionsApi
-      .bookSession(payload)
-      .then((res) => {
-        if (res.ok) {
-          successResponse();
-        } else {
+    if (service.fee > 0) {
+      var options = {
+        description: "Session Payment",
+        image: "https://i.imgur.com/3g7nmJC.png",
+        currency: "INR",
+        key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
+        amount: service.fee * 100,
+        name: user?.name,
+        prefill: {
+          email: user?.email,
+          contact: "9657690018",
+          name: "Mentorpoint",
+        },
+        theme: { color: colors.primary },
+      };
+
+      RazorpayCheckout.open(options)
+        .then((data) => {
+          // handle success
+          sessionsApi
+            .bookSession(payload)
+            .then((res) => {
+              if (res.ok) {
+                successResponse();
+              } else {
+                failResponse();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((error) => {
+          // handle failure
           failResponse();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        });
+    } else {
+      sessionsApi
+        .bookSession(payload)
+        .then((res) => {
+          if (res.ok) {
+            successResponse();
+          } else {
+            failResponse();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
