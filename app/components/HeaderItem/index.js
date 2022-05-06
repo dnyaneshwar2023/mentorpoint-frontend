@@ -29,8 +29,13 @@ export default function HeaderItem({ route, navigation }) {
             avatarStyle={{}}
             containerStyle={{ backgroundColor: "#BDBDBD" }}
             icon={{}}
+            source={require("../../images/user-icon.png")}
             iconStyle={{}}
-            imageProps={{}}
+            imageProps={{
+              style: {
+                resizeMode: "contain",
+              },
+            }}
             overlayContainerStyle={{}}
             placeholderStyle={{}}
             rounded

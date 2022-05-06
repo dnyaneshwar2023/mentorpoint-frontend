@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
 
 export default function BookingScreen({ route, navigation }) {
   const [modal, setModal] = useState(false);
-  const [drawer, setDrawer] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [service, setService] = useState({});
   const [slots, setSlots] = useState([]);
@@ -56,7 +56,7 @@ export default function BookingScreen({ route, navigation }) {
     });
   };
   const handleSubmit = (values) => {
-    console.log(values);
+    setSpinner(true);
     const user_slot = selected;
     if (user_slot == null) return null;
     delete user_slot["is_booked"];
@@ -71,7 +71,7 @@ export default function BookingScreen({ route, navigation }) {
       mentor_id: mentorid,
     };
 
-    if (service.fee > 0) {
+    if (false) {
       var options = {
         description: "Session Payment",
         image: "https://i.imgur.com/3g7nmJC.png",
@@ -94,6 +94,7 @@ export default function BookingScreen({ route, navigation }) {
             .bookSession(payload)
             .then((res) => {
               if (res.ok) {
+                setSpinner(false);
                 successResponse();
               } else {
                 failResponse();
@@ -112,6 +113,7 @@ export default function BookingScreen({ route, navigation }) {
         .bookSession(payload)
         .then((res) => {
           if (res.ok) {
+            setSpinner(false);
             successResponse();
           } else {
             failResponse();
@@ -285,7 +287,20 @@ export default function BookingScreen({ route, navigation }) {
                 marginHorizontal: 20,
               }}
             >
-              <AppButton title="Proceed" onPress={handleSubmit} />
+              {spinner ? (
+                <View
+                  style={{
+                    backgroundColor: colors.primary,
+                    marginVertical: 10,
+                    paddingVertical: 10,
+                    borderRadius: 5,
+                  }}
+                >
+                  <ActivityIndicator size="large" color="white" />
+                </View>
+              ) : (
+                <AppButton title="Proceed" onPress={handleSubmit} />
+              )}
             </View>
           </>
         )}

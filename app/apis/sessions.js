@@ -1,7 +1,7 @@
 import apiClient from "./client";
 
-const getSessions = () => {
-  return apiClient.get("/sessions");
+const getSessions = (payload) => {
+  return apiClient.get("/sessions", payload);
 };
 
 const bookSession = (payload) => {

@@ -11,10 +11,13 @@ import React, { useState, useEffect } from "react";
 import sessionsApi from "../apis/sessions";
 import SessionCard from "../components/SessionCard";
 import { useIsFocused } from "@react-navigation/native";
+import useAuth from "../auth/useAuth";
 
 export default function SessionsScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const { user } = useAuth();
   const focus = useIsFocused();
   const failResponse = () => {
     navigation.navigate("Failure", {
@@ -22,20 +25,18 @@ export default function SessionsScreen({ navigation }) {
       screenName: "Home",
     });
   };
-  const getSessions = async () => {
-    const res = await sessionsApi.getSessions();
-    console.log(res.data.data);
-    return res.data.data;
-  };
+
   useEffect(() => {
     if (!focus) return null;
+    setLoaded(false);
     setSessions([]);
-    sessionsApi.getSessions().then((res) => {
+    sessionsApi.getSessions({ user_id: user._id }).then((res) => {
       if (res.ok == true) {
         setSessions(res.data.data);
       } else {
         failResponse();
       }
+      setLoaded(true);
     });
   }, [focus]);
 
@@ -43,7 +44,7 @@ export default function SessionsScreen({ navigation }) {
     setRefresh(true);
     setSessions([]);
     sessionsApi
-      .getSessions()
+      .getSessions({ user_id: user._id })
       .then((res) => {
         console.log(res);
         if (res.ok == true) {
@@ -85,7 +86,17 @@ export default function SessionsScreen({ navigation }) {
             flex: 1,
           }}
         >
-          <ActivityIndicator size="large" color="#0000ff" />
+          {loaded ? (
+            <Text
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              No Active Sessions right Now
+            </Text>
+          ) : (
+            <ActivityIndicator size="large" color="#0000ff" />
+          )}
         </View>
       )}
     </View>
