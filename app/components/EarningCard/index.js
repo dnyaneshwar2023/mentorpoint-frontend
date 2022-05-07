@@ -2,27 +2,27 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function EarningCard() {
+export default function EarningCard(props) {
   return (
     <View style={styles.container}>
       <Text
         style={{
-          fontSize: 18,
+          fontSize: 15,
           fontWeight: "700",
         }}
       >
-        Total Earnings
+        {props?.title}
       </Text>
       <View style={styles.amount}>
-        <FontAwesome5 name="money-bill-wave" size={28} color="green" />
+        <FontAwesome5 name="money-bill-wave" size={20} color="green" />
         <View style={{ marginLeft: 10 }}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 15,
               fontWeight: "700",
             }}
           >
-            150
+            {props?.amount}
           </Text>
         </View>
       </View>
@@ -33,15 +33,15 @@ export default function EarningCard() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    width: "80%",
-    height: "40%",
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
     justifyContent: "space-around",
+    marginHorizontal: 20,
   },
   amount: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 10,
   },
 });

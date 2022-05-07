@@ -1,71 +1,93 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+
 import { colors, statusbar } from "../configs/variables";
 import EarningCard from "../components/EarningCard";
 import AppButton from "../components/AppButton";
 import BottonButton from "../components/BottomButton";
+import useAuth from "../auth/useAuth";
+import sessionsApi from "../apis/sessions";
+import EarningItem from "../components/EarningItem";
 export default function EarningsSceen() {
+  const { user } = useAuth();
+  const [sessions, setSessions] = useState();
+  const focus = useIsFocused();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (!focus) return null;
+    setSessions([]);
+    setLoading(true);
+    sessionsApi.getSessions({ mentor_id: user._id }).then((res) => {
+      if (res.ok == true) {
+        setSessions(res.data.data);
+      } else {
+        failResponse();
+      }
+      setLoading(false);
+    });
+  }, [focus]);
   return (
     <>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.rewardcontainer}>
-            <EarningCard />
-          </View>
-          <View
+      <View style={styles.container}>
+        <View style={styles.rewardcontainer}>
+          <EarningCard title="Current Earnings" amount={150} />
+          <EarningCard title="Total Earnings" amount={1500} />
+        </View>
+        <View
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <Text
             style={{
-              flex: 2,
-              padding: 10,
+              fontWeight: "bold",
+              fontSize: 16,
             }}
           >
-            <ScrollView>
-              <Text>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing
-                and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type
-                specimen book. Lorem Ipsum is simply dummy text of the printing
-                and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also
-                the leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more
-                recently with desktop publishing software like Aldus PageMaker
-                including versions of Lorem Ipsum. Lorem Ipsum is simply dummy
-                text of the printing and typesetting industry. Lorem Ipsum has
-                been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it
-                to make a type specimen book.
-              </Text>
-            </ScrollView>
-          </View>
+            Recent Sessions
+          </Text>
         </View>
-      </View>
-      <View
-        style={{
-          marginHorizontal: 10,
-          marginTop: -20,
-        }}
-      >
-        <AppButton
-          title="withdraw"
-          buttonStyles={{ backgroundColor: "blue" }}
-        />
+        <View
+          style={{
+            flex: 2,
+            padding: 10,
+          }}
+        >
+          {loading && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
+          <FlatList
+            data={sessions}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <EarningItem {...item} />}
+          />
+        </View>
+        <View
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <AppButton
+            title="withdraw"
+            buttonStyles={{ backgroundColor: "blue" }}
+          />
+        </View>
       </View>
     </>
   );
@@ -74,13 +96,14 @@ export default function EarningsSceen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: statusbar,
   },
   rewardcontainer: {
-    flex: 1,
+    flexDirection: "row",
     backgroundColor: "blue",
-    marginTop: -statusbar,
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
+    paddingVertical: 20,
+    margin: 10,
+    borderRadius: 5,
   },
 });

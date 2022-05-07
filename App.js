@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View, Platform, StatusBar } from "react-native";
+import { StyleSheet, Text, View, Platform } from "react-native";
 import "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
-
 import Drawer from "./app/navigation/Drawer";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { useState } from "react";
 import authStorage from "./app/auth/storage";
-
+import { StatusBar } from "expo-status-bar";
 import AuthContext from "./app/auth/context";
 export default function App() {
   const [user, setUser] = useState(null);
@@ -38,13 +37,7 @@ export default function App() {
           <AuthNavigator />
         </AuthContext.Provider>
       )}
+      <StatusBar style="dark" />
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});

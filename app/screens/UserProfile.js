@@ -18,6 +18,7 @@ import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
 import useAuth from "../auth/useAuth";
 import mentorsApi from "../apis/mentors";
+import RNEInput from "../components/RNEInput";
 
 export default function UserProfile({ route, navigation }) {
   const [drawer, setDrawer] = useState(false);
@@ -140,6 +141,17 @@ export default function UserProfile({ route, navigation }) {
               />
             </View>
           </View>
+          {/* <View style={styles.skillscontainer}>
+            <Text
+              style={{
+                color: colors.grey,
+                fontWeight: "bold",
+              }}
+            >
+              Meeting URL
+            </Text>
+            
+          </View> */}
         </ScrollView>
       )}
     </>

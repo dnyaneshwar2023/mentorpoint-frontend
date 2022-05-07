@@ -25,6 +25,7 @@ import slotsApi from "../apis/slots";
 import useAuth from "../auth/useAuth";
 import sessionsApi from "../apis/sessions";
 import RazorpayCheckout from "react-native-razorpay";
+import LoadingButtonButton from "../components/LoadingButton";
 const validationSchema = yup.object().shape({
   resume_link: yup.string().required().url(),
 });
@@ -77,7 +78,7 @@ export default function BookingScreen({ route, navigation }) {
         image: "https://i.imgur.com/3g7nmJC.png",
         currency: "INR",
         key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
-        amount: service.fee * 100,
+        amount: service.fee * 105,
         name: user?.name,
         prefill: {
           email: user?.email,
@@ -128,6 +129,7 @@ export default function BookingScreen({ route, navigation }) {
   useEffect(() => {
     if (!isFocus) {
       setService({});
+      setSpinner(false);
       return null;
     }
     if (!service?.title) {
@@ -288,16 +290,7 @@ export default function BookingScreen({ route, navigation }) {
               }}
             >
               {spinner ? (
-                <View
-                  style={{
-                    backgroundColor: colors.primary,
-                    marginVertical: 10,
-                    paddingVertical: 10,
-                    borderRadius: 5,
-                  }}
-                >
-                  <ActivityIndicator size="large" color="white" />
-                </View>
+                <LoadingButtonButton />
               ) : (
                 <AppButton title="Proceed" onPress={handleSubmit} />
               )}

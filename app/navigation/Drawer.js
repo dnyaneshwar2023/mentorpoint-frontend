@@ -9,6 +9,7 @@ import Sidebar from "../components/Sidebar";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import MentorProfile from "../screens/MentorProfile";
@@ -27,6 +28,7 @@ import AddServiceScreen from "../screens/AddServiceScreen";
 import AddOpportunityScreen from "../screens/AddOpportunity";
 import BookingSuccess from "../animations/BookingSuccess";
 import Payment from "../screens/Payment";
+import MeetingDetailsScreen from "../screens/MeetingDetailsScreen";
 export default function Drawer() {
   return (
     <>
@@ -134,6 +136,22 @@ export default function Drawer() {
             }}
           />
           <AppDrawer.Screen
+            component={MeetingDetailsScreen}
+            name="MeetingDetails"
+            options={{
+              drawerLabel: "Meeting Details",
+              drawerIcon: () => (
+                <MaterialCommunityIcons
+                  name="video-outline"
+                  size={24}
+                  color="#00aced"
+                />
+              ),
+              headerShown: true,
+              headerTitle: "Meeting Details",
+            }}
+          />
+          <AppDrawer.Screen
             component={EditProfile}
             name="EditProfile"
             options={{
@@ -145,6 +163,7 @@ export default function Drawer() {
               headerTitle: "Edit Profile",
             }}
           />
+
           <AppDrawer.Screen
             component={EarningsSceen}
             name="Earnings"

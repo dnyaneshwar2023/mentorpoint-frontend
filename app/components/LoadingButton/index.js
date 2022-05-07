@@ -4,10 +4,11 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  TouchableNativeFeedback,
+  ActivityIndicator,
 } from "react-native";
+import { colors } from "../../configs/variables";
 
-export default function AppButton({
+export default function LoadingButtonButton({
   title,
   onPress,
   buttonStyles,
@@ -15,21 +16,9 @@ export default function AppButton({
   textStyle,
 }) {
   return (
-    <TouchableNativeFeedback onPress={onPress}>
-      <View style={[styles.button, buttonStyles]}>
-        {IconComponent && (
-          <View
-            style={{
-              marginRight: 10,
-              justifyContent: "center",
-            }}
-          >
-            {IconComponent}
-          </View>
-        )}
-        <Text style={[styles.text, textStyle]}>{title}</Text>
-      </View>
-    </TouchableNativeFeedback>
+    <View style={[styles.button, buttonStyles]}>
+      <ActivityIndicator size={25} color="white" />
+    </View>
   );
 }
 
