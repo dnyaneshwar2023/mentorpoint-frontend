@@ -43,19 +43,6 @@ export default function BookingScreen({ route, navigation }) {
   const isFocus = useIsFocused();
   const { user } = useAuth();
 
-  const successResponse = () => {
-    navigation.navigate("BookingSuccess", {
-      buttonTitle: "My Sessions",
-      screenName: "Sessions",
-    });
-  };
-
-  const failResponse = () => {
-    navigation.navigate("Failure", {
-      buttonTitle: "Back to Home",
-      screenName: "Home",
-    });
-  };
   const handleSubmit = (values) => {
     setSpinner(true);
     const user_slot = selected;
@@ -72,58 +59,9 @@ export default function BookingScreen({ route, navigation }) {
       mentor_id: mentorid,
     };
 
-    if (false) {
-      var options = {
-        description: "Session Payment",
-        image: "https://i.imgur.com/3g7nmJC.png",
-        currency: "INR",
-        key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
-        amount: service.fee * 105,
-        name: user?.name,
-        prefill: {
-          email: user?.email,
-          contact: "9657690018",
-          name: "Mentorpoint",
-        },
-        theme: { color: colors.primary },
-      };
-
-      RazorpayCheckout.open(options)
-        .then((data) => {
-          // handle success
-          sessionsApi
-            .bookSession(payload)
-            .then((res) => {
-              if (res.ok) {
-                setSpinner(false);
-                successResponse();
-              } else {
-                failResponse();
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((error) => {
-          // handle failure
-          failResponse();
-        });
-    } else {
-      sessionsApi
-        .bookSession(payload)
-        .then((res) => {
-          if (res.ok) {
-            setSpinner(false);
-            successResponse();
-          } else {
-            failResponse();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    navigation.navigate("Summary", {
+      session: { service: service, payload: payload },
+    });
   };
 
   useEffect(() => {

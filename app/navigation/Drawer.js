@@ -29,6 +29,7 @@ import AddOpportunityScreen from "../screens/AddOpportunity";
 import BookingSuccess from "../animations/BookingSuccess";
 import Payment from "../screens/Payment";
 import MeetingDetailsScreen from "../screens/MeetingDetailsScreen";
+import BookingStack from "./BookingStack";
 export default function Drawer() {
   return (
     <>
@@ -84,7 +85,7 @@ export default function Drawer() {
             }}
           />
 
-          <AppDrawer.Screen
+          {/* <AppDrawer.Screen
             component={MentorProfile}
             name="MentorProfile"
             options={{
@@ -94,7 +95,7 @@ export default function Drawer() {
               headerShown: true,
               drawerItemStyle: { display: "none" },
             }}
-          />
+          /> */}
 
           <AppDrawer.Screen
             component={MentorServices}
@@ -175,7 +176,7 @@ export default function Drawer() {
               headerTitle: "Earnings",
             }}
           />
-          <AppDrawer.Screen
+          {/* <AppDrawer.Screen
             component={ServicesScreen}
             name="Services"
             options={{
@@ -185,7 +186,7 @@ export default function Drawer() {
               headerShown: true,
               drawerItemStyle: { display: "none" },
             }}
-          />
+          /> */}
           <AppDrawer.Screen
             component={AddOpportunityScreen}
             name="AddOpportunity"
@@ -232,7 +233,7 @@ export default function Drawer() {
               drawerItemStyle: { display: "none" },
             }}
           />
-          <AppDrawer.Screen
+          {/* <AppDrawer.Screen
             name="Booking"
             component={BookingScreen}
             options={{
@@ -240,6 +241,17 @@ export default function Drawer() {
                 <MaterialIcons name="work-outline" size={24} color={color} />
               ),
               headerShown: true,
+              drawerItemStyle: { display: "none" },
+            }}
+          /> */}
+          <AppDrawer.Screen
+            component={BookingStack}
+            name="BookingStack"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: false,
               drawerItemStyle: { display: "none" },
             }}
           />

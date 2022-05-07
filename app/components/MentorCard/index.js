@@ -72,8 +72,15 @@ export default function MentorCard(props) {
         <View>
           <AppButton
             title="Profile"
-            onPress={() =>
-              navigation.navigate("MentorProfile", { user: props })
+            onPress={
+              () =>
+                navigation.navigate("BookingStack", {
+                  screen: "MentorProfile",
+                  params: { user: props },
+                })
+              // navigation.navigate("MentorProfile", {
+              //   user: props,
+              // })
             }
             buttonStyles={{
               paddingVertical: 5,
