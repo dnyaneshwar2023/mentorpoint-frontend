@@ -106,7 +106,12 @@ export default function MentorCard(props) {
         <View>
           <AppButton
             title="Book Now"
-            onPress={() => console.log("click")}
+            onPress={() => {
+              navigation.navigate("BookingStack", {
+                screen: "Services",
+                params: { mentor_id: props?._id },
+              });
+            }}
             buttonStyles={{
               paddingVertical: 5,
               paddingHorizontal: 20,
