@@ -1,12 +1,24 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  Linking,
+} from "react-native";
 import React, { useState } from "react";
 import ProfileCard from "../components/ProfileCard";
 import SkillBadge from "../components/SkillBadge";
 import { colors, statusbar } from "../configs/variables";
 import Socialcard from "../components/SocialCard";
 import BottonButton from "../components/BottomButton";
+
 export default function MentorProfile({ route, navigation }) {
   const params = route.params.user;
+  const handleOpenLink = async (link) => {
+    if (!link) return null;
+    await Linking.openURL(link);
+  };
   const [drawer, setDrawer] = useState(false);
   return (
     <>
@@ -65,9 +77,18 @@ export default function MentorProfile({ route, navigation }) {
               flexDirection: "row",
             }}
           >
-            <Socialcard name={"github"} />
-            <Socialcard name={"linkedin"} />
-            <Socialcard name={"instagram"} />
+            <Socialcard
+              name={"github"}
+              onPress={() => handleOpenLink(params?.github_url)}
+            />
+            <Socialcard
+              name={"linkedin"}
+              onPress={() => handleOpenLink(params?.linkedin_url)}
+            />
+            <Socialcard
+              name={"instagram"}
+              onPress={() => handleOpenLink(params?.instagram_url)}
+            />
           </View>
         </View>
       </ScrollView>
