@@ -9,22 +9,21 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { launchImageLibrary } from "react-native-image-picker";
 import { colors } from "../../configs/variables";
 
 export default function AppImagePicker({ imageUri, onChangeImage }) {
   useEffect(() => {
-    const requestPermission = async () => {
-      const result = await ImagePicker.requestCameraPermissionsAsync();
-      console.log(result.granted);
-      if (!result.granted) {
-        requestPermission();
-      }
-    };
-    requestPermission();
+    // const requestPermission = async () => {
+    //   const result = await ImagePicker.requestCameraPermissionsAsync();
+    //   console.log(result.granted);
+    //   if (!result.granted) {
+    //     requestPermission();
+    //   }
+    // };
+    // requestPermission();
   }, []);
   const handlePress = () => {
-    console.log(imageUri);
     if (!imageUri) {
       selectImage();
     } else {
@@ -39,9 +38,11 @@ export default function AppImagePicker({ imageUri, onChangeImage }) {
 
   const selectImage = async () => {
     try {
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.cancelled) {
-        onChangeImage(result.uri);
+      const result = await launchImageLibrary({
+        mediaType: "photo",
+      });
+      if (!result.didCancel) {
+        onChangeImage(result.assets[0]);
       }
     } catch (error) {
       console.log(error);
@@ -49,12 +50,34 @@ export default function AppImagePicker({ imageUri, onChangeImage }) {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={handlePress}>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
       <View style={styles.picker}>
-        {!imageUri && <MaterialCommunityIcons name="camera" size={35} />}
-        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+        <TouchableWithoutFeedback onPress={handlePress}>
+          {imageUri == null ? (
+            <MaterialCommunityIcons name="camera" size={35} />
+          ) : (
+            <Image source={{ uri: imageUri }} style={styles.image} />
+          )}
+        </TouchableWithoutFeedback>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View
+        style={{
+          marginHorizontal: 10,
+        }}
+      >
+        {imageUri && (
+          <TouchableWithoutFeedback onPress={handlePress}>
+            <MaterialCommunityIcons name="delete" size={30} color="red" />
+          </TouchableWithoutFeedback>
+        )}
+      </View>
+    </View>
   );
 }
 
@@ -76,5 +99,6 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
+    resizeMode: "cover",
   },
 });

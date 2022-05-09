@@ -76,6 +76,7 @@ export default function MentorsScreen({ navigation }) {
           refreshControl={
             <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
           }
+          showsVerticalScrollIndicator={false}
         />
       ) : (
         <View

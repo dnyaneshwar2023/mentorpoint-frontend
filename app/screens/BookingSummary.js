@@ -6,10 +6,14 @@ import services from "../apis/services";
 import moment from "moment";
 import LoadingButtonButton from "../components/LoadingButton";
 import AppButton from "../components/AppButton";
+import driveURL from "../utils/drive";
+import { colors } from "../configs/variables";
+import RazorpayCheckout from "react-native-razorpay";
+import useAuth from "../auth/useAuth";
 export default function BookingSummary({ route, navigation }) {
   const [spinner, setSpinner] = useState(false);
   const { service, payload } = route?.params.session;
-  console.log(service, payload);
+  const { user } = useAuth();
   const successResponse = () => {
     navigation.navigate("BookingSuccess", {
       buttonTitle: "My Sessions",
@@ -26,10 +30,10 @@ export default function BookingSummary({ route, navigation }) {
 
   const handleBooking = () => {
     setSpinner(true);
-    if (false) {
+    if (service?.fee > 0) {
       var options = {
         description: "Session Payment",
-        image: "https://i.imgur.com/3g7nmJC.png",
+        image: driveURL + "1q6aqxnQ_BMXjFC5O6FppM9OXzrZAJPp_",
         currency: "INR",
         key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
         amount: service.fee * 105,
@@ -96,11 +100,11 @@ export default function BookingSummary({ route, navigation }) {
             {payload?.resume_link}
           </Text>
         </Text>
-        <Text style={styles.text}>Session Charges: {service?.fee}</Text>
+        <Text style={styles.text}>Session Charges: Rs {service?.fee}</Text>
         <Text style={styles.text}>
-          Convinience Charges: {parseInt(service.fee) * 1.05}
+          Convinience Charges: Rs {parseInt(service.fee) * 1.05 - service?.fee}
         </Text>
-        <Text style={styles.text}>Total Charges: {service.fee * 1.05}</Text>
+        <Text style={styles.text}>Total Charges: Rs {service.fee * 1.05}</Text>
       </View>
       <View
         style={{

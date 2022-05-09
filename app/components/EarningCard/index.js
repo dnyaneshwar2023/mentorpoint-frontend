@@ -14,11 +14,11 @@ export default function EarningCard(props) {
         {props?.title}
       </Text>
       <View style={styles.amount}>
-        <FontAwesome5 name="money-bill-wave" size={20} color="green" />
+        <FontAwesome5 name="rupee-sign" size={20} color="green" />
         <View style={{ marginLeft: 10 }}>
           <Text
             style={{
-              fontSize: 15,
+              fontSize: 20,
               fontWeight: "700",
             }}
           >

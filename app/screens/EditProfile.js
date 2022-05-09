@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -14,6 +15,8 @@ import { colors, statusbar } from "../configs/variables";
 import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
 import AppImagePicker from "../components/ImagePicker";
+import LoadingButton from "../components/LoadingButton";
+
 import SkillSelect from "../components/SkillSelect";
 import mentorsApi from "../apis/mentors";
 import useAuth from "../auth/useAuth";
@@ -29,8 +32,9 @@ const validationSchema = yup.object().shape({
 });
 
 export default function EditProfile({ navigation }) {
-  const [imageUri, setImageUri] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [mentordata, setMentorData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const isFocus = useIsFocused();
 
   const mentorid = useAuth()?.user?._id;
@@ -53,6 +57,46 @@ export default function EditProfile({ navigation }) {
     });
   };
   const updateData = (values) => {
+    setLoading(true);
+    if (photo != null) {
+      if (mentordata?.profile_picture) {
+        console.log("Update");
+        const data = new FormData();
+        data.append("profile_picture", mentordata?.profile_picture);
+        data.append("profile", {
+          name: "profile_picture",
+          type: photo.type,
+          uri: photo.uri,
+        });
+        console.log(data);
+        mentorsApi
+          .updatePhoto(data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        const data = new FormData();
+        data.append("_id", mentorid);
+        data.append("profile", {
+          name: "profileimage",
+          type: photo.type,
+          uri: photo.uri,
+        });
+        console.log(data);
+        mentorsApi
+          .addPhoto(data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+
     mentorsApi
       .updateMentor(values)
       .then((res) => {
@@ -67,6 +111,7 @@ export default function EditProfile({ navigation }) {
         console.log(err);
         failResponse();
       });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -114,9 +159,9 @@ export default function EditProfile({ navigation }) {
                     </Text>
 
                     <AppImagePicker
-                      imageUri={imageUri}
+                      imageUri={photo?.uri}
                       onChangeImage={(val) => {
-                        setImageUri(val);
+                        setPhoto(val);
                         console.log(val);
                       }}
                     />
@@ -204,7 +249,11 @@ export default function EditProfile({ navigation }) {
               </View>
 
               <View style={{ marginHorizontal: 10 }}>
-                <AppButton title="Save Details" onPress={handleSubmit} />
+                {loading ? (
+                  <LoadingButton />
+                ) : (
+                  <AppButton title="Save Details" onPress={handleSubmit} />
+                )}
               </View>
             </>
           )}

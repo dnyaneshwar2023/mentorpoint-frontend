@@ -16,15 +16,25 @@ import BottonButton from "../components/BottomButton";
 import useAuth from "../auth/useAuth";
 import sessionsApi from "../apis/sessions";
 import EarningItem from "../components/EarningItem";
+import mentorsApi from "../apis/mentors";
 export default function EarningsSceen() {
   const { user } = useAuth();
   const [sessions, setSessions] = useState();
+  const [mentor, setMentor] = useState({});
   const focus = useIsFocused();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (!focus) return null;
     setSessions([]);
     setLoading(true);
+    mentorsApi
+      .getMentors(user?._id)
+      .then((res) => {
+        if (res.ok) {
+          setMentor(res?.data?.data[0]);
+        }
+      })
+      .catch((err) => {});
     sessionsApi.getSessions({ mentor_id: user._id }).then((res) => {
       if (res.ok == true) {
         setSessions(res.data.data);
@@ -38,8 +48,11 @@ export default function EarningsSceen() {
     <>
       <View style={styles.container}>
         <View style={styles.rewardcontainer}>
-          <EarningCard title="Current Earnings" amount={150} />
-          <EarningCard title="Total Earnings" amount={1500} />
+          <EarningCard
+            title="Current Earnings"
+            amount={mentor?.current_balance}
+          />
+          <EarningCard title="Total Earnings" amount={mentor?.total_earning} />
         </View>
         <View
           style={{

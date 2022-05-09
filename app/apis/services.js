@@ -13,7 +13,6 @@ const getServiceById = (service_id) => {
 };
 
 const deleteService = (payload) => {
-  console.log(payload);
   return apiClient.delete("/services", { ...payload });
 };
 

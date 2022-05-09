@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { colors } from "../../configs/variables";
+import driveURL from "../../utils/drive.js";
+
 export default function ProfileCard(props) {
   return (
     <View style={styles.container}>
@@ -12,10 +14,19 @@ export default function ProfileCard(props) {
             }}
           >
             <View style={styles.usercontainer}>
-              <Image
-                source={require("../../images/user-icon.png")}
-                style={styles.image}
-              />
+              {props?.profile_picture ? (
+                <Image
+                  source={{
+                    uri: driveURL + props?.profile_picture,
+                  }}
+                  style={styles.image}
+                />
+              ) : (
+                <Image
+                  source={require("../../images/user-icon.png")}
+                  style={styles.image}
+                />
+              )}
               <Text style={styles.heading}>
                 {props.name ? props.name : "Name"}
               </Text>
@@ -102,7 +113,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 5,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   heading: {
     fontSize: 18,

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { colors } from "../../configs/variables";
-import { FontAwesome } from "@expo/vector-icons";
-import { Badge } from "react-native-elements";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import AppButton from "../AppButton";
-import { MaterialIcons } from "@expo/vector-icons";
-import SkillBadge from "../SkillBadge";
 import { useNavigation } from "@react-navigation/native";
+import { Badge } from "react-native-elements";
+import { MaterialIcons } from "@expo/vector-icons";
+import driveURL from "../../utils/drive.js";
+import { colors } from "../../configs/variables";
+import AppButton from "../AppButton";
+import SkillBadge from "../SkillBadge";
+
 export default function MentorCard(props) {
   const navigation = useNavigation();
   return (
@@ -15,10 +15,19 @@ export default function MentorCard(props) {
       <View style={styles.profileheader}>
         <View style={styles.mentorinfo}>
           <View style={styles.profileicon}>
-            <Image
-              source={require("../../images/user-icon.png")}
-              style={styles.image}
-            />
+            {props?.profile_picture ? (
+              <Image
+                source={{
+                  uri: driveURL + props?.profile_picture,
+                }}
+                style={styles.image}
+              />
+            ) : (
+              <Image
+                source={require("../../images/user-icon.png")}
+                style={styles.image}
+              />
+            )}
           </View>
           <View style={styles.mentorname}>
             <Text
@@ -29,22 +38,30 @@ export default function MentorCard(props) {
             >
               {props.name}
             </Text>
-            <Text
+            <View
               style={{
-                opacity: 0.7,
-                fontWeight: "600",
+                flex: 1,
+                flexWrap: "wrap",
               }}
             >
-              {props?.headline}
-            </Text>
+              <Text
+                style={{
+                  fontWeight: "600",
+                }}
+              >
+                {props?.headline}
+              </Text>
+            </View>
           </View>
         </View>
         <View
           style={{
             flex: 1,
             flexDirection: "row",
-            justifyContent: "flex-end",
             alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 20,
+            marginHorizontal: 5,
           }}
         >
           <View
@@ -72,15 +89,11 @@ export default function MentorCard(props) {
         <View>
           <AppButton
             title="Profile"
-            onPress={
-              () =>
-                navigation.navigate("BookingStack", {
-                  screen: "MentorProfile",
-                  params: { user: props },
-                })
-              // navigation.navigate("MentorProfile", {
-              //   user: props,
-              // })
+            onPress={() =>
+              navigation.navigate("BookingStack", {
+                screen: "MentorProfile",
+                params: { user: props },
+              })
             }
             buttonStyles={{
               paddingVertical: 5,
@@ -118,13 +131,17 @@ const badgeStyle = {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: 10,
     margin: 10,
     borderBottomColor: colors.grey,
     borderBottomWidth: 1,
     justifyContent: "space-around",
+    backgroundColor: "white",
+    borderRadius: 5,
   },
   profileheader: {
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 10,
@@ -136,8 +153,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   mentorinfo: {
+    flex: 7,
     flexDirection: "row",
-    alignItems: "center",
+    overflow: "hidden",
   },
   profileicon: {
     borderRadius: 10,
@@ -146,6 +164,9 @@ const styles = StyleSheet.create({
   },
   mentorname: {
     marginLeft: 10,
+    alignItems: "flex-start",
+    overflow: "hidden",
+    flexWrap: "wrap",
   },
   buttons: {
     flexDirection: "row",
@@ -156,7 +177,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 5,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   skillscontainer: {},
   badgecontainer: {
