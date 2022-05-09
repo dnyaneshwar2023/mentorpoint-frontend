@@ -30,6 +30,7 @@ import BookingSuccess from "../animations/BookingSuccess";
 import Payment from "../screens/Payment";
 import MeetingDetailsScreen from "../screens/MeetingDetailsScreen";
 import BookingStack from "./BookingStack";
+import PaymentFailed from "../animations/PaymentFailed";
 export default function Drawer() {
   return (
     <>
@@ -258,6 +259,18 @@ export default function Drawer() {
           <AppDrawer.Screen
             component={BookingSuccess}
             name="BookingSuccess"
+            options={{
+              drawerIcon: () => (
+                <FontAwesome name="money" size={24} color="#00aced" />
+              ),
+              headerShown: false,
+              drawerItemStyle: { display: "none" },
+            }}
+          />
+
+          <AppDrawer.Screen
+            component={PaymentFailed}
+            name="FailedPayment"
             options={{
               drawerIcon: () => (
                 <FontAwesome name="money" size={24} color="#00aced" />

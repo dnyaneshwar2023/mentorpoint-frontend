@@ -22,8 +22,8 @@ export default function BookingSummary({ route, navigation }) {
   };
 
   const failResponse = () => {
-    navigation.navigate("Failure", {
-      buttonTitle: "Back to Home",
+    navigation.navigate("FailedPayment", {
+      buttonTitle: "Back",
       screenName: "Home",
     });
   };
@@ -36,7 +36,7 @@ export default function BookingSummary({ route, navigation }) {
         image: driveURL + "1q6aqxnQ_BMXjFC5O6FppM9OXzrZAJPp_",
         currency: "INR",
         key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
-        amount: service.fee * 105,
+        amount: service.fee * 110,
         name: user?.name,
         prefill: {
           email: user?.email,
@@ -55,6 +55,7 @@ export default function BookingSummary({ route, navigation }) {
                 setSpinner(false);
                 successResponse();
               } else {
+                setSpinner(false);
                 failResponse();
               }
             })
@@ -100,11 +101,16 @@ export default function BookingSummary({ route, navigation }) {
             {payload?.resume_link}
           </Text>
         </Text>
-        <Text style={styles.text}>Session Charges: Rs {service?.fee}</Text>
         <Text style={styles.text}>
-          Convinience Charges: Rs {parseInt(service.fee) * 1.05 - service?.fee}
+          Session Charges: Rs {parseFloat(service?.fee).toFixed(2)}
         </Text>
-        <Text style={styles.text}>Total Charges: Rs {service.fee * 1.05}</Text>
+        <Text style={styles.text}>
+          Convinience Charges: Rs{" "}
+          {parseFloat(parseInt(service.fee) * 1.1 - service?.fee).toFixed(2)}
+        </Text>
+        <Text style={styles.text}>
+          Total Charges: Rs {parseFloat(service.fee * 1.1).toFixed(2)}
+        </Text>
       </View>
       <View
         style={{

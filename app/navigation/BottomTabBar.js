@@ -16,10 +16,16 @@ export default function BottomTabBar() {
     <>
       <BottomTabs.Navigator
         screenOptions={{
-          tabBarShowLabel: false,
           tabBarActiveTintColor: "blue",
           tabBarInactiveTintColor: "black",
           header: (props) => <HeaderItem {...props} />,
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: "600",
+          },
+          tabBarItemStyle: {
+            margin: 2,
+          },
         }}
       >
         <BottomTabs.Screen
@@ -60,7 +66,7 @@ export default function BottomTabBar() {
           component={OppotunitiesScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="work-outline" size={24} color={color} />
+              <MaterialIcons name="work-outline" size={25} color={color} />
             ),
           }}
         />

@@ -22,12 +22,22 @@ export default function PaymentFailed({ navigation, route }) {
         <LottieView
           source={require("./payment-failed.json")}
           style={{
-            width: 500,
-            height: 500,
+            width: 300,
+            height: 300,
           }}
           autoPlay
           loop
         />
+        <View>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 20,
+            }}
+          >
+            Payment Failed
+          </Text>
+        </View>
       </View>
       <View
         style={{
@@ -41,7 +51,7 @@ export default function PaymentFailed({ navigation, route }) {
             borderRadius: 5,
             backgroundColor: "#E74B3C",
           }}
-          onPress={() => navigation.navigate(screenName)}
+          onPress={() => navigation.goBack()}
         />
       </View>
     </View>

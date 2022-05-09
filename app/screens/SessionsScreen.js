@@ -43,6 +43,7 @@ export default function SessionsScreen({ navigation }) {
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
     setSessions([]);
+    setLoaded(false);
     sessionsApi
       .getSessions({ user_id: user._id })
       .then((res) => {
@@ -56,6 +57,7 @@ export default function SessionsScreen({ navigation }) {
       .catch((err) => {
         console.log(err);
       });
+    setLoaded(false);
     setRefresh(false);
   }, []);
 

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     margin: 10,
     borderBottomColor: colors.grey,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.5,
     justifyContent: "space-around",
     backgroundColor: "white",
     borderRadius: 5,
