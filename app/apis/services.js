@@ -16,4 +16,14 @@ const deleteService = (payload) => {
   return apiClient.delete("/services", { ...payload });
 };
 
-export default { addService, getServices, getServiceById, deleteService };
+const editService = (payload) => {
+  return apiClient.put("/services", { ...payload });
+};
+
+export default {
+  addService,
+  getServices,
+  getServiceById,
+  deleteService,
+  editService,
+};

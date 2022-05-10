@@ -31,6 +31,8 @@ import Payment from "../screens/Payment";
 import MeetingDetailsScreen from "../screens/MeetingDetailsScreen";
 import BookingStack from "./BookingStack";
 import PaymentFailed from "../animations/PaymentFailed";
+import EditService from "../screens/EditService";
+import ServicesStack from "./ServicesStack";
 export default function Drawer() {
   return (
     <>
@@ -99,19 +101,19 @@ export default function Drawer() {
           /> */}
 
           <AppDrawer.Screen
-            component={MentorServices}
-            name="MentorServices"
+            component={ServicesStack}
+            name="ServicesStack"
             options={{
               drawerLabel: "Your Services",
               drawerIcon: () => (
                 <AntDesign name="customerservice" size={24} color="#00aced" />
               ),
-              headerShown: true,
+              headerShown: false,
               headerTitle: "Your Services",
             }}
           />
 
-          <AppDrawer.Screen
+          {/* <AppDrawer.Screen
             component={AddServiceScreen}
             name="AddService"
             options={{
@@ -124,6 +126,19 @@ export default function Drawer() {
               drawerItemStyle: { display: "none" },
             }}
           />
+          <AppDrawer.Screen
+            component={EditService}
+            name="EditService"
+            options={{
+              drawerLabel: "Your Services",
+              drawerIcon: () => (
+                <AntDesign name="customerservice" size={24} color="#00aced" />
+              ),
+              headerShown: true,
+              headerTitle: "Edit Service",
+              drawerItemStyle: { display: "none" },
+            }}
+          /> */}
 
           <AppDrawer.Screen
             component={ScheduleScreen}

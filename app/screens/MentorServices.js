@@ -12,22 +12,21 @@ export default function SessionsTypeScreen({ navigation }) {
   const { user } = useAuth();
   const mentor_id = user?._id;
 
-  const handleDeleteService = (id) => {
+  const handleDeleteService = (id, value) => {
     servicesApi
-      .deleteService({ _id: id })
-      .then((res) => {
-        setServices(services.filter((item) => item._id != id));
-      })
-      .then((err) => {});
+      .editService({ _id: id, is_deleted: value })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const handleEditService = (id) => {
-    console.log("Edit");
+    navigation.navigate("EditService", { service_id: id });
   };
 
   useEffect(() => {
     if (!focus) return null;
-    console.log(mentor_id);
-    if (!focus) return null;
+    setServices(null);
     servicesApi.getServices(mentor_id).then((res) => {
       setServices(res.data.data);
     });
@@ -45,7 +44,7 @@ export default function SessionsTypeScreen({ navigation }) {
           renderItem={(item) => (
             <SessionTypeItem
               {...item}
-              handleDeleteItem={() => handleDeleteService(item.item._id)}
+              handleDeleteItem={(id, value) => handleDeleteService(id, value)}
               handleEditItem={() => handleEditService(item.item._id)}
             />
           )}

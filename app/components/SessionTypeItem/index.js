@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import "react-native-gesture-handler";
+import { Switch } from "react-native-elements";
 
 import { colors } from "../../configs/variables";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -10,13 +11,12 @@ export default function SessionTypeItem({
   handleDeleteItem,
   handleEditItem,
 }) {
-  console.log(item);
+  const [value, setValue] = useState(item?.is_deleted);
   return (
     <View style={styles.container}>
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "center",
           flexWrap: "wrap",
         }}
       >
@@ -28,7 +28,9 @@ export default function SessionTypeItem({
 
       <View
         style={{
+          marginTop: 10,
           flexDirection: "row",
+          justifyContent: "space-between",
         }}
       >
         <TouchableOpacity onPress={handleEditItem}>
@@ -36,11 +38,28 @@ export default function SessionTypeItem({
             <MaterialIcons name="edit" size={20} color="white" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleDeleteItem}>
-          <View style={[styles.button, { backgroundColor: "red" }]}>
-            <MaterialCommunityIcons name="delete" size={20} color="white" />
-          </View>
-        </TouchableOpacity>
+
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "bold",
+            }}
+          >
+            Active Status
+          </Text>
+          <Switch
+            value={!value}
+            onValueChange={(value) => {
+              setValue(!value);
+              handleDeleteItem(item?._id, !value);
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -50,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     justifyContent: "center",
-    alignItems: "center",
     margin: 10,
     padding: 10,
     borderBottomColor: "black",
@@ -63,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   button: {
-    paddingHorizontal: 50,
+    paddingHorizontal: 30,
     paddingVertical: 8,
     borderRadius: 5,
     marginVertical: 10,

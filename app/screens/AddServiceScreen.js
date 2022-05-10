@@ -105,22 +105,9 @@ export default function AddServiceScreen({ visible }) {
             </View>
             <View style={styles.bottombuttons}>
               <AppButton
-                title="back"
-                buttonStyles={{
-                  paddingHorizontal: 40,
-                  paddingVertical: 10,
-                  backgroundColor: "red",
-                  borderColor: "red",
-                  borderWidth: 1,
-                  borderRadius: 5,
-                }}
-                onPress={() => setVisible(false)}
-              />
-              <AppButton
                 title="Submit"
                 buttonStyles={{
-                  paddingHorizontal: 40,
-                  paddingVertical: 10,
+                  paddingVertical: 15,
                   borderRadius: 5,
                 }}
                 onPress={handleSubmit}
@@ -136,12 +123,10 @@ export default function AddServiceScreen({ visible }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 20,
+    justifyContent: "space-between",
   },
   bottombuttons: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
+    marginHorizontal: 10,
   },
 });

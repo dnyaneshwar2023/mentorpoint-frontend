@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../configs/variables";
+
 export default function SessionItem(props) {
   return (
     <TouchableOpacity onPress={props.onPress}>
