@@ -9,7 +9,11 @@ import AppButton from "../components/AppButton";
 import driveURL from "../utils/drive";
 import { colors } from "../configs/variables";
 import RazorpayCheckout from "react-native-razorpay";
+import RNPgReactNativeSdk from "react-native-pg-react-native-sdk";
 import useAuth from "../auth/useAuth";
+import apisauce from "apisauce";
+import uuid from "react-native-uuid";
+
 export default function BookingSummary({ route, navigation }) {
   const [spinner, setSpinner] = useState(false);
   const { service, payload } = route?.params.session;
@@ -28,7 +32,7 @@ export default function BookingSummary({ route, navigation }) {
     });
   };
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     setSpinner(true);
     if (service?.fee > 0) {
       var options = {
@@ -40,11 +44,12 @@ export default function BookingSummary({ route, navigation }) {
         name: user?.name,
         prefill: {
           email: user?.email,
-          contact: "9657690018",
-          name: "Mentorpoint",
+          contact: user?.mobile ? user?.mobile : "8888888888",
+          name: user?.name,
         },
         theme: { color: colors.primary },
       };
+
       RazorpayCheckout.open(options)
         .then((data) => {
           // handle success

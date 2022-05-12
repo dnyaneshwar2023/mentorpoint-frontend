@@ -25,7 +25,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.mentorpointapp.mentorpoint",
-      "versionCode": 1
+      "versionCode": 1                                                      
     },
     "web": {
       "favicon": "./assets/favicon.png"

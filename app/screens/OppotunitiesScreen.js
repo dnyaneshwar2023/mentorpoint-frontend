@@ -27,6 +27,7 @@ export default function OppotunitiesScreen() {
   const onRefresh = React.useCallback(() => {
     setRefresh(true);
     getOpportunities().then((data) => {
+      log
       setOpportunities(data);
     });
     setRefresh(false);
