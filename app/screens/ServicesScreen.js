@@ -23,7 +23,7 @@ export default function ServicesScreen({ route }) {
     setServices([]);
     setLoaded(true);
     servicesApi
-      .getServices(mentor_id)
+      .getServices({ mentor_id: mentor_id, is_deleted: false })
       .then((res) => {
         console.log(res.data);
         setServices(res?.data?.data);

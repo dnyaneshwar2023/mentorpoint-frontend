@@ -14,6 +14,9 @@ import RNEInput from "../components/RNEInput";
 import AppButton from "../components/AppButton";
 import authApi from "../apis/auth";
 import useAuth from "../auth/useAuth";
+import { Dropdown } from "react-native-element-dropdown";
+import { Picker } from "@react-native-picker/picker";
+import { colors } from "react-native-elements";
 const data = [
   {
     id: 1,
@@ -39,9 +42,12 @@ export default function SignUpScreen({ navigation }) {
   const [wrong, setWrong] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedRole, setSelectedRole] = useState("student");
+
   const { logIn, user } = useAuth();
   const handleSignup = (values) => {
     setLoading(true);
+    console.log(values);
     authApi
       .signUp(values)
       .then((res) => {
@@ -101,8 +107,8 @@ export default function SignUpScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
-            marginHorizontal: 20,
             marginVertical: 10,
+            alignItems: "center",
           }}
         >
           <Text
@@ -138,11 +144,19 @@ export default function SignUpScreen({ navigation }) {
               email: "",
               password: "",
               name: "",
+              role: "student",
             }}
             onSubmit={handleSignup}
             validationSchema={validationSchema}
           >
-            {({ handleSubmit, values, errors, touched }) => (
+            {({
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              handleChange,
+              setFieldValue,
+            }) => (
               <>
                 <View>
                   <RNEInput
@@ -166,6 +180,25 @@ export default function SignUpScreen({ navigation }) {
                     name="password"
                     error={touched.password && errors.password}
                   />
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    marginHorizontal: 10,
+                    backgroundColor: colors.greyOutline,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Picker
+                    selectedValue={selectedRole}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setSelectedRole(itemValue);
+                      setFieldValue("role", itemValue);
+                    }}
+                  >
+                    <Picker.Item label="Student" value="student" />
+                    <Picker.Item label="Mentor" value="mentor" />
+                  </Picker>
                 </View>
                 {loading && (
                   <View

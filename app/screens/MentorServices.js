@@ -25,9 +25,9 @@ export default function SessionsTypeScreen({ navigation }) {
   };
 
   useEffect(() => {
-    if (!focus) return null;
+    if (!focus) return;
     setServices(null);
-    servicesApi.getServices(mentor_id).then((res) => {
+    servicesApi.getServices({ mentor_id: mentor_id }).then((res) => {
       setServices(res.data.data);
     });
   }, [focus]);

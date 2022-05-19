@@ -4,8 +4,8 @@ const addService = (payload) => {
   return apiClient.post("/services", payload);
 };
 
-const getServices = (mentor_id) => {
-  return apiClient.get("/services", { mentor_id });
+const getServices = (payload) => {
+  return apiClient.get("/services", payload);
 };
 
 const getServiceById = (service_id) => {
@@ -20,10 +20,15 @@ const editService = (payload) => {
   return apiClient.put("/services", { ...payload });
 };
 
+const getServiceRatings = (service_id) => {
+  return apiClient.get(`/services/ratings?service_id=${service_id}`);
+};
+
 export default {
   addService,
   getServices,
   getServiceById,
   deleteService,
   editService,
+  getServiceRatings,
 };

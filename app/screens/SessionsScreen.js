@@ -27,10 +27,14 @@ export default function SessionsScreen({ navigation }) {
   };
 
   useEffect(() => {
-    if (!focus) return null;
+    if (!focus) return;
     setLoaded(false);
     setSessions([]);
-    sessionsApi.getSessions({ user_id: user._id }).then((res) => {
+    const payload =
+      user?.role == "student"
+        ? { user_id: user._id }
+        : { mentor_id: user?._id };
+    sessionsApi.getSessions(payload).then((res) => {
       if (res.ok == true) {
         setSessions(res.data.data);
       } else {

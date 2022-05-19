@@ -17,14 +17,34 @@ import useAuth from "../auth/useAuth";
 import sessionsApi from "../apis/sessions";
 import EarningItem from "../components/EarningItem";
 import mentorsApi from "../apis/mentors";
-export default function EarningsSceen() {
+import { paytoVPA } from "../apis/payouts";
+export default function EarningsSceen({ navigation }) {
   const { user } = useAuth();
   const [sessions, setSessions] = useState();
   const [mentor, setMentor] = useState({});
   const focus = useIsFocused();
   const [loading, setLoading] = useState(false);
+
+  const handlePayout = () => {
+    console.log("Pay");
+    paytoVPA({ _id: user?._id })
+      .then((res) => {
+        navigation.navigate("Success", {
+          screenName: "Earnings",
+          buttonTitle: "Go To My Earnings",
+        });
+      })
+      .catch((err) => {
+        navigation.navigate("Success", {
+          screenName: "Earnings",
+          buttonTitle: "Go To My Earnings",
+        });
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    if (!focus) return null;
+    if (!focus) return;
     setSessions([]);
     setLoading(true);
     mentorsApi
@@ -97,8 +117,9 @@ export default function EarningsSceen() {
           }}
         >
           <AppButton
-            title="withdraw"
-            buttonStyles={{ backgroundColor: "blue" }}
+            title="Withdraw"
+            buttonStyles={{ backgroundColor: colors.primary }}
+            onPress={handlePayout}
           />
         </View>
       </View>
@@ -112,7 +133,7 @@ const styles = StyleSheet.create({
   },
   rewardcontainer: {
     flexDirection: "row",
-    backgroundColor: "blue",
+    backgroundColor: colors.primary,
     justifyContent: "space-around",
     alignItems: "center",
     paddingVertical: 20,

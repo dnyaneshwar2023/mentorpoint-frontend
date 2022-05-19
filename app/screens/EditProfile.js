@@ -60,7 +60,6 @@ export default function EditProfile({ navigation }) {
     setLoading(true);
     if (photo != null) {
       if (mentordata?.profile_picture) {
-        console.log("Update");
         const data = new FormData();
         data.append("profile_picture", mentordata?.profile_picture);
         data.append("profile", {
@@ -78,6 +77,7 @@ export default function EditProfile({ navigation }) {
             console.log(err);
           });
       } else {
+        console.log("Here");
         const data = new FormData();
         data.append("_id", mentorid);
         data.append("profile", {
@@ -85,11 +85,12 @@ export default function EditProfile({ navigation }) {
           type: photo.type,
           uri: photo.uri,
         });
-        console.log(data);
         mentorsApi
           .addPhoto(data)
           .then((res) => {
             console.log(res);
+            if (res.ok) {
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -115,9 +116,10 @@ export default function EditProfile({ navigation }) {
   };
 
   useEffect(() => {
+    if (!isFocus) return;
     setMentorData(null);
     mentorsApi
-      .getMentors(mentorid)
+      .getMentors({ _id: mentorid })
       .then((res) => {
         if (res.ok == true) setMentorData(res.data.data[0]);
         else {
