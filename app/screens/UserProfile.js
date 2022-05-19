@@ -33,7 +33,7 @@ export default function UserProfile({ route, navigation }) {
   useEffect(() => {
     if (!focus) return null;
     setUserData(null);
-    mentorsApi.getMentors(userid).then((res) => {
+    mentorsApi.getMentors({ _id: userid }).then((res) => {
       if (res.ok) {
         setUserData(res.data.data[0]);
       }

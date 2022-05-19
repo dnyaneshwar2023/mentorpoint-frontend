@@ -9,11 +9,7 @@ import AppButton from "../components/AppButton";
 import driveURL from "../utils/drive";
 import { colors } from "../configs/variables";
 import RazorpayCheckout from "react-native-razorpay";
-import RNPgReactNativeSdk from "react-native-pg-react-native-sdk";
 import useAuth from "../auth/useAuth";
-import apisauce from "apisauce";
-import uuid from "react-native-uuid";
-
 export default function BookingSummary({ route, navigation }) {
   const [spinner, setSpinner] = useState(false);
   const { service, payload } = route?.params.session;
@@ -32,24 +28,23 @@ export default function BookingSummary({ route, navigation }) {
     });
   };
 
-  const handleBooking = async () => {
+  const handleBooking = () => {
     setSpinner(true);
     if (service?.fee > 0) {
       var options = {
         description: "Session Payment",
-        image: driveURL + "1q6aqxnQ_BMXjFC5O6FppM9OXzrZAJPp_",
+        image: driveURL + "1gvBBDBvoaOejYI02SwA3iMnj3zv_BXVS",
         currency: "INR",
         key: "rzp_live_CFq8WlxGy8ruJr", // Your api key
         amount: service.fee * 110,
         name: user?.name,
         prefill: {
           email: user?.email,
-          contact: user?.mobile ? user?.mobile : "8888888888",
-          name: user?.name,
+          contact: "9657690018",
+          name: "Aacharya",
         },
         theme: { color: colors.primary },
       };
-
       RazorpayCheckout.open(options)
         .then((data) => {
           // handle success

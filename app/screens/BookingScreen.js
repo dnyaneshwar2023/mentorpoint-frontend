@@ -23,12 +23,8 @@ import { useIsFocused } from "@react-navigation/native";
 import servicesApi from "../apis/services";
 import slotsApi from "../apis/slots";
 import useAuth from "../auth/useAuth";
-import sessionsApi from "../apis/sessions";
-import RazorpayCheckout from "react-native-razorpay";
+
 import LoadingButtonButton from "../components/LoadingButton";
-const validationSchema = yup.object().shape({
-  resume_link: yup.string().required().url(),
-});
 
 export default function BookingScreen({ route, navigation }) {
   const [modal, setModal] = useState(false);
@@ -43,13 +39,16 @@ export default function BookingScreen({ route, navigation }) {
   const isFocus = useIsFocused();
   const { user } = useAuth();
 
-  const handleSubmit = (values) => {
+  const handleSession = () => {
     setSpinner(true);
     const user_slot = selected;
-    if (user_slot == null) return null;
+    console.log(user_slot);
+    if (user_slot == null) {
+      setSpinner(false);
+      return;
+    }
     delete user_slot["is_booked"];
     const payload = {
-      resume_link: values?.resume_link,
       date: date,
       slot: selected,
       service_id: serviceid,
@@ -68,7 +67,7 @@ export default function BookingScreen({ route, navigation }) {
     if (!isFocus) {
       setService({});
       setSpinner(false);
-      return null;
+      return;
     }
     if (!service?.title) {
       servicesApi
@@ -101,141 +100,120 @@ export default function BookingScreen({ route, navigation }) {
   }, [isFocus, date]);
   return (
     <>
-      <Formik
-        initialValues={{
-          resume_link: "",
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ values, errors, handleSubmit, handleChange, touched }) => (
-          <>
-            <ScrollView keyboardShouldPersistTaps={"always"}>
-              <View style={styles.container}>
-                <View style={styles.biocontainer}>
-                  <Text
-                    style={{
-                      color: colors.primary,
-                      fontWeight: "bold",
-                      fontSize: 16,
-                    }}
-                  >
-                    {service?.title}
-                  </Text>
-                  <Text
-                    style={{
-                      textAlign: "justify",
-                      lineHeight: 20,
-                      marginVertical: 5,
-                    }}
-                  >
-                    {service?.description}
-                  </Text>
-                  <View
-                    style={{
-                      marginTop: 10,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Duration
-                    </Text>
-                    <Text
-                      style={{
-                        textAlign: "justify",
-                        lineHeight: 20,
-                        marginVertical: 5,
-                      }}
-                    >
-                      {service?.duration} Minutes
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    marginHorizontal: -10,
-                    marginTop: 10,
-                    marginBottom: -10,
-                  }}
-                >
-                  <RNEInput
-                    placeholder="Enter Resume Link"
-                    bg="white"
-                    label="Resume Link"
-                    name="resume_link"
-                    onInputChange={handleChange}
-                    error={touched.resume_link && errors?.resume_link}
-                  />
-                </View>
-                <ModalContext.Provider value={{ modal, setModal }}>
-                  <DateContext.Provider value={{ date, setDate }}>
-                    <AppPicker placeholder={date} icon="calendar" />
-                    <DatePicker />
-                  </DateContext.Provider>
-                </ModalContext.Provider>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {slots.map((item) => {
-                    return (
-                      <SlotCard
-                        {...item}
-                        key={item.start_time}
-                        selected={item == selected}
-                        onPress={() => {
-                          if (item.is_booked) return null;
-                          setSelected(item);
-                        }}
-                      />
-                    );
-                  })}
-                </View>
-                {slots.length == 0 && refresh && (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flex: 1,
-                    }}
-                  >
-                    <ActivityIndicator size="large" color="#0000ff" />
-                  </View>
-                )}
-                {slots.length == 0 && !refresh && (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flex: 1,
-                    }}
-                  >
-                    <Text>No Slots Available on {date} </Text>
-                  </View>
-                )}
-              </View>
-            </ScrollView>
-            <View
+      <ScrollView keyboardShouldPersistTaps={"always"}>
+        <View style={styles.container}>
+          <View style={styles.biocontainer}>
+            <Text
               style={{
-                marginHorizontal: 20,
+                color: colors.primary,
+                fontWeight: "bold",
+                fontSize: 16,
               }}
             >
-              {spinner ? (
-                <LoadingButtonButton />
-              ) : (
-                <AppButton title="Proceed" onPress={handleSubmit} />
-              )}
+              {service?.title}
+            </Text>
+            <Text
+              style={{
+                textAlign: "justify",
+                lineHeight: 20,
+                marginVertical: 5,
+              }}
+            >
+              {service?.description}
+            </Text>
+            <View
+              style={{
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 16,
+                }}
+              >
+                Duration
+              </Text>
+              <Text
+                style={{
+                  textAlign: "justify",
+                  lineHeight: 20,
+                  marginVertical: 5,
+                }}
+              >
+                {service?.duration} Minutes
+              </Text>
             </View>
-          </>
+          </View>
+          <View
+            style={{
+              marginHorizontal: -10,
+              marginTop: 10,
+              marginBottom: -10,
+            }}
+          ></View>
+          <ModalContext.Provider value={{ modal, setModal }}>
+            <DateContext.Provider value={{ date, setDate }}>
+              <AppPicker placeholder={date} icon="calendar" />
+              <DatePicker />
+            </DateContext.Provider>
+          </ModalContext.Provider>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            {slots.map((item) => {
+              return (
+                <SlotCard
+                  {...item}
+                  key={item.start_time}
+                  selected={item == selected}
+                  onPress={() => {
+                    if (item.is_booked) return null;
+                    setSelected(item);
+                  }}
+                />
+              );
+            })}
+          </View>
+          {slots.length == 0 && refresh && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
+          {slots.length == 0 && !refresh && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <Text>No Slots Available on {date} </Text>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+      <View
+        style={{
+          marginHorizontal: 20,
+        }}
+      >
+        {spinner ? (
+          <LoadingButtonButton />
+        ) : (
+          <AppButton title="Proceed" onPress={handleSession} />
         )}
-      </Formik>
+      </View>
     </>
   );
 }

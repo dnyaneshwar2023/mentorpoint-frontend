@@ -33,7 +33,9 @@ import BookingStack from "./BookingStack";
 import PaymentFailed from "../animations/PaymentFailed";
 import EditService from "../screens/EditService";
 import ServicesStack from "./ServicesStack";
+import useAuth from "../auth/useAuth";
 export default function Drawer() {
+  const { user } = useAuth();
   return (
     <>
       <NavigationContainer>
@@ -63,7 +65,7 @@ export default function Drawer() {
               ),
             }}
           />
-          <AppDrawer.Screen
+          {/* <AppDrawer.Screen
             component={BookingScreen}
             name="BookingScreen"
             options={{
@@ -74,7 +76,7 @@ export default function Drawer() {
               headerTitle: "Your Profile",
               drawerItemStyle: { display: "none" },
             }}
-          />
+          /> */}
           <AppDrawer.Screen
             component={UserProfile}
             name="UserProfile"
@@ -110,6 +112,10 @@ export default function Drawer() {
               ),
               headerShown: false,
               headerTitle: "Your Services",
+              drawerItemStyle:
+                user?.role == "student"
+                  ? { display: "none" }
+                  : { display: "flex", paddingLeft: 20 },
             }}
           />
 
@@ -150,6 +156,10 @@ export default function Drawer() {
               ),
               headerTitle: "Your Schedule",
               headerShown: true,
+              drawerItemStyle:
+                user?.role == "student"
+                  ? { display: "none" }
+                  : { display: "flex", paddingLeft: 20 },
             }}
           />
           <AppDrawer.Screen
@@ -166,6 +176,10 @@ export default function Drawer() {
               ),
               headerShown: true,
               headerTitle: "Meeting Details",
+              drawerItemStyle:
+                user?.role == "student"
+                  ? { display: "none" }
+                  : { display: "flex", paddingLeft: 20 },
             }}
           />
           <AppDrawer.Screen
@@ -190,6 +204,10 @@ export default function Drawer() {
               ),
               headerShown: true,
               headerTitle: "Earnings",
+              drawerItemStyle:
+                user?.role == "student"
+                  ? { display: "none" }
+                  : { display: "flex", paddingLeft: 20 },
             }}
           />
           {/* <AppDrawer.Screen

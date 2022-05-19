@@ -123,7 +123,6 @@ export default function ScheduleScreen() {
             {modal1 ? <TimePicker modal={modal1} /> : <></>}
           </DateContext.Provider>
         </ModalContext.Provider>
-
         <ModalContext.Provider value={{ modal: modal2, setModal: setModal2 }}>
           <DateContext.Provider value={{ date: endtime, setDate: setEndtime }}>
             {modal2 ? <TimePicker modal={modal2} /> : <></>}
@@ -154,6 +153,21 @@ export default function ScheduleScreen() {
                   setModal1(true);
                 }}
               />
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  -{" "}
+                </Text>
+              </View>
               <TimeSelector
                 time={moment(endtime).format("LT")}
                 onPress={() => setModal2(true)}
