@@ -4,7 +4,9 @@
 <img src="MentorPoint%20App%2003333250199d4c39a078c91fee5f137c/pxl.png" height="800px" width="400px" style="object-fit: cover;">
 </p>
 
-### What it is?
+<h3><a href="https://dnyaneshwar-dev.notion.site/MentorPoint-App-b1176357437f4900b1b8ef982e45adb3">Notion Doc Link </a></h3>
+
+### About App
 
 - Mobile app to manage the mentors and provide the mentors to schedule the various sessions and keep the pricing on their basis.
 - Connect with various skillset of mentors and get the students doubts resolved
